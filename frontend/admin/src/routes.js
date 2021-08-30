@@ -21,27 +21,27 @@ const isLogin = () => {
 const routes = [
   {
     path: 'app',
-    element: <DashboardLayout />,
+    element: isLogin() ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       {
         path: 'account',
-        element: isLogin() ? <Account /> : <Navigate to="/login" />
+        element: <Account />
       },
       {
         path: 'bookings',
-        element: isLogin() ? <BookingList /> : <Navigate to="/login" />
+        element: <BookingList />
       },
       {
         path: 'dashboard',
-        element: isLogin() ? <Dashboard /> : <Navigate to="/login" />
+        element: <Dashboard />
       },
       {
         path: 'products',
-        element: isLogin() ? <ProductList /> : <Navigate to="/login" />
+        element: <ProductList />
       },
       {
         path: 'settings',
-        element: isLogin() ? <Settings /> : <Navigate to="/login" />
+        element: <Settings />
       },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -55,11 +55,7 @@ const routes = [
       { path: '404', element: <NotFound /> },
       {
         path: '/',
-        element: isLogin() ? (
-          <Navigate to="/app/dashboard" />
-        ) : (
-          <Navigate to="login" />
-        )
+        element: <Navigate to="/app/dashboard" />
       },
       { path: '*', element: <Navigate to="/404" /> }
     ]

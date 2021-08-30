@@ -21,6 +21,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const navigate = useNavigate();
 
   const handleSignout = () => {
+    localStorage.removeItem('authenticatedUser');
     localStorage.clear();
     navigate('/login', { replace: false });
   };

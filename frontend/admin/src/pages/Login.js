@@ -45,7 +45,7 @@ const Login = () => {
             })}
             onSubmit={async ({ email, password }) => {
               const config = {
-                header: {
+                headers: {
                   'content-Type': 'application/json'
                 }
               };

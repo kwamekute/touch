@@ -10,44 +10,41 @@ import {
   Typography
 } from '@material-ui/core';
 
-const user = {
-  avatar: '',
-  jobTitle: 'Front Desk',
-  name: 'John Doe Junior'
-};
-
-const AccountProfile = (props) => (
-  <Card {...props}>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <Avatar
-          src={user.avatar}
+const AccountProfile = (props) => {
+  const { details: user } = props;
+  return (
+    <Card {...props}>
+      <CardContent>
+        <Box
           sx={{
-            height: 100,
-            width: 100
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column'
           }}
-        />
-        <Typography color="textPrimary" gutterBottom variant="h3">
-          {user.name}
-        </Typography>
-        <Typography color="textSecondary" variant="body1">
-          {user.jobTitle}
-        </Typography>
-      </Box>
-    </CardContent>
-    <Divider />
-    <CardActions>
-      <Button color="primary" fullWidth variant="text">
-        Upload picture
-      </Button>
-    </CardActions>
-  </Card>
-);
+        >
+          <Avatar
+            src={user.avatar}
+            sx={{
+              height: 100,
+              width: 100
+            }}
+          />
+          <Typography color="textPrimary" gutterBottom variant="h3">
+            {user.name}
+          </Typography>
+          <Typography color="textSecondary" variant="body1">
+            {user.permission}
+          </Typography>
+        </Box>
+      </CardContent>
+      <Divider />
+      <CardActions>
+        <Button color="primary" fullWidth variant="text">
+          Upload picture
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 export default AccountProfile;

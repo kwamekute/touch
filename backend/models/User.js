@@ -25,9 +25,15 @@ const UserSchema = new mongoose.Schema({
     select: false,
   },
 
-  resetPasswordToken: {
+  permission: {
     type: String,
     default: null,
+    required: [true, "Please provide user permission"],
+  },
+
+  resetPasswordToken: {
+    type: String,
+    default: "Admin",
   },
   resetPasswordExpire: { type: Date, default: null },
   createdAt: {
