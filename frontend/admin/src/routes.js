@@ -10,39 +10,16 @@ import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
 
-const isLogin = () => {
-  const user = localStorage.getItem('authenticatedUser');
-  if (!user) {
-    return false;
-  }
-  return true;
-};
-
 const routes = [
   {
     path: 'app',
-    element: isLogin() ? <DashboardLayout /> : <Navigate to="/login" />,
+    element: <DashboardLayout />,
     children: [
-      {
-        path: 'account',
-        element: <Account />
-      },
-      {
-        path: 'bookings',
-        element: <BookingList />
-      },
-      {
-        path: 'dashboard',
-        element: <Dashboard />
-      },
-      {
-        path: 'products',
-        element: <ProductList />
-      },
-      {
-        path: 'settings',
-        element: <Settings />
-      },
+      { path: 'account', element: <Account /> },
+      { path: 'bookings', element: <BookingList /> },
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'products', element: <ProductList /> },
+      { path: 'settings', element: <Settings /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -53,10 +30,7 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
-      {
-        path: '/',
-        element: <Navigate to="/app/dashboard" />
-      },
+      { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }

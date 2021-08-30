@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -12,7 +11,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
-import axios from 'axios';
+import customers from 'src/__mocks__/customers';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
 import BookingDetails from 'src/components/booking/BookingDetails';
@@ -35,39 +34,11 @@ const useStyles = makeStyles((theme) => ({
 
 const BookingListResults = ({ filterfn }) => {
   const classes = useStyles();
-  const navigation = useNavigate();
-  const [records, setRecords] = useState([{}]);
+  const [records, setRecords] = useState(customers);
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
     UseTable(records, headCells, filterfn);
   const [openPopup, setOpenPopup] = useState(false);
   const [recordsForEdit, setRecordsFoprEdit] = useState(null);
-
-  useEffect(() => {
-    const bookings = async () => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem('authenticatedUser')).token
-          }`
-        }
-      };
-
-      try {
-        const { data } = await axios.get(
-          'http://localhost:5000/api/bookings',
-          config
-        );
-
-        setRecords(data.bookings);
-      } catch (error) {
-        navigation('/login', { replace: true });
-        console.log(error);
-      }
-    };
-
-    bookings();
-  }, [records, navigation]);
 
   const openInPopup = (item) => {
     setRecordsFoprEdit(item);

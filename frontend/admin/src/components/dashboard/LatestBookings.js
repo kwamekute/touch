@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,7 +13,7 @@ import {
 } from '@material-ui/core';
 import UseTable from '../UseTable';
 import StatusChip from '../StatusChip';
-import axios from 'axios';
+import customers from 'src/__mocks__/customers';
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -31,44 +30,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestBookings = (props) => {
-  const navigation = useNavigate();
   const classes = useStyles();
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
     }
   });
-  const [records, setRecords] = useState([{}]);
+  const [records, setRecords] = useState(customers);
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
     UseTable(records, headCells, filterfn);
 
-  useEffect(() => {
-    const bookings = async () => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem('authenticatedUser')).token
-          }`
-        }
-      };
-
-      try {
-        const { data } = await axios.get(
-          'http://localhost:5000/api/bookings',
-          config
-        );
-
-        setRecords(data.bookings);
-      } catch (error) {
-        navigation('/login', { replace: true });
-        localStorage.clear();
-        console.log(error);
-      }
-    };
-
-    bookings();
-  }, [records, navigation]);
   return (
     <Card className={classes.card}>
       <CardHeader title="Bookings" />
