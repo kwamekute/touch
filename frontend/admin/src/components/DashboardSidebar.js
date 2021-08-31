@@ -72,7 +72,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
       >
         <Avatar
           component={RouterLink}
-          src={user.avatar}
+          src=""
           sx={{
             cursor: 'pointer',
             width: 64,
@@ -81,10 +81,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h5">
-          {user.user.name}
+          {user?.user.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.user.permission}
+          {user?.user.permission}
         </Typography>
       </Box>
       <Divider />

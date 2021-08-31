@@ -1,5 +1,3 @@
-import { PlaylistAddOutlined } from '@material-ui/icons';
-
 export default (state, action) => {
   switch (action.type) {
     case 'GET_BOOKINGS':

@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -32,9 +33,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BookingListResults = ({ filterfn }) => {
-  const { bookings, getBookings, user } = useContext(GlobalContext);
+  const { bookings, getBookings, user, error } = useContext(GlobalContext);
 
   const classes = useStyles();
+  const navigate = useNavigate();
 
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
     UseTable(bookings, headCells, filterfn);
@@ -48,7 +50,13 @@ const BookingListResults = ({ filterfn }) => {
   };
 
   useEffect(() => {
-    getBookings(user);
+    getBookings(user).then(() => {
+      if (
+        error === 'Access not authorized, There was an error => jwt expired'
+      ) {
+        navigate('/login');
+      }
+    });
     //eslint-diable-next-line react-hooks/exhustive-deps
   }, []);
 

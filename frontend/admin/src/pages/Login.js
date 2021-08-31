@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -13,6 +13,7 @@ import {
 import { GlobalContext } from 'src/context/GlobalState';
 
 const Login = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const { logInUser } = useContext(GlobalContext);
@@ -45,8 +46,9 @@ const Login = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(values) => {
-              logInUser(values);
-              navigate('/app/dashboard', { replace: true });
+              logInUser(values).then(() => {
+                navigate('/app/dashboard', { state: { from: location } });
+              });
             }}
           >
             {({

@@ -9,11 +9,17 @@ import NotFound from 'src/pages/NotFound';
 import ProductList from 'src/pages/ProductList';
 import Register from 'src/pages/Register';
 import Settings from 'src/pages/Settings';
+import { ProtectedRoute } from 'src/routes/ProtectedRoute';
 
 const routes = [
   {
     path: 'app',
-    element: <DashboardLayout />,
+
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       { path: 'account', element: <Account /> },
       { path: 'bookings', element: <BookingList /> },
@@ -25,6 +31,7 @@ const routes = [
   },
   {
     path: '/',
+
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },

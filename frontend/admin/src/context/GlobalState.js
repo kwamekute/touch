@@ -2,12 +2,14 @@ import { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
 
+const user = JSON.parse(localStorage.getItem('authenticatedUser'));
+
 const initialState = {
   bookings: [],
-  auth: false,
+  auth: user ? true : false,
   loading: true,
   error: null,
-  user: null
+  user: user
 };
 
 export const GlobalContext = createContext(initialState);
