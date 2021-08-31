@@ -2,7 +2,8 @@ import { v4 as uuid } from 'uuid';
 
 export default [
   {
-    id: uuid(),
+    _id: uuid(),
+
     name: 'Ekaterina Tankova',
     email: 'ekaterina.tankova@devias.io',
     roomType: 'Delux',
@@ -13,7 +14,7 @@ export default [
     status: 'Awaiting'
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'ekaterina.tankova@devias.io',
     roomType: 'Presidential',
     name: 'Cao Yu',
@@ -24,7 +25,7 @@ export default [
     createdAt: 1555016400000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'alexa.richardson@devias.io',
     roomType: 'Presidential',
     name: 'Alexa Richardson',
@@ -35,7 +36,7 @@ export default [
     createdAt: 1555016400000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'anje.keizer@devias.io',
     name: 'Anje Keizer',
     roomType: 'Standard',
@@ -46,7 +47,7 @@ export default [
     createdAt: 1555016400000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'clarke.gillebert@devias.io',
     name: 'Clarke Gillebert',
     roomType: 'Delux Standard',
@@ -57,7 +58,7 @@ export default [
     createdAt: 1555016400000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'adam.denisov@devias.io',
     name: 'Adam Denisov',
     phone: '858-602-3409',
@@ -68,7 +69,7 @@ export default [
     createdAt: 1555016400000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     email: 'ava.gregoraci@devias.io',
     name: 'Ava Gregoraci',
     phone: '415-907-2647',
@@ -79,7 +80,7 @@ export default [
     createdAt: 1554325200000
   },
   {
-    id: uuid(),
+    _id: uuid(),
     createdAt: 1523048400000,
     email: 'emilee.simchenko@devias.io',
     roomType: 'Delux',
@@ -90,7 +91,7 @@ export default [
     departure: '20/02/2021'
   },
   {
-    id: uuid(),
+    _id: uuid(),
     createdAt: 1554702800000,
     roomType: 'Standard',
     email: 'kwak.seong.min@devias.io',
@@ -101,7 +102,7 @@ export default [
     departure: '20/02/2021'
   },
   {
-    id: uuid(),
+    _id: uuid(),
     createdAt: 1522702800000,
     roomType: 'Standard',
     email: 'merrile.burgett@devias.io',

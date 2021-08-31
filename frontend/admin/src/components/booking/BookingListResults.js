@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import moment from 'moment';
+import { useState, useContext, useEffect } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -11,10 +10,10 @@ import {
   IconButton
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
-import customers from 'src/__mocks__/customers';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
 import BookingDetails from 'src/components/booking/BookingDetails';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -33,10 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BookingListResults = ({ filterfn }) => {
+  const { bookings, getBookings, user } = useContext(GlobalContext);
+
   const classes = useStyles();
-  const [records, setRecords] = useState(customers);
+
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
-    UseTable(records, headCells, filterfn);
+    UseTable(bookings, headCells, filterfn);
+
   const [openPopup, setOpenPopup] = useState(false);
   const [recordsForEdit, setRecordsFoprEdit] = useState(null);
 
@@ -44,6 +46,11 @@ const BookingListResults = ({ filterfn }) => {
     setRecordsFoprEdit(item);
     setOpenPopup(true);
   };
+
+  useEffect(() => {
+    getBookings(user);
+    //eslint-diable-next-line react-hooks/exhustive-deps
+  }, []);
 
   return (
     <>
@@ -68,12 +75,9 @@ const BookingListResults = ({ filterfn }) => {
                       >
                         <EditIcon size="20" />
                       </IconButton>
-                      {JSON.parse(localStorage.getItem('authenticatedUser'))
-                        .user.permission === 'Super-Admin' ? (
-                        <IconButton color="secondary">
-                          <DeleteIcon size="20" />
-                        </IconButton>
-                      ) : null}
+                      <IconButton color="secondary">
+                        <DeleteIcon size="20" />
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -10,11 +10,12 @@ import {
   TextField,
   Typography
 } from '@material-ui/core';
-import axios from 'axios';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const { logInUser } = useContext(GlobalContext);
 
   return (
     <>
@@ -43,29 +44,9 @@ const Login = () => {
                 .required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={async ({ email, password }) => {
-              const config = {
-                headers: {
-                  'content-Type': 'application/json'
-                }
-              };
-
-              try {
-                const { data } = await axios.post(
-                  'http://localhost:5000/api/auth/login',
-                  { email, password },
-                  config
-                );
-
-                localStorage.setItem('authenticatedUser', JSON.stringify(data));
-
-                navigate('/app/dashboard', { replace: true });
-              } catch (error) {
-                setError(error.response.data.error);
-                setTimeout(() => {
-                  setError(null);
-                }, 5000);
-              }
+            onSubmit={(values) => {
+              logInUser(values);
+              navigate('/app/dashboard', { replace: true });
             }}
           >
             {({

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -14,15 +14,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from './Logo';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   const [notifications] = useState([]);
+  const { logOutUser } = useContext(GlobalContext);
 
   const navigate = useNavigate();
 
   const handleSignout = () => {
-    localStorage.removeItem('authenticatedUser');
-    localStorage.clear();
+    logOutUser();
     navigate('/login', { replace: false });
   };
 

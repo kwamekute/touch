@@ -27,13 +27,13 @@ const UserSchema = new mongoose.Schema({
 
   permission: {
     type: String,
-    default: null,
+    default: "Admin",
     required: [true, "Please provide user permission"],
   },
 
   resetPasswordToken: {
     type: String,
-    default: "Admin",
+    default: null,
   },
   resetPasswordExpire: { type: Date, default: null },
   createdAt: {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
@@ -17,11 +17,7 @@ import {
   Book as BookIcon
 } from 'react-feather';
 import NavItem from './NavItem';
-
-const user = {
-  jobTitle: 'Front Desk',
-  name: 'John Doe Junior'
-};
+import { GlobalContext } from 'src/context/GlobalState';
 
 const items = [
   {
@@ -49,6 +45,8 @@ const items = [
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const location = useLocation();
+
+  const { user } = useContext(GlobalContext);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -83,10 +81,10 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           to="/app/account"
         />
         <Typography color="textPrimary" variant="h5">
-          {user.name}
+          {user.user.name}
         </Typography>
         <Typography color="textSecondary" variant="body2">
-          {user.jobTitle}
+          {user.user.permission}
         </Typography>
       </Box>
       <Divider />

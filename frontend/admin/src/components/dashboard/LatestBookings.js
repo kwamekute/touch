@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import UseTable from '../UseTable';
 import StatusChip from '../StatusChip';
-import customers from 'src/__mocks__/customers';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -30,15 +30,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestBookings = (props) => {
+  const { bookings } = useContext(GlobalContext);
   const classes = useStyles();
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
     }
   });
-  const [records, setRecords] = useState(customers);
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
-    UseTable(records, headCells, filterfn);
+    UseTable(bookings, headCells, filterfn);
 
   return (
     <Card className={classes.card}>
