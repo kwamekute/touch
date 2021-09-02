@@ -31,7 +31,7 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'LOGIN_USER_ERROR',
-        payload: error.response.data.error
+        payload: error.response?.data.error
       });
     }
   }
@@ -57,7 +57,7 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
-        payload: error.response.data.error
+        payload: error.response?.data.error
       });
     }
   }
@@ -76,12 +76,12 @@ export const GlobalProvider = ({ children }) => {
         config
       );
 
-      dispatch({ type: 'DELETE_BOOKINGS', payload: res.data.bookings });
+      dispatch({ type: 'DELETE_BOOKING', payload: res.data.deletedBooking });
     } catch (error) {
       console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
-        payload: error.response.data.error
+        payload: error.response?.data.error
       });
     }
   }
@@ -106,7 +106,7 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
-        payload: error.response.data.error
+        payload: error.response?.data.error
       });
     }
   }

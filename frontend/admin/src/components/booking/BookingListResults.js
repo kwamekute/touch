@@ -15,6 +15,8 @@ import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
 import BookingDetails from 'src/components/booking/BookingDetails';
 import { GlobalContext } from 'src/context/GlobalState';
+import Notification from '../Notification';
+import ConfirmDialog from '../ConfirmDialog';
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -33,11 +35,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BookingListResults = ({ filterfn }) => {
-  const { bookings, getBookings, user, error, logOutUser, updateBooking } =
-    useContext(GlobalContext);
+  const {
+    bookings,
+    getBookings,
+    user,
+    error,
+    logOutUser,
+    updateBooking,
+    deleteBooking
+  } = useContext(GlobalContext);
 
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: '',
+    type: ''
+  });
+
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    subTitle: ''
+  });
 
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
     UseTable(bookings, headCells, filterfn);
@@ -53,6 +74,22 @@ const BookingListResults = ({ filterfn }) => {
   const handleSubmit = (values) => {
     updateBooking(values, user).then(() => {
       setOpenPopup(false);
+      setNotify({
+        isOpen: true,
+        message: 'Status changed successfully',
+        type: 'success'
+      });
+    });
+  };
+
+  const onDelete = (id) => {
+    setConfirmDialog({ ...confirmDialog, isOpen: false });
+    deleteBooking(id).then(() => {
+      setNotify({
+        isOpen: true,
+        message: 'Booking deleted successfully',
+        type: 'error'
+      });
     });
   };
 
@@ -92,7 +129,21 @@ const BookingListResults = ({ filterfn }) => {
                         <EditIcon size="20" />
                       </IconButton>
                       {user.user.permission === 'Super-Admin' ? (
-                        <IconButton color="secondary">
+                        <IconButton
+                          color="secondary"
+                          onClick={() => {
+                            setConfirmDialog({
+                              isOpen: true,
+                              title:
+                                'Are you sure you want to delete this booking?',
+                              subTitle: "You can't undo this operation",
+                              onConfirm: () => {
+                                onDelete(item._id);
+                              }
+                            });
+                            //
+                          }}
+                        >
                           <DeleteIcon size="20" />
                         </IconButton>
                       ) : null}
@@ -116,6 +167,11 @@ const BookingListResults = ({ filterfn }) => {
           handleSubmit={handleSubmit}
         />
       </Popup>
+      <Notification notify={notify} setNotify={setNotify} />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </>
   );
 };

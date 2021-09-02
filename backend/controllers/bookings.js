@@ -83,12 +83,12 @@ exports.deletebookings = async (request, response, next) => {
       return next(new ErrorResponse("Booking with id doesn't exist", 400));
     }
 
-    deletedBooking = await Booking.deleteOne({ _id: id });
+    await Booking.deleteOne({ _id: id });
 
     return response.status(200).json({
       status: "success",
       message: "Booking deleted successfully",
-      booking: deletedBooking,
+      deletedBooking: booking,
     });
   } catch (error) {
     next(error);
