@@ -5,10 +5,8 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-  makeStyles,
-  IconButton
+  makeStyles
 } from '@material-ui/core';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles((theme) => ({
   dialog: {

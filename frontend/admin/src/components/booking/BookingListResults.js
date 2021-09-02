@@ -8,7 +8,9 @@ import {
   TableRow,
   TableCell,
   makeStyles,
-  IconButton
+  IconButton,
+  Skeleton,
+  CircularProgress
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
@@ -17,6 +19,7 @@ import BookingDetails from 'src/components/booking/BookingDetails';
 import { GlobalContext } from 'src/context/GlobalState';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
+import Loading from '../Loading';
 
 const headCells = [
   { id: 'name', label: 'Name' },
@@ -42,7 +45,8 @@ const BookingListResults = ({ filterfn }) => {
     error,
     logOutUser,
     updateBooking,
-    deleteBooking
+    deleteBooking,
+    loading
   } = useContext(GlobalContext);
 
   const classes = useStyles();
@@ -112,45 +116,49 @@ const BookingListResults = ({ filterfn }) => {
           <Box sx={{ minWidth: 1050 }}>
             <TblContainer>
               <TblHead />
-              <TableBody>
-                {recordsAfterSorting().map((item) => (
-                  <TableRow hover key={item._id}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.email}</TableCell>
-                    <TableCell>{item.phone}</TableCell>
-                    <TableCell>{item.roomType}</TableCell>
-                    <TableCell>{item.checkIn}</TableCell>
-                    <TableCell>{item.checkOut}</TableCell>
-                    <TableCell>
-                      <IconButton
-                        color="primary"
-                        onClick={() => openInPopup(item)}
-                      >
-                        <EditIcon size="20" />
-                      </IconButton>
-                      {user.user.permission === 'Super-Admin' ? (
+              {loading ? (
+                <Loading />
+              ) : (
+                <TableBody>
+                  {recordsAfterSorting().map((item) => (
+                    <TableRow hover key={item._id}>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.email}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
+                      <TableCell>{item.roomType}</TableCell>
+                      <TableCell>{item.checkIn}</TableCell>
+                      <TableCell>{item.checkOut}</TableCell>
+                      <TableCell>
                         <IconButton
-                          color="secondary"
-                          onClick={() => {
-                            setConfirmDialog({
-                              isOpen: true,
-                              title:
-                                'Are you sure you want to delete this booking?',
-                              subTitle: "You can't undo this operation",
-                              onConfirm: () => {
-                                onDelete(item._id);
-                              }
-                            });
-                            //
-                          }}
+                          color="primary"
+                          onClick={() => openInPopup(item)}
                         >
-                          <DeleteIcon size="20" />
+                          <EditIcon size="20" />
                         </IconButton>
-                      ) : null}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
+                        {user.user.permission === 'Super-Admin' ? (
+                          <IconButton
+                            color="secondary"
+                            onClick={() => {
+                              setConfirmDialog({
+                                isOpen: true,
+                                title:
+                                  'Are you sure you want to delete this booking?',
+                                subTitle: "You can't undo this operation",
+                                onConfirm: () => {
+                                  onDelete(item._id);
+                                }
+                              });
+                              //
+                            }}
+                          >
+                            <DeleteIcon size="20" />
+                          </IconButton>
+                        ) : null}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              )}
             </TblContainer>
             <TblPagination />
           </Box>
