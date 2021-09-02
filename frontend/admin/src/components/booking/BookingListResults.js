@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const BookingListResults = ({ filterfn }) => {
-  const { bookings, getBookings, user, error } = useContext(GlobalContext);
+  const { bookings, getBookings, user, error, logOutUser, updateBooking } =
+    useContext(GlobalContext);
 
   const classes = useStyles();
   const navigate = useNavigate();
@@ -49,11 +50,18 @@ const BookingListResults = ({ filterfn }) => {
     setOpenPopup(true);
   };
 
+  const handleSubmit = (values) => {
+    updateBooking(values, user).then(() => {
+      setOpenPopup(false);
+    });
+  };
+
   useEffect(() => {
     getBookings(user).then(() => {
       if (
         error === 'Access not authorized, There was an error => jwt expired'
       ) {
+        logOutUser();
         navigate('/login');
       }
     });
@@ -83,9 +91,11 @@ const BookingListResults = ({ filterfn }) => {
                       >
                         <EditIcon size="20" />
                       </IconButton>
-                      <IconButton color="secondary">
-                        <DeleteIcon size="20" />
-                      </IconButton>
+                      {user.user.permission === 'Super-Admin' ? (
+                        <IconButton color="secondary">
+                          <DeleteIcon size="20" />
+                        </IconButton>
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -101,7 +111,10 @@ const BookingListResults = ({ filterfn }) => {
         title="Booking Details"
         subTitle="Only the Status of a booking can be edited"
       >
-        <BookingDetails recordsforedit={recordsForEdit} />
+        <BookingDetails
+          recordsforedit={recordsForEdit}
+          handleSubmit={handleSubmit}
+        />
       </Popup>
     </>
   );

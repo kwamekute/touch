@@ -18,13 +18,18 @@ export default (state, action) => {
         ...state,
         bookings: [...state.bookings, action.payload]
       };
+    case 'UPDATE_BOOKING':
+      return {
+        ...state,
+        bookings: state.bookings.map((booking) =>
+          booking._id === action.payload_id ? action.payload : booking
+        )
+      };
     case 'GET_BOOKINGS_ERROR':
       return {
         ...state,
         error: action.payload
       };
-    default:
-      return state;
     case 'LOGIN_USER':
       localStorage.setItem(
         'authenticatedUser',
@@ -47,7 +52,9 @@ export default (state, action) => {
     case 'LOGIN_USER_ERROR':
       return {
         ...state,
-        user: action.payload
+        error: action.payload
       };
+    default:
+      return state;
   }
 };

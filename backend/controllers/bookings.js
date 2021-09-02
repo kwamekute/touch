@@ -1,5 +1,6 @@
 const Booking = require("../models/Booking");
-const ErrorResponse = require("../middleware/error");
+const ErrorResponse = require("../utils/errorResponse");
+const sendEmail = require("../utils/sendMail");
 
 //@desc get all bookings
 //@route GET /api/bookings
@@ -44,15 +45,27 @@ exports.addbookings = async (request, response, next) => {
       phone,
     });
 
-    if (!newBooking) {
-      return new ErrorResponse("something went worng please try again", 400);
-    }
+    const message = `
+    <h1>New Booking</h1>
+    <p>Hello <b>${newBooking.name}</b>, <br> Your Booking for a <b>${newBooking.roomType}</b> has been recieved, we will contact you shortly on ${newBooking.phone}</p><br>
+    <p>Thank You</p><br>
+    `;
 
-    response.status(200).json({
-      status: "success",
-      message: "booking created",
-      Booking: newBooking,
-    });
+    try {
+      await sendEmail({
+        to: newBooking.email,
+        subject: "New Booking",
+        text: message,
+      });
+
+      response.status(201).json({
+        status: "success",
+        message: "Booking created Successfully",
+        booking: newBooking,
+      });
+    } catch (error) {
+      return next(new ErrorResponse("Email could not be sent", 500));
+    }
   } catch (error) {
     next(error);
   }
@@ -61,19 +74,52 @@ exports.addbookings = async (request, response, next) => {
 //@desc Delete booking
 //@route DELETE /api/bookings/:id
 //@access Protected
-exports.deletebookings = (request, response, next) => {
-  response.status(200).json({
-    status: "success",
-    message: "you have access to this route",
-  });
+exports.deletebookings = async (request, response, next) => {
+  const id = request.params.id;
+  try {
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return next(new ErrorResponse("Booking with id doesn't exist", 400));
+    }
+
+    deletedBooking = await Booking.deleteOne({ _id: id });
+
+    return response.status(200).json({
+      status: "success",
+      message: "Booking deleted successfully",
+      booking: deletedBooking,
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
 //@desc update Product
 //@route UPDATE /api/bookings/:id
 //@access Protected
-exports.updatebookings = (request, response, next) => {
-  response.status(200).json({
-    status: "success",
-    message: "you have access to this route",
-  });
+exports.updatebookings = async (request, response, next) => {
+  const id = request.params.id;
+  const { status } = await request.body;
+  try {
+    const booking = await Booking.findById(id);
+    if (!booking) {
+      return next(new ErrorResponse("Booking with id doesn't exist", 400));
+    }
+    const updatedBooking = await Booking.findOneAndUpdate(
+      { _id: id },
+      { status },
+      {
+        new: true,
+      }
+    );
+
+    return response.status(200).json({
+      status: "success",
+      message: "Booking Updated Successfully",
+      booking: updatedBooking,
+    });
+  } catch (error) {
+    next(error);
+  }
 };

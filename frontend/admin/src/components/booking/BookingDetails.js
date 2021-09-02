@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Box, Button, CardContent, Grid, TextField } from '@material-ui/core';
 
 const status = [
@@ -16,11 +16,11 @@ const initialValues = {
   phone: '',
   status: '',
   arrival: '',
-  departure: ''
+  depature: ''
 };
 
 const BookingDetails = (props) => {
-  const { recordsforedit } = props;
+  const { recordsforedit, handleSubmit } = props;
   const [values, setValues] = useState(initialValues);
 
   useEffect(() => {
@@ -32,11 +32,6 @@ const BookingDetails = (props) => {
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('formData=>', values);
   };
 
   return (
@@ -147,7 +142,13 @@ const BookingDetails = (props) => {
           justifyContent: 'flex-end'
         }}
       >
-        <Button color="primary" variant="contained" onClick={handleSubmit}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => {
+            handleSubmit(values);
+          }}
+        >
           Update
         </Button>
       </Box>

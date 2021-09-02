@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -30,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestBookings = (props) => {
-  const { bookings } = useContext(GlobalContext);
+  const { bookings, getBookings, user, error, logOutUser } =
+    useContext(GlobalContext);
+  const navigate = useNavigate();
   const classes = useStyles();
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
@@ -39,6 +42,18 @@ const LatestBookings = (props) => {
   });
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
     UseTable(bookings, headCells, filterfn);
+
+  useEffect(() => {
+    getBookings(user).then(() => {
+      if (
+        error === 'Access not authorized, There was an error => jwt expired'
+      ) {
+        logOutUser();
+        navigate('/login');
+      }
+    });
+    //eslint-diable-next-line react-hooks/exhustive-deps
+  }, []);
 
   return (
     <Card className={classes.card}>

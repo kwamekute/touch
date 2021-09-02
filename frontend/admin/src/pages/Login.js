@@ -15,8 +15,7 @@ import { GlobalContext } from 'src/context/GlobalState';
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
-  const { logInUser } = useContext(GlobalContext);
+  const { logInUser, error } = useContext(GlobalContext);
 
   return (
     <>

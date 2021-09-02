@@ -18,6 +18,8 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   //actions
+
+  //logIn user action
   async function logInUser({ email, password }) {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', {
@@ -34,10 +36,12 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  //logOut user action
   function logOutUser() {
     dispatch({ type: 'LOG_OUT_USER' });
   }
 
+  //get all bookings action
   async function getBookings(user) {
     try {
       const config = {
@@ -58,13 +62,56 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  //Delete Booking action
   async function deleteBooking(id) {
     try {
-      await axios.delete();
-    } catch (error) {}
-    dispatch({ type: 'DELETE_BOOKING', payload: id });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.delete(
+        `http://localhost:5000/api/bookings/${id}`,
+        config
+      );
+
+      dispatch({ type: 'DELETE_BOOKINGS', payload: res.data.bookings });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_BOOKINGS_ERROR',
+        payload: error.response.data.error
+      });
+    }
   }
 
+  //Update Booking action
+  async function updateBooking(formData, user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.put(
+        `http://localhost:5000/api/bookings/${formData._id}`,
+        formData,
+        config
+      );
+
+      dispatch({ type: 'UPDATE_BOOKING', payload: res.data.booking });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_BOOKINGS_ERROR',
+        payload: error.response.data.error
+      });
+    }
+  }
+
+  //Adding Booking action
   function addBooking(booking) {
     dispatch({ type: 'ADD_BOOKING', payload: booking });
   }
@@ -79,6 +126,7 @@ export const GlobalProvider = ({ children }) => {
         user: state.user,
         deleteBooking,
         addBooking,
+        updateBooking,
         getBookings,
         logInUser,
         logOutUser
