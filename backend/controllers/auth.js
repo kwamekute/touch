@@ -21,7 +21,7 @@ exports.register = async (request, response, next) => {
 
     await user.save();
 
-    const inviteUrl = `http://localhost:3000/newaccount/${inviteToken}`;
+    const inviteUrl = `${process.env.URL}/newaccount/${inviteToken}`;
 
     const message = `
     <h1>Hello <b>${user.name}</b></h1>
@@ -129,7 +129,7 @@ exports.forgotpassword = async (request, response, next) => {
 
     await user.save();
 
-    const resetUrl = `http://localhost:3000/resetpassword/${resetToken}`;
+    const resetUrl = `${process.env.URL}/resetpassword/${resetToken}`;
 
     const message = `
     <h1>Password Reset Request</h1>
