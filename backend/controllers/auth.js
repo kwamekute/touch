@@ -26,7 +26,7 @@ exports.register = async (request, response, next) => {
     const message = `
     <h1>Hello <b>${user.name}</b></h1>
     <p>You have been added as an Admin on the Luxury Touch Hotel booking managment portal</p><br>
-    <p>Please follow this link to activate your account</p><br>
+    <p>Please follow the invitation link below to activate your account</p><br>
     <a href=${inviteUrl} clicktracking=off>CLICK HERE</a>
     `;
 
@@ -66,7 +66,12 @@ exports.newaccount = async (request, response, next) => {
     });
 
     if (!user) {
-      return next(new ErrorResponse("Invalid inite token", 400));
+      return next(
+        new ErrorResponse(
+          "This invitation link isn't valid. Perhaps you already used it?",
+          400
+        )
+      );
     }
 
     user.password = password;
