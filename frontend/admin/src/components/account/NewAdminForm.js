@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState, useContext } from 'react';
 import { Box, Button, CardContent, Grid, TextField } from '@material-ui/core';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const permissions = [
   { value: 'Admin', label: 'Admin' },
@@ -11,19 +12,24 @@ const initialValues = {
   email: '',
   name: '',
   phone: '',
-  permission: ''
+  permission: 'Admin'
 };
 
 const NewAdminForm = (props) => {
+  const { openPopup, setOpenPopup } = props;
   const [values, setValues] = useState(initialValues);
+
+  const { addNewUser, user } = useContext(GlobalContext);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('formData=>', values);
+  const handleSubmit = () => {
+    addNewUser(values, user).then(() => {
+      setOpenPopup(false);
+      console.log('formData=>', values);
+    });
   };
 
   return (
@@ -93,7 +99,7 @@ const NewAdminForm = (props) => {
         }}
       >
         <Button color="primary" variant="contained" onClick={handleSubmit}>
-          Update
+          Add admin
         </Button>
       </Box>
     </form>

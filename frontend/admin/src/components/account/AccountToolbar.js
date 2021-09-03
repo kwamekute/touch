@@ -36,7 +36,7 @@ const AccountToolbar = () => {
         setOpenPopup={setOpenPopup}
         title="Add new Admin"
       >
-        <NewAdminForm />
+        <NewAdminForm openPopup={openPopup} setOpenPopup={setOpenPopup} />
       </Popup>
     </>
   );

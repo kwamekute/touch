@@ -19,6 +19,58 @@ export const GlobalProvider = ({ children }) => {
 
   //actions
 
+  //Register user action
+  async function addNewUser(formData, user) {
+    const { name, email, phone, permission } = formData;
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      await axios.post(
+        'http://localhost:5000/api/auth/register',
+        {
+          name,
+          email,
+          phone,
+          permission
+        },
+        config
+      );
+      dispatch({ type: 'ADD_USER' });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'ADD_USER_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
+
+  //finish admin account setup
+  async function finishSetup(formData, params) {
+    const { password, passwordConfirmation } = formData;
+    const { inviteToken } = params;
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/auth/newaccount/${inviteToken}`,
+        {
+          password,
+          passwordConfirmation
+        }
+      );
+      dispatch({ type: 'FINISH_ADMIN_SETUP', payload: res.data });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'ADD_USER_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
+
   //logIn user action
   async function logInUser({ email, password }) {
     try {
@@ -129,7 +181,9 @@ export const GlobalProvider = ({ children }) => {
         updateBooking,
         getBookings,
         logInUser,
-        logOutUser
+        logOutUser,
+        addNewUser,
+        finishSetup
       }}
     >
       {children}

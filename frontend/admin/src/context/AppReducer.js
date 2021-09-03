@@ -30,6 +30,16 @@ export default (state, action) => {
         ...state,
         error: action.payload
       };
+    // case 'ADD_USER':
+    //   return {
+    //     ...state
+    //   };
+    case 'ADD_USER_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'FINISH_ADMIN_SETUP':
     case 'LOGIN_USER':
       localStorage.setItem(
         'authenticatedUser',

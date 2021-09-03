@@ -8,15 +8,75 @@ const sendEmail = require("../utils/sendMail");
 //@route POST /api/auth
 //@access Protected
 exports.register = async (request, response, next) => {
-  const { name, email, password } = await request.body;
+  const { name, email, phone, permission } = await request.body;
   try {
     const user = await User.create({
       name,
       email,
-      password,
+      phone,
+      permission,
     });
 
-    sendToken(user, 201, response);
+    inviteToken = user.getInviteToken();
+
+    await user.save();
+
+    const inviteUrl = `http://localhost:3000/newaccount/${inviteToken}`;
+
+    const message = `
+    <h1>Hello <b>${user.name}</b></h1>
+    <p>You have been added as an Admin on the Luxury Touch Hotel booking managment portal</p><br>
+    <p>Please follow this link to activate your account</p><br>
+    <a href=${inviteUrl} clicktracking=off>CLICK HERE</a>
+    `;
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Setup your account",
+        text: message,
+      });
+
+      sendToken(user, 201, response);
+    } catch (error) {
+      await User.deleteOne({ _id: user._id });
+      return next(new ErrorResponse("There was an error adding admin", 500));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.newaccount = async (request, response, next) => {
+  const inviteToken = crypto
+    .createHash("sha256")
+    .update(request.params.inviteToken)
+    .digest("hex");
+
+  const { password, passwordConfirmation } = request.body;
+
+  if (password !== passwordConfirmation) {
+    return next(new ErrorResponse("Passwords mismatch", 400));
+  }
+
+  try {
+    const user = await User.findOne({
+      inviteToken,
+      // resetPasswordExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+      return next(new ErrorResponse("Invalid inite token", 400));
+    }
+
+    user.password = password;
+    user.inviteToken = undefined;
+    await user.save();
+    return response.status(201).json({
+      status: "success",
+      message: "Account activated successfully",
+      user,
+    });
   } catch (error) {
     next(error);
   }

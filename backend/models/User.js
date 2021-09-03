@@ -18,11 +18,21 @@ const UserSchema = new mongoose.Schema({
       "Please provide a valid email",
     ],
   },
+
   password: {
     type: String,
-    required: [true, "Please add a password"],
     minlength: 6,
     select: false,
+  },
+
+  avartar: {
+    type: String,
+    default: null,
+  },
+
+  inviteToken: {
+    type: String,
+    default: null,
   },
 
   permission: {
@@ -73,6 +83,15 @@ UserSchema.methods.getResetPasswordToken = function () {
 
   return resetToken;
 };
+
+UserSchema.methods.getInviteToken = function () {
+  const token = crypto.randomBytes(20).toString("hex");
+
+  this.inviteToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  return token;
+};
+
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
