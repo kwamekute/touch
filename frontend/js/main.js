@@ -778,7 +778,7 @@
 
       //Ajax post data to server
       $.post(
-        "http://192.168.8.105:5000/api/bookings/",
+        "https://luxury-touch.herokuapp.com/api/bookings/",
         post_data,
         function (response) {
           //Response server message

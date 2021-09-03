@@ -1,6 +1,7 @@
 import { createContext, useReducer } from 'react';
 import AppReducer from './AppReducer';
 import axios from 'axios';
+import { URL } from '../constants/index';
 
 const user = JSON.parse(localStorage.getItem('authenticatedUser'));
 
@@ -30,7 +31,7 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       await axios.post(
-        'http://localhost:5000/api/auth/register',
+        `${URL}api/auth/register`,
         {
           name,
           email,
@@ -54,13 +55,10 @@ export const GlobalProvider = ({ children }) => {
     const { password, passwordConfirmation } = formData;
     const { inviteToken } = params;
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/auth/newaccount/${inviteToken}`,
-        {
-          password,
-          passwordConfirmation
-        }
-      );
+      const res = await axios.put(`${URL}api/auth/newaccount/${inviteToken}`, {
+        password,
+        passwordConfirmation
+      });
       dispatch({ type: 'FINISH_ADMIN_SETUP', payload: res.data });
     } catch (error) {
       console.log(error);
@@ -74,7 +72,7 @@ export const GlobalProvider = ({ children }) => {
   //logIn user action
   async function logInUser({ email, password }) {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post(`${URL}api/auth/login`, {
         email,
         password
       });
@@ -102,7 +100,7 @@ export const GlobalProvider = ({ children }) => {
           Authorization: `Bearer ${user.token}`
         }
       };
-      const res = await axios.get('http://localhost:5000/api/bookings', config);
+      const res = await axios.get(`${URL}api/bookings`, config);
 
       dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
     } catch (error) {
@@ -123,10 +121,7 @@ export const GlobalProvider = ({ children }) => {
           Authorization: `Bearer ${user.token}`
         }
       };
-      const res = await axios.delete(
-        `http://localhost:5000/api/bookings/${id}`,
-        config
-      );
+      const res = await axios.delete(`${URL}api/bookings/${id}`, config);
 
       dispatch({ type: 'DELETE_BOOKING', payload: res.data.deletedBooking });
     } catch (error) {
@@ -148,7 +143,7 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       const res = await axios.put(
-        `http://localhost:5000/api/bookings/${formData._id}`,
+        `${URL}api/bookings/${formData._id}`,
         formData,
         config
       );
