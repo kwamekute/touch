@@ -802,7 +802,7 @@
             $("input").val("");
             //enable button
             $("#Book-Submit-Button").prop("disabled", false);
-            //set text back to default text
+            //set text back to default text.
             $("#Book-Submit-Button").html("BOOK NOW");
             $("#Book-Submit-Button").css("cursor", "pointer");
           }
