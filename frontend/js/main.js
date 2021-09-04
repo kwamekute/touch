@@ -751,16 +751,20 @@
     /*========== BOOKING FORM ==========*/
     $("#booking-form-form, #booking-form").on("submit", function (e) {
       e.preventDefault();
-
+      //disable button
+      $("#Book-Submit-Button").prop("disabled", true);
+      $("#Book-Submit-Button").css("cursor", "no-drop");
+      //change text
+      $("#Book-Submit-Button").html("SUBMITTING...");
       //Get input field values from HTML form
       var name = $("input[name=name]").val();
       var phone = $("input[name=phone]").val();
       var email = $("input[name=email]").val();
-      var roomType = $("[name=roomType]").val();
-      var numberAdults = $("[name=numberAdults]").val();
-      var numberChildren = $("[name=numberChildren]").val();
-      var checkIn = $("[name=checkIn]").val();
-      var checkOut = $("[name=checkOut]").val();
+      var roomType = $("input[name=roomType]").val();
+      var numberAdults = $("input[name=numberAdults]").val();
+      var numberChildren = $("input[name=numberChildren]").val();
+      var checkIn = $("input[name=checkIn]").val();
+      var checkOut = $("input[name=checkOut]").val();
 
       //Data to be sent to server
       var post_data;
@@ -778,23 +782,29 @@
 
       //Ajax post data to server
       $.post(
-        "https://luxury-touch.herokuapp.com/api/bookings/",
+        "https://luxury-touch.herokuapp.com/api/bookings",
         post_data,
         function (response) {
           //Response server message
-          if (response.status == "success") {
-            output =
-              '<div class="notification success"><span class="notification-icon"><i class="fa fa-check" aria-hidden="true"></i></span><span class="notification-text">' +
-              response.message +
-              "</span></div>";
-          } else {
+          if (response.status == "failed") {
             output =
               '<div class="notification error"><span class="notification-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></span><span class="notification-text">' +
               response.error +
               "</span></div>";
+          } else {
+            output =
+              '<div class="notification success"><span class="notification-icon"><i class="fa fa-check" aria-hidden="true"></i></span><span class="notification-text">' +
+              response.message +
+              "</span></div>";
 
-            //If success clear inputs
-            $("input, textarea").val("");
+            //If success
+            //clear inputs
+            $("input").val("");
+            //enable button
+            $("#Book-Submit-Button").prop("disabled", false);
+            //set text back to default text
+            $("#Book-Submit-Button").html("BOOK NOW");
+            $("#Book-Submit-Button").css("cursor", "pointer");
           }
 
           $("#notification").html(output);
