@@ -760,9 +760,9 @@
       var name = $("input[name=name]").val();
       var phone = $("input[name=phone]").val();
       var email = $("input[name=email]").val();
-      var roomType = $("input[name=roomType]").val();
-      var numberAdults = $("input[name=numberAdults]").val();
-      var numberChildren = $("input[name=numberChildren]").val();
+      var roomType = $("[name=roomType]").val();
+      var numberAdults = $("[name=numberAdults]").val();
+      var numberChildren = $("[name=numberChildren]").val();
       var checkIn = $("input[name=checkIn]").val();
       var checkOut = $("input[name=checkOut]").val();
 
