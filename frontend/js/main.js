@@ -791,6 +791,10 @@
               '<div class="notification error"><span class="notification-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></span><span class="notification-text">' +
               response.error +
               "</span></div>";
+            $("#Book-Submit-Button").prop("disabled", false);
+            //set text back to default text.
+            $("#Book-Submit-Button").html("BOOK NOW");
+            $("#Book-Submit-Button").css("cursor", "pointer");
           } else {
             output =
               '<div class="notification success"><span class="notification-icon"><i class="fa fa-check" aria-hidden="true"></i></span><span class="notification-text">' +
