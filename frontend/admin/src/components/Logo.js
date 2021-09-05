@@ -1,3 +1,5 @@
-const Logo = (props) => <img alt="Logo" src="/static/logo.jpg" {...props} />;
+const Logo = (props) => (
+  <img alt="Logo" src="/static/lux-touch.png" {...props} />
+);
 
 export default Logo;

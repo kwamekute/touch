@@ -12,6 +12,7 @@ import {
   Skeleton,
   CircularProgress
 } from '@material-ui/core';
+import { green, blue, grey, red } from '@material-ui/core/colors';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
@@ -130,7 +131,7 @@ const BookingListResults = ({ filterfn }) => {
                       <TableCell>{item.checkOut}</TableCell>
                       <TableCell>
                         <IconButton
-                          color="primary"
+                          color="inherit"
                           onClick={() => openInPopup(item)}
                         >
                           <EditIcon size="20" />

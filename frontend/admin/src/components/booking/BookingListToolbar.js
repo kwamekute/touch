@@ -17,11 +17,11 @@ const CustomerListToolbar = ({ onHandleChange }) => (
         justifyContent: 'flex-end'
       }}
     >
-      <Button>Import</Button>
-      <Button sx={{ mx: 1 }}>Export</Button>
-      <Button color="primary" variant="contained">
+      {/* <Button>Import</Button>
+      <Button sx={{ mx: 1 }}>Export</Button> */}
+      {/* <Button color="primary" variant="contained">
         Add booking
-      </Button>
+      </Button> */}
     </Box>
     <Box sx={{ mt: 3 }}>
       <Card>

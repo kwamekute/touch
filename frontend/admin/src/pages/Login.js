@@ -11,6 +11,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { GlobalContext } from 'src/context/GlobalState';
+import Logo from 'src/components/Logo';
 
 const Login = () => {
   const location = useLocation();
@@ -60,6 +61,16 @@ const Login = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
+                <Box
+                  sx={{
+                    display: 'Block',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    width: '20%'
+                  }}
+                >
+                  <Logo style={{ height: 119, width: 119 }} />
+                </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" variant="h2">
                     Sign in

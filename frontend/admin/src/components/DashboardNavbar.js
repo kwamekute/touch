@@ -24,14 +24,14 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
 
   const handleSignout = () => {
     logOutUser();
-    navigate('/login', { replace: false });
+    navigate('/login', { replace: true });
   };
 
   return (
     <AppBar elevation={0} {...rest}>
       <Toolbar>
         <RouterLink to="/">
-          <Logo />
+          {/* <Logo style={{ height: 60, width: 60 }} /> */}
         </RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
