@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, CardContent, Grid, TextField } from '@material-ui/core';
 
 const status = [
@@ -15,8 +15,8 @@ const initialValues = {
   name: '',
   phone: '',
   status: '',
-  arrival: '',
-  depature: ''
+  checkIn: '',
+  checkOut: ''
 };
 
 const BookingDetails = (props) => {
@@ -93,8 +93,8 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
-              label="Arrival"
-              name="arrival"
+              label="checkIn"
+              name="checkIn"
               required
               value={values.checkIn}
               variant="outlined"
@@ -106,8 +106,8 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
-              label="Depature"
-              name="depature"
+              label="checkOut"
+              name="checkOut"
               value={values.checkOut}
               variant="outlined"
               InputProps={{

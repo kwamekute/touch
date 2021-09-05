@@ -795,7 +795,7 @@
             //set text back to default text.
             $("#Book-Submit-Button").html("BOOK NOW");
             $("#Book-Submit-Button").css("cursor", "pointer");
-          } else {
+          } else if (response.status === "success") {
             output =
               '<div class="notification success"><span class="notification-icon"><i class="fa fa-check" aria-hidden="true"></i></span><span class="notification-text">' +
               response.message +
