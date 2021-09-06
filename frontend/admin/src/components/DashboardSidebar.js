@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   Avatar,
@@ -8,13 +8,15 @@ import {
   Drawer,
   Hidden,
   List,
-  Typography
+  Typography,
+  Button
 } from '@material-ui/core';
 import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   User as UserIcon,
-  Book as BookIcon
+  Book as BookIcon,
+  LogOut as LogoutIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 import { GlobalContext } from 'src/context/GlobalState';
@@ -44,9 +46,15 @@ const items = [
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const { user } = useContext(GlobalContext);
+  const { user, logOutUser } = useContext(GlobalContext);
+
+  const handleSignout = () => {
+    logOutUser();
+    navigate('/login', { replace: true });
+  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
@@ -99,6 +107,25 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             />
           ))}
         </List>
+        <Button
+          onClick={handleSignout}
+          sx={{
+            color: 'text.secondary',
+            fontWeight: 'medium',
+            justifyContent: 'flex-start',
+            letterSpacing: 0,
+            py: 1.25,
+            textTransform: 'none',
+            width: '100%',
+            '& svg': {
+              mr: 1
+            }
+          }}
+        >
+          <LogoutIcon size="20" />
+
+          <span>Logout</span>
+        </Button>
       </Box>
       <Box sx={{ flexGrow: 1 }} />
     </Box>

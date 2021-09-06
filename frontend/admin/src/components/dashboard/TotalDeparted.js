@@ -1,20 +1,20 @@
 import {
   Avatar,
+  Box,
   Card,
   CardContent,
   Grid,
-  Typography,
-  Box
+  Typography
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+import { green } from '@material-ui/core/colors';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
-const TotalCanceled = (props) => {
+const TotalDeparted = (props) => {
   const { bookings } = props;
-  const canceledBookings = (bookings) => {
+  const numberDeparted = (bookings) => {
     const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Canceled'
+      (booking) => booking.status === 'Departed'
     );
     const count = PendingBookings.length;
     return count;
@@ -25,40 +25,40 @@ const TotalCanceled = (props) => {
         <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              TOTAL CANCELED
+              TOTAL DEPARTED
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {canceledBookings(bookings)}
+              {numberDeparted(bookings)}
             </Typography>
           </Grid>
           <Grid item>
             <Avatar
               sx={{
-                backgroundColor: red[600],
+                backgroundColor: green[600],
                 height: 56,
                 width: 56
               }}
             >
-              <CancelOutlinedIcon />
+              <AttachMoneyIcon />
             </Avatar>
           </Grid>
         </Grid>
         <Box
           sx={{
-            pt: 2,
+            alignItems: 'center',
             display: 'flex',
-            alignItems: 'center'
+            pt: 2
           }}
         >
-          <ArrowDownwardIcon sx={{ color: red[900] }} />
+          <ArrowUpwardIcon sx={{ color: green[900] }} />
           <Typography
+            variant="body2"
             sx={{
-              color: red[900],
+              color: green[900],
               mr: 1
             }}
-            variant="body2"
           >
-            12%
+            16%
           </Typography>
           <Typography color="textSecondary" variant="caption">
             Since last month
@@ -69,4 +69,4 @@ const TotalCanceled = (props) => {
   );
 };
 
-export default TotalCanceled;
+export default TotalDeparted;

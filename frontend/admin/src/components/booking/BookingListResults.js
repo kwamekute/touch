@@ -77,6 +77,10 @@ const BookingListResults = ({ filterfn }) => {
   };
 
   const handleSubmit = (values) => {
+    if (error === 'Access not authorized, There was an error => jwt expired') {
+      logOutUser();
+      navigate('/login', { replace: true });
+    }
     updateBooking(values, user).then(() => {
       setOpenPopup(false);
       setNotify({

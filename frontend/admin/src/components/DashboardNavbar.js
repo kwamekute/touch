@@ -13,7 +13,6 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
-import Logo from './Logo';
 import { GlobalContext } from 'src/context/GlobalState';
 
 const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
@@ -30,20 +29,9 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
   return (
     <AppBar elevation={0} {...rest}>
       <Toolbar>
-        <RouterLink to="/">
-          {/* <Logo style={{ height: 60, width: 60 }} /> */}
-        </RouterLink>
+        <RouterLink to="/"></RouterLink>
         <Box sx={{ flexGrow: 1 }} />
         <Hidden lgDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="error"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
           <IconButton onClick={handleSignout} color="inherit">
             <InputIcon />
           </IconButton>

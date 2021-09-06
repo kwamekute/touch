@@ -1,13 +1,12 @@
 import { Avatar, Card, CardContent, Grid, Typography } from '@material-ui/core';
-import { orange } from '@material-ui/core/colors';
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
+import { blue } from '@material-ui/core/colors';
 
-const PendingBooking = (props) => {
+const TotalArrived = (props) => {
   const { bookings } = props;
-
-  const pendingBookings = (bookings) => {
+  const arrivedBookings = (bookings) => {
     const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Awaiting'
+      (booking) => booking.status === 'Arrived'
     );
     const count = PendingBookings.length;
     return count;
@@ -18,21 +17,21 @@ const PendingBooking = (props) => {
         <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
           <Grid item>
             <Typography color="textSecondary" gutterBottom variant="h6">
-              TOTAL PENDING
+              TOTAL ARRIVED
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {pendingBookings(bookings)}
+              {arrivedBookings(bookings)}
             </Typography>
           </Grid>
           <Grid item>
             <Avatar
               sx={{
-                backgroundColor: orange[600],
+                backgroundColor: blue[600],
                 height: 56,
                 width: 56
               }}
             >
-              <HelpOutlineOutlinedIcon />
+              <BookOutlinedIcon />
             </Avatar>
           </Grid>
         </Grid>
@@ -41,4 +40,4 @@ const PendingBooking = (props) => {
   );
 };
 
-export default PendingBooking;
+export default TotalArrived;
