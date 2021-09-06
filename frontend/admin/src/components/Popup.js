@@ -10,9 +10,7 @@ import { X as CloseIcon } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
   dialogWraper: {
-    padding: theme.spacing(1),
-    position: 'absolute',
-    bottom: theme.spacing(8)
+    padding: theme.spacing(1)
   }
 }));
 
