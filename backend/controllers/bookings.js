@@ -45,17 +45,16 @@ exports.addbookings = async (request, response, next) => {
       phone,
     });
 
-    const message = `
-    <h1>New Booking</h1>
-    <p>Hello <b>${newBooking.name}</b>, <br> Your Booking for a <b>${newBooking.roomType}</b> has been recieved, we will contact you shortly on ${newBooking.phone}</p><br>
-    <p>Thank You</p><br>
-    `;
-
     try {
       await sendEmail({
         to: newBooking.email,
-        subject: "New Booking",
-        text: message,
+        subject: "New Booking Confirmation",
+        template: "booking-confirmation",
+        templateVars: {
+          name: newBooking.name,
+          roomType: newBooking.roomType,
+          phone: newBooking.phone,
+        },
       });
 
       response.status(201).json({
@@ -64,7 +63,7 @@ exports.addbookings = async (request, response, next) => {
         booking: newBooking,
       });
     } catch (error) {
-      return next(new ErrorResponse("Email could not be sent", 500));
+      return next(error);
     }
   } catch (error) {
     next(error);

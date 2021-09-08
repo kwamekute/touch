@@ -23,18 +23,15 @@ exports.register = async (request, response, next) => {
 
     const inviteUrl = `${process.env.URL}/newaccount/${inviteToken}`;
 
-    const message = `
-    <h1>Hello <b>${user.name}</b></h1>
-    <p>You have been added as an Admin on the Luxury Touch Hotel booking managment portal</p><br>
-    <p>Please follow the invitation link below to activate your account</p><br>
-    <a href=${inviteUrl} clicktracking=off>CLICK HERE</a>
-    `;
-
     try {
       await sendEmail({
         to: user.email,
         subject: "Setup your account",
-        text: message,
+        template: "admin-invite",
+        templateVars: {
+          userName: user.name,
+          inviteLink: inviteUrl,
+        },
       });
 
       sendToken(user, 201, response);
@@ -131,18 +128,14 @@ exports.forgotpassword = async (request, response, next) => {
 
     const resetUrl = `${process.env.URL}/resetpassword/${resetToken}`;
 
-    const message = `
-    <h1>Password Reset Request</h1>
-    <p>Your are recieving this email beacause of a password reset request with your acount with us</p><br>
-    <p>Please go to the link below to reset your password</p><br>
-    <a href=${resetUrl} clicktracking=off>CLICK HERE</a>
-    `;
-
     try {
       await sendEmail({
         to: user.email,
         subject: "Password Reset",
-        text: message,
+        template: "password-reset",
+        templateVars: {
+          resetLink: resetUrl,
+        },
       });
 
       response.status(200).json({

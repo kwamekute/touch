@@ -1,6 +1,14 @@
 const nodemailer = require("nodemailer");
+const fs = require("fs");
+const ejs = require("ejs");
+const { htmlToText } = require("html-to-text");
+const juice = require("juice");
 
-const sendEmail = (options) => {
+const sendEmail = ({
+  template: templateName,
+  templateVars,
+  ...restOfOptions
+}) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.zoho.com",
     port: 465,
@@ -11,12 +19,22 @@ const sendEmail = (options) => {
     },
   });
 
+  const templatePath = `utils/templates/${templateName}.html`;
+
   const mailOptions = {
     from: process.env.EMAIL,
-    to: options.to,
-    subject: options.subject,
-    html: options.text,
+    ...restOfOptions,
   };
+
+  if (templateName && fs.existsSync(templatePath)) {
+    const template = fs.readFileSync(templatePath, "utf-8");
+    const html = ejs.render(template, templateVars);
+    const text = htmlToText(html);
+    const htmlWithStylesInlined = juice(html);
+
+    mailOptions.html = htmlWithStylesInlined;
+    mailOptions.text = text;
+  }
 
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
