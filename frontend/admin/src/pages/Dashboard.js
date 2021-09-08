@@ -24,7 +24,7 @@ const Dashboard = () => {
         }}
       >
         <Container maxWidth={false}>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <TotalArrived bookings={bookings} />
             </Grid>

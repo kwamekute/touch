@@ -72,10 +72,11 @@ const Login = () => {
                   <Logo style={{ height: 119, width: 119 }} />
                 </Box>
                 <Box sx={{ mb: 3 }}>
-                  <Typography color="textPrimary" variant="h2">
+                  <Typography color="textPrimary" align="center" variant="h2">
                     Sign in
                   </Typography>
                   <Typography
+                    align="center"
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
