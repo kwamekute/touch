@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,65 +18,211 @@
               cellspacing="0"
               width="600"
               height="800"
-              style="border: 1px solid #cccccc; border-collapse: collapse"
+              style="
+                border: 1px solid #cccccc;
+                border-collapse: collapse;
+                font-family: Arial, sans-serif;
+                color: #153643;
+              "
             >
               <tbody>
                 <tr>
                   <td
                     align="center"
-                    bgcolor="#272727"
-                    style="padding: 20px 0 20px 0"
+                    bgcolor="#ffffff"
+                    style="padding: 20px 0px 0px 0px; margin: auto"
                   >
                     <img
                       src="https://flamboyant-banach-b3871f.netlify.app/static/lux-touch.png"
                       alt="logo"
-                      width="300"
-                      height="300"
-                      style="display: block"
-                      class="CToWUd"
+                      width="15%"
+                      height="15%"
                     />
                   </td>
                 </tr>
                 <tr>
-                  <td bgcolor="#ffffff" style="padding: 50px 30px 40px 30px">
-                    <table
-                      border="0"
-                      cellpadding="0"
-                      cellspacing="0"
-                      width="100%"
-                    >
+                  <td
+                    align="center"
+                    bgcolor="#ffffff"
+                    style="padding: 20px 0px 20px 25px; text-align: left"
+                  >
+                    <b style="font-size: 25px"
+                      >Your booking request has been recieved</b
+                    ><br />
+                    <p>welcome to Luxury Touch Hotel</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td bgcolor="#ffffff" style="padding: 0px 30px 40px 30px">
+                    <table cellpadding="0" cellspacing="0" width="100%">
                       <tbody>
                         <tr>
-                          <td
-                            style="
-                              text-align: left;
-                              color: #153643;
-                              font-family: Arial, sans-serif;
-                              font-size: 24px;
-                            "
-                          >
-                            Hello <b><%= name %></b>,
+                          <td>
+                            <img
+                              src="<%= imgUrl %>"
+                              alt="logo"
+                              width="100%"
+                              height="100%"
+                              style="display: block; margin: auto"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <h3>
+                                      <b><%= roomType %></b>
+                                    </h3>
+                                    <p>Booked on <%= dateBooked %></p>
+                                  </td>
+                                  <td>
+                                    <img
+                                      style="float: right"
+                                      src="user.png"
+                                      alt=""
+                                      width="23%"
+                                      height="23%"
+                                    />
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <hr />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td style="width: 10%">
+                                    <h2>
+                                      <b><%= checkIn %></b>
+                                    </h2>
+                                    <p>Selected check in date</p>
+                                  </td>
+                                  <td style="width: 10%; text-align: right">
+                                    <h2>
+                                      <b><%= checkOut %></b>
+                                    </h2>
+                                    <p>Selected check out date</p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <hr />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 20px">
+                            <a
+                              style="
+                                text-decoration: none;
+                                color: #ffffff;
+                                border-radius: 3px;
+                                background-color: #c70a0a;
+                                display: block;
+                                text-align: center;
+                                padding: 15px 32px;
+                              "
+                              href="<%= url %>"
+                              target="_blank"
+                            >
+                              Check out other rooms</a
+                            >
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <hr />
+                            <table>
+                              <tbody>
+                                <tr>
+                                  <td style="width: 50%">
+                                    <h3>Address</h3>
+                                    <p>Takwa, UMaT(Brahabebom)</p>
+                                  </td>
+                                  <td style="width: 10%">
+                                    <p>
+                                      <a
+                                        style="
+                                          text-decoration: none;
+                                          color: #c70a0a;
+                                        "
+                                        href="https://www.google.com/maps/place/Luxury+Touch+Hotel/@5.3039069,-2.0026755,15z/data=!4m5!3m4!1s0x0:0x7858c659f582786!8m2!3d5.3039069!4d-2.0026755"
+                                        >Get Directions</a
+                                      >
+                                    </p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <hr />
                           </td>
                         </tr>
                         <tr>
                           <td
                             style="
-                              text-align: left;
-                              padding: 20px 0 30px 0;
+                              padding: 20px 10p 0px 0;
                               color: #153643;
                               font-family: Arial, sans-serif;
                               font-size: 16px;
                               line-height: 20px;
                             "
                           >
-                            Your Booking for a <b><%= roomType %></b> has been
-                            recieved, we will contact you shortly on
-                            <b><%= phone %></b>
-                            Thank You.
+                            Guests<br />
+                            <%= guests %>
+                            <br />
+                            <hr />
                           </td>
                         </tr>
                         <tr>
-                          <td></td>
+                          <td>
+                            <table>
+                              <tbody>
+                                <tr style="width: 15%">
+                                  <td>
+                                    Amount<br />
+                                    N/A
+                                  </td>
+                                  <td style="width: 90%">
+                                    <div style="float: right">
+                                      <p>
+                                        <a></a>
+                                      </p>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <hr />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <table>
+                              <tbody
+                                style="
+                                  color: #153643;
+                                  font-family: Arial, sans-serif;
+                                  font-size: 16px;
+                                "
+                              >
+                                <tr>
+                                  <td style="width: 15%">Booking Id</td>
+                                  <td style="width: 85%">
+                                    <div style="float: right">
+                                      <p><%= bookingId %></p>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <hr />
+                          </td>
                         </tr>
                         <tr>
                           <td

@@ -1,3 +1,4 @@
+const moment = require("moment");
 const Booking = require("../models/Booking");
 const ErrorResponse = require("../utils/errorResponse");
 const sendEmail = require("../utils/sendMail");
@@ -55,6 +56,19 @@ exports.addbookings = async (request, response, next) => {
           name: newBooking.name,
           roomType: newBooking.roomType,
           phone: newBooking.phone,
+          dateBooked: moment(newBooking.createdAt).format("MMMM Do YYYY"),
+          checkIn: moment(newBooking.checkIn, "DD/MM/YYYY").format(
+            "MMMM Do YYYY"
+          ),
+          checkOut: moment(newBooking.checkOut, "DD/MM/YYYY").format(
+            "MMMM Do YYYY"
+          ),
+          guests: parseInt(numberAdults) + parseInt(numberChildren),
+          bookingId: newBooking._id.toString().slice(0, 6),
+          url: process.env.URL,
+          imgUrl: `${process.env.SERVER_URL}rooms/${newBooking.roomType
+            .split(" ")
+            .join("-")}.jpg`,
         },
       });
 

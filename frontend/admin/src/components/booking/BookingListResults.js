@@ -8,9 +8,7 @@ import {
   TableRow,
   TableCell,
   makeStyles,
-  IconButton,
-  Skeleton,
-  CircularProgress
+  IconButton
 } from '@material-ui/core';
 import { green, blue, grey, red } from '@material-ui/core/colors';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';

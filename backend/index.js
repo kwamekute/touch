@@ -1,5 +1,6 @@
 const dotenv = require("dotenv");
 const express = require("express");
+const path = require("path");
 const colors = require("colors");
 const connectDB = require("./config/db");
 const errorHandler = require("./middleware/error");
@@ -21,6 +22,9 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/bookings", require("./routes/bookings"));
+
+//serve static files
+app.use(express.static(__dirname + "/public"));
 
 //Error Handler (should be last middleware)
 app.use(errorHandler);
