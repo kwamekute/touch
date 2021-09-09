@@ -15,10 +15,14 @@ const BookingList = () => {
     let target = event.target;
     setFilterFn({
       fn: (items) => {
-        if (target.value == '') return items;
+        if (target.value === '') return items;
         else
-          return items.filter((x) =>
-            x.name.toLowerCase().includes(target.value.toLowerCase())
+          return items.filter(
+            (x) =>
+              x.name.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.email.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.phone.includes(target.value) ||
+              x.roomType.toLowerCase().includes(target.value.toLowerCase())
           );
       }
     });

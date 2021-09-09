@@ -122,7 +122,13 @@ const BookingListResults = ({ filterfn }) => {
             <TblContainer>
               <TblHead />
               {loading ? (
-                <Loading />
+                <TableBody>
+                  <TableRow>
+                    <TableCell align="center">
+                      <Loading />
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
               ) : (
                 <TableBody>
                   {recordsAfterSorting().map((item) => (

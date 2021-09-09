@@ -39,7 +39,7 @@ const CustomerListToolbar = ({ onHandleChange }) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Search bookings"
+              placeholder="Search bookings by name, email, phone and room type"
               variant="outlined"
             />
           </Box>
