@@ -10,7 +10,8 @@ const initialState = {
   auth: user ? true : false,
   loading: true,
   error: null,
-  user: user
+  user: user,
+  message: null
 };
 
 export const GlobalContext = createContext(initialState);
@@ -81,6 +82,44 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'LOGIN_USER_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
+
+  //forgotten password
+  async function fogortPassword({ email }) {
+    try {
+      const res = await axios.post(`${URL}api/auth/forgotpassword`, {
+        email
+      });
+      dispatch({ type: 'FORGOT_PASSWORD', payload: res.data.message });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'FORGOT_PASSWORD_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
+
+  //Rset password
+  async function resetPassword(formData, params) {
+    const { password, passwordConfirmation } = formData;
+    const { resetToken } = params;
+    try {
+      const res = await axios.put(
+        `${URL}api/auth/resetpassword/${resetToken}`,
+        {
+          password,
+          passwordConfirmation
+        }
+      );
+      dispatch({ type: 'PASSWORD_RESET', payload: res.data.message });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'FORGOT_PASSWORD_ERROR',
         payload: error.response?.data.error
       });
     }
@@ -171,6 +210,7 @@ export const GlobalProvider = ({ children }) => {
         error: state.error,
         loading: state.loading,
         user: state.user,
+        message: state.message,
         deleteBooking,
         addBooking,
         updateBooking,
@@ -178,7 +218,9 @@ export const GlobalProvider = ({ children }) => {
         logInUser,
         logOutUser,
         addNewUser,
-        finishSetup
+        finishSetup,
+        fogortPassword,
+        resetPassword
       }}
     >
       {children}

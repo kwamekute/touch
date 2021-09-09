@@ -20,7 +20,7 @@ const TotalDeparted = (props) => {
     return count;
   };
   return (
-    <Card {...props}>
+    <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
         <Grid container spacing={3} sx={{ justifyContent: 'space-between' }}>
           <Grid item>
@@ -43,7 +43,7 @@ const TotalDeparted = (props) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
+        {/* <Box
           sx={{
             alignItems: 'center',
             display: 'flex',
@@ -63,7 +63,7 @@ const TotalDeparted = (props) => {
           <Typography color="textSecondary" variant="caption">
             Since last month
           </Typography>
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   );

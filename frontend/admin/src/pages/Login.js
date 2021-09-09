@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
@@ -8,6 +8,7 @@ import {
   Button,
   Container,
   TextField,
+  Link,
   Typography
 } from '@material-ui/core';
 import { GlobalContext } from 'src/context/GlobalState';
@@ -16,7 +17,7 @@ import Logo from 'src/components/Logo';
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { logInUser, error } = useContext(GlobalContext);
+  const { logInUser, error, message } = useContext(GlobalContext);
 
   return (
     <>
@@ -28,7 +29,6 @@ const Login = () => {
           backgroundColor: 'background.default',
           display: 'flex',
           flexDirection: 'column',
-          height: '100%',
           justifyContent: 'center'
         }}
       >
@@ -47,7 +47,7 @@ const Login = () => {
             })}
             onSubmit={(values) => {
               logInUser(values).then(() => {
-                navigate('/app/dashboard', { state: { from: location } });
+                navigate('/app/dashboard', { replace: true });
               });
             }}
           >
@@ -84,7 +84,6 @@ const Login = () => {
                     Sign into your admin account
                   </Typography>
                 </Box>
-
                 {error && (
                   <Box>
                     <Typography
@@ -94,6 +93,18 @@ const Login = () => {
                       variant="body2"
                     >
                       {error}
+                    </Typography>
+                  </Box>
+                )}
+                {message && (
+                  <Box sx={{ mt: 3 }}>
+                    <Typography
+                      align="center"
+                      style={{ color: '#3bc70c' }}
+                      gutterBottom
+                      variant="body1"
+                    >
+                      {message}
                     </Typography>
                   </Box>
                 )}
@@ -136,6 +147,16 @@ const Login = () => {
                     Sign in now
                   </Button>
                 </Box>
+                <Typography color="textSecondary" variant="body1">
+                  Forgot Password?
+                  <Link
+                    component={RouterLink}
+                    to="/forgotpassword"
+                    variant="h6"
+                  >
+                    Reset
+                  </Link>
+                </Typography>
               </form>
             )}
           </Formik>

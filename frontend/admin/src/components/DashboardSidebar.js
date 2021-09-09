@@ -30,7 +30,9 @@ const items = [
   {
     href: '/app/bookings',
     icon: BookIcon,
-    title: 'Bookings'
+    title: 'Bookings',
+    badge: true,
+    count: null
   },
 
   {
@@ -49,7 +51,19 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user, logOutUser } = useContext(GlobalContext);
+  const { user, logOutUser, bookings } = useContext(GlobalContext);
+
+  // check for number of pending bookings
+  const pendingBookings = (bookings) => {
+    const PendingBookings = bookings.filter(
+      (booking) => booking.status === 'Awaiting'
+    );
+    const count = PendingBookings.length;
+    return count;
+  };
+
+  //assign number of pending bookings to bookings navbar Item
+  items[1].count = pendingBookings(bookings);
 
   const handleSignout = () => {
     logOutUser();
@@ -104,6 +118,8 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
               key={item.title}
               title={item.title}
               icon={item.icon}
+              badge={item.badge}
+              count={item?.count}
             />
           ))}
         </List>

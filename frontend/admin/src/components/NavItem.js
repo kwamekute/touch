@@ -4,20 +4,20 @@ import {
   useLocation
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Button, ListItem } from '@material-ui/core';
+import { Button, ListItem, Badge } from '@material-ui/core';
 
-const NavItem = ({
-  href,
-  icon: Icon,
-  title,
-  ...rest
-}) => {
+const NavItem = ({ href, icon: Icon, title, badge, count, ...rest }) => {
   const location = useLocation();
 
-  const active = href ? !!matchPath({
-    path: href,
-    end: false
-  }, location.pathname) : false;
+  const active = href
+    ? !!matchPath(
+        {
+          path: href,
+          end: false
+        },
+        location.pathname
+      )
+    : false;
 
   return (
     <ListItem
@@ -29,6 +29,15 @@ const NavItem = ({
       {...rest}
     >
       <Button
+        endIcon={
+          badge ? (
+            <Badge
+              style={{ paddingLeft: 5 }}
+              badgeContent={count}
+              color="primary"
+            />
+          ) : null
+        }
         component={RouterLink}
         sx={{
           color: 'text.secondary',
@@ -47,12 +56,8 @@ const NavItem = ({
         }}
         to={href}
       >
-        {Icon && (
-          <Icon size="20" />
-        )}
-        <span>
-          {title}
-        </span>
+        {Icon && <Icon size="20" />}
+        <span>{title}</span>
       </Button>
     </ListItem>
   );
@@ -61,7 +66,9 @@ const NavItem = ({
 NavItem.propTypes = {
   href: PropTypes.string,
   icon: PropTypes.elementType,
-  title: PropTypes.string
+  title: PropTypes.string,
+  badge: PropTypes.bool,
+  count: PropTypes.number
 };
 
 export default NavItem;

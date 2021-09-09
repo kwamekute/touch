@@ -10,6 +10,8 @@ import ProductList from 'src/pages/ProductList';
 import Settings from 'src/pages/Settings';
 import { ProtectedRoute } from 'src/routes/ProtectedRoute';
 import AccountSetup from './pages/AccountSetup';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const routes = [
   {
@@ -33,6 +35,8 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <Login /> },
+      { path: 'forgotpassword', element: <ForgotPassword /> },
+      { path: 'resetpassword/:resetToken', element: <ResetPassword /> },
       { path: 'newaccount/:inviteToken', element: <AccountSetup /> },
       { path: '404', element: <NotFound /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },

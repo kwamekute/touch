@@ -64,6 +64,23 @@ export default (state, action) => {
         ...state,
         error: action.payload
       };
+    case 'PASSWORD_RESET':
+      return {
+        ...state,
+        error: null,
+        message: action.payload
+      };
+    case 'FORGOT_PASSWORD':
+      return {
+        ...state,
+        error: null,
+        message: action.payload
+      };
+    case 'FORGOT_PASSWORD_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
     default:
       return state;
   }
