@@ -7,7 +7,7 @@ const sendEmail = require("../utils/sendMail");
 //@access Protected
 exports.getbookings = async (request, response, next) => {
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find().sort({ _id: -1 });
 
     return response.status(200).json({
       status: "success",
