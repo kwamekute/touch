@@ -164,6 +164,10 @@ exports.resetpassword = async (request, response, next) => {
     .update(request.params.resetToken)
     .digest("hex");
 
+  const { password, passwordConfirmation } = request.body;
+  if (password !== passwordConfirmation) {
+    return next(new ErrorResponse("Passwords mismatch", 400));
+  }
   try {
     const user = await User.findOne({
       resetPasswordToken,
@@ -171,10 +175,12 @@ exports.resetpassword = async (request, response, next) => {
     });
 
     if (!user) {
-      return next(new ErrorResponse("Invalid reset token", 400));
+      return next(
+        new ErrorResponse("Password Reset link Expired try a new request", 400)
+      );
     }
 
-    user.password = request.body.password;
+    user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
