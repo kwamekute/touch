@@ -65,7 +65,7 @@ exports.addbookings = async (request, response, next) => {
           ),
           guests: parseInt(numberAdults) + parseInt(numberChildren),
           bookingId: newBooking._id.toString().slice(0, 6),
-          url: process.env.URL,
+          url: "https://francisjun.github.io/touch/frontend/index.html",
           imgUrl: `${process.env.SERVER_URL}rooms/${newBooking.roomType
             .split(" ")
             .join("-")}.jpg`,
