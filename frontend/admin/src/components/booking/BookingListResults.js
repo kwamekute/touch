@@ -91,7 +91,7 @@ const BookingListResults = ({ filterfn }) => {
 
   const onDelete = (id) => {
     setConfirmDialog({ ...confirmDialog, isOpen: false });
-    deleteBooking(id).then(() => {
+    deleteBooking(id, user).then(() => {
       setNotify({
         isOpen: true,
         message: 'Booking deleted successfully',

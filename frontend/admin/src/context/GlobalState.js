@@ -152,7 +152,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   //Delete Booking action
-  async function deleteBooking(id) {
+  async function deleteBooking(id, user) {
     try {
       const config = {
         headers: {
