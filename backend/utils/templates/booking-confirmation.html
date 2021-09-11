@@ -60,10 +60,15 @@
                           <td>
                             <img
                               src="<%= imgUrl %>"
-                              alt="logo"
+                              alt="room"
                               width="100%"
                               height="100%"
-                              style="display: block; margin: auto"
+                              style="
+                                display: block;
+                                margin: auto;
+                                max-width: 100%;
+                                height: auto;
+                              "
                             />
                           </td>
                         </tr>
@@ -72,19 +77,23 @@
                             <table>
                               <tbody>
                                 <tr>
-                                  <td>
-                                    <h3>
+                                  <td style="width: 20%">
+                                    <h2>
                                       <b><%= roomType %></b>
-                                    </h3>
+                                    </h2>
                                     <p>Booked on <%= dateBooked %></p>
                                   </td>
-                                  <td>
+                                  <td style="width: 10%">
                                     <img
-                                      style="float: right"
+                                      style="
+                                        float: right;
+                                        max-width: 100%;
+                                        height: auto;
+                                      "
                                       src="https://flamboyant-banach-b3871f.netlify.app/static/images/avatars/user.png"
                                       alt=""
-                                      width="23%"
-                                      height="23%"
+                                      width="20%"
+                                      height="20%"
                                     />
                                   </td>
                                 </tr>
