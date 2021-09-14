@@ -1,13 +1,5 @@
-import {
-  Avatar,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  Box
-} from '@material-ui/core';
+import { Avatar, Card, CardContent, Grid, Typography } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 
 const TotalCanceled = (props) => {

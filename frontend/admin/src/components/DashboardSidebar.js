@@ -139,11 +139,9 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
           }}
         >
           <LogoutIcon size="20" />
-
           <span>Logout</span>
         </Button>
       </Box>
-      <Box sx={{ flexGrow: 1 }} />
     </Box>
   );
 

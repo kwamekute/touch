@@ -10,7 +10,6 @@ import {
   makeStyles,
   IconButton
 } from '@material-ui/core';
-import { green, blue, grey, red } from '@material-ui/core/colors';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
@@ -21,10 +20,10 @@ import ConfirmDialog from '../ConfirmDialog';
 import Loading from '../Loading';
 
 const headCells = [
-  { id: 'name', label: 'Name' },
+  { id: 'name', label: 'Full Name' },
   { id: 'email', label: 'Email' },
   { id: 'phone', label: 'Phone', disableSorting: true },
-  { id: 'roomType', label: 'Room Type' },
+  { id: 'roomType', label: 'Room type' },
   { id: 'arrival', label: 'Arrival', disableSorting: true },
   { id: 'depature', label: 'Depature', disableSorting: true },
   { id: 'actions', label: 'Actions', disableSorting: true }

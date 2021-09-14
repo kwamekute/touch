@@ -1,7 +1,7 @@
+import { useContext } from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -9,33 +9,95 @@ import {
   useTheme,
   colors
 } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import { GlobalContext } from 'src/context/GlobalState';
+import moment from 'moment';
+
+const BOOKING_BUCKETS = {
+  January: 'January',
+  February: 'February',
+  March: 'March',
+  April: 'April',
+  May: 'May',
+  June: 'June',
+  July: 'July',
+  August: 'August',
+  September: 'September',
+  October: 'October',
+  November: 'November',
+  December: 'December'
+};
 
 const Sales = (props) => {
   const theme = useTheme();
+  const { bookings } = useContext(GlobalContext);
 
+  const output1 = {};
+  const output2 = {};
+
+  for (const bucket in BOOKING_BUCKETS) {
+    const filteredBookingsCount = bookings.reduce((prev, current) => {
+      if (
+        moment(current.createdAt).format('MMMM') === BOOKING_BUCKETS[bucket] &&
+        current.status === 'Canceled'
+      ) {
+        return prev + 1;
+      } else {
+        return prev;
+      }
+    }, 0);
+
+    output1[bucket] = filteredBookingsCount;
+  }
+  for (const bucket in BOOKING_BUCKETS) {
+    const filteredBookingsCount1 = bookings.reduce((prev, current) => {
+      if (
+        moment(current.createdAt).format('MMMM') === BOOKING_BUCKETS[bucket] &&
+        current.status === 'Departed'
+      ) {
+        return prev + 1;
+      } else {
+        return prev;
+      }
+    }, 0);
+
+    output2[bucket] = filteredBookingsCount1;
+  }
+  console.log('output1', output1);
+  console.log('output2', output2);
   const data = {
     datasets: [
       {
-        backgroundColor: colors.indigo[500],
-        data: [18, 5, 19, 27, 29, 19, 20],
-        label: 'This year'
+        backgroundColor: colors.green[600],
+        data: Object.values(output2),
+        label: 'Departed'
       },
       {
-        backgroundColor: colors.grey[200],
-        data: [11, 20, 12, 29, 30, 25, 13],
-        label: 'Last year'
+        backgroundColor: colors.red[600],
+        data: Object.values(output1),
+        label: 'Canceled'
       }
     ],
-    labels: ['1 Aug', '2 Aug', '3 Aug', '4 Aug', '5 Aug', '6 Aug']
+    labels: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ]
   };
 
   const options = {
     animation: false,
     cornerRadius: 20,
     layout: { padding: 0 },
-    legend: { display: false },
+    legend: { display: true },
     maintainAspectRatio: false,
     responsive: true,
     scales: {
@@ -88,18 +150,7 @@ const Sales = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader
-        action={(
-          <Button
-            endIcon={<ArrowDropDownIcon />}
-            size="small"
-            variant="text"
-          >
-            Last 7 days
-          </Button>
-        )}
-        title="Latest Sales"
-      />
+      <CardHeader title="Montly Stats" />
       <Divider />
       <CardContent>
         <Box
@@ -108,29 +159,9 @@ const Sales = (props) => {
             position: 'relative'
           }}
         >
-          <Bar
-            data={data}
-            options={options}
-          />
+          <Bar data={data} options={options} />
         </Box>
       </CardContent>
-      <Divider />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          p: 2
-        }}
-      >
-        <Button
-          color="primary"
-          endIcon={<ArrowRightIcon />}
-          size="small"
-          variant="text"
-        >
-          Overview
-        </Button>
-      </Box>
     </Card>
   );
 };

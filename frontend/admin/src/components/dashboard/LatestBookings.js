@@ -21,7 +21,7 @@ const headCells = [
   { id: 'email', label: 'Email' },
   { id: 'phone', label: 'Phone', disableSorting: true },
   { id: 'roomType', label: 'Room Type' },
-  { id: 'bookiedAt', label: 'Date Booked' },
+  { id: 'bookedAt', label: 'Date Booked' },
   { id: 'status', label: 'Status', disableSorting: true }
 ];
 const useStyles = makeStyles((theme) => ({

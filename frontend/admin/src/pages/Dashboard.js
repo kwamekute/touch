@@ -8,6 +8,8 @@ import TotalDeparted from 'src/components/dashboard/TotalDeparted';
 import TotalCanceled from 'src/components/dashboard/TotalCanceled';
 
 import { GlobalContext } from 'src/context/GlobalState';
+import Sales from 'src/components/dashboard/Sales';
+import TrafficByDevice from 'src/components/dashboard/TrafficByDevice';
 
 const Dashboard = () => {
   const { bookings } = useContext(GlobalContext);
@@ -36,6 +38,12 @@ const Dashboard = () => {
             </Grid>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <TotalCanceled bookings={bookings} sx={{ height: '100%' }} />
+            </Grid>
+            <Grid item lg={8} md={12} xl={9} xs={12}>
+              <Sales />
+            </Grid>
+            <Grid item lg={4} md={6} xl={3} xs={12}>
+              <TrafficByDevice sx={{ height: '100%' }} />
             </Grid>
             <Grid item lg={12} md={12} xl={12} xs={12}>
               <LatestBookings bookings={bookings} />

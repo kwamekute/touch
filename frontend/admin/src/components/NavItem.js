@@ -32,9 +32,10 @@ const NavItem = ({ href, icon: Icon, title, badge, count, ...rest }) => {
         endIcon={
           badge ? (
             <Badge
-              style={{ paddingLeft: 5 }}
+              style={{ paddingLeft: 13 }}
               badgeContent={count}
               color="primary"
+              max={10}
             />
           ) : null
         }

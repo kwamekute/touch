@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import {
   Box,
@@ -5,32 +6,48 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography,
   colors,
   useTheme
 } from '@material-ui/core';
-import LaptopMacIcon from '@material-ui/icons/LaptopMac';
-import PhoneIcon from '@material-ui/icons/Phone';
-import TabletIcon from '@material-ui/icons/Tablet';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const TrafficByDevice = (props) => {
   const theme = useTheme();
 
+  const { bookings } = useContext(GlobalContext);
+
+  const canceledBookings = bookings.filter(
+    (booking) => booking.status === 'Canceled'
+  ).length;
+
+  const honoredBookings = bookings.filter(
+    (booking) => booking.status === 'Departed'
+  ).length;
+
+  const awaitingBookings = bookings.filter(
+    (booking) => booking.status === 'Awaiting'
+  ).length;
+
+  const arrived = bookings.filter(
+    (booking) => booking.status === 'Arrived'
+  ).length;
+
   const data = {
     datasets: [
       {
-        data: [63, 15, 22],
+        data: [arrived, awaitingBookings, honoredBookings, canceledBookings],
         backgroundColor: [
           colors.indigo[500],
-          colors.red[600],
-          colors.orange[600]
+          colors.orange[600],
+          colors.green[600],
+          colors.red[600]
         ],
         borderWidth: 8,
         borderColor: colors.common.white,
         hoverBorderColor: colors.common.white
       }
     ],
-    labels: ['Desktop', 'Tablet', 'Mobile']
+    labels: ['Arrived', 'Awaiting', 'Departed', 'Canceled']
   };
 
   const options = {
@@ -38,7 +55,7 @@ const TrafficByDevice = (props) => {
     cutoutPercentage: 80,
     layout: { padding: 0 },
     legend: {
-      display: false
+      display: true
     },
     maintainAspectRatio: false,
     responsive: true,
@@ -55,79 +72,18 @@ const TrafficByDevice = (props) => {
     }
   };
 
-  const devices = [
-    {
-      title: 'Desktop',
-      value: 63,
-      icon: LaptopMacIcon,
-      color: colors.indigo[500]
-    },
-    {
-      title: 'Tablet',
-      value: 15,
-      icon: TabletIcon,
-      color: colors.red[600]
-    },
-    {
-      title: 'Mobile',
-      value: 23,
-      icon: PhoneIcon,
-      color: colors.orange[600]
-    }
-  ];
-
   return (
     <Card {...props}>
-      <CardHeader title="Traffic by Device" />
+      <CardHeader title="Current Stats" />
       <Divider />
       <CardContent>
         <Box
           sx={{
-            height: 300,
+            height: 350,
             position: 'relative'
           }}
         >
-          <Doughnut
-            data={data}
-            options={options}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pt: 2
-          }}
-        >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
-            value
-          }) => (
-            <Box
-              key={title}
-              sx={{
-                p: 1,
-                textAlign: 'center'
-              }}
-            >
-              <Icon color="action" />
-              <Typography
-                color="textPrimary"
-                variant="body1"
-              >
-                {title}
-              </Typography>
-              <Typography
-                style={{ color }}
-                variant="h2"
-              >
-                {value}
-                %
-              </Typography>
-            </Box>
-          ))}
+          <Doughnut data={data} options={options} />
         </Box>
       </CardContent>
     </Card>
