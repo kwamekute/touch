@@ -62,8 +62,6 @@ const Sales = (props) => {
 
     output2[bucket] = filteredBookingsCount1;
   }
-  console.log('output1', output1);
-  console.log('output2', output2);
   const data = {
     datasets: [
       {
@@ -150,7 +148,7 @@ const Sales = (props) => {
 
   return (
     <Card {...props}>
-      <CardHeader title="Montly Stats" />
+      <CardHeader title="Yearly Stats" />
       <Divider />
       <CardContent>
         <Box
