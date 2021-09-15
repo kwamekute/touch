@@ -3,6 +3,7 @@ import {
   makeStyles,
   Table,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UseTable(records, headCells, filterfn) {
   const classes = useStyles();
-  const pages = [5, 10, 25];
+  const pages = [25, 35, 40];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
   const [order, setOrder] = useState();
@@ -81,7 +82,9 @@ export default function UseTable(records, headCells, filterfn) {
   //Table Sorting logic END
 
   const TblContainer = (props) => (
-    <Table className={classes.Table}>{props.children}</Table>
+    <TableContainer style={{ width: 1355 }}>
+      <Table className={classes.Table}>{props.children}</Table>
+    </TableContainer>
   );
 
   const TblHead = (props) => {

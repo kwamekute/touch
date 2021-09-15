@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
@@ -29,7 +30,18 @@ const BOOKING_BUCKETS = {
 
 const Sales = (props) => {
   const theme = useTheme();
-  const { bookings } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const { bookings, getBookings, logOutUser, user, error } =
+    useContext(GlobalContext);
+
+  useEffect(async () => {
+    await getBookings(user);
+    if (error === 'Access not authorized, There was an error => jwt expired') {
+      logOutUser();
+      navigate('/login', { replace: true });
+    }
+    //eslint-diable-next-line react-hooks/exhustive-deps
+  }, []);
 
   const output1 = {};
   const output2 = {};
@@ -38,7 +50,9 @@ const Sales = (props) => {
     const filteredBookingsCount = bookings.reduce((prev, current) => {
       if (
         moment(current.createdAt).format('MMMM') === BOOKING_BUCKETS[bucket] &&
-        current.status === 'Canceled'
+        current.status === 'Canceled' &&
+        parseInt(moment(current.createdAt).format('YYYY')) ===
+          parseInt(new Date().getFullYear())
       ) {
         return prev + 1;
       } else {
@@ -52,7 +66,9 @@ const Sales = (props) => {
     const filteredBookingsCount1 = bookings.reduce((prev, current) => {
       if (
         moment(current.createdAt).format('MMMM') === BOOKING_BUCKETS[bucket] &&
-        current.status === 'Departed'
+        current.status === 'Departed' &&
+        parseInt(moment(current.createdAt).format('YYYY')) ===
+          parseInt(new Date().getFullYear())
       ) {
         return prev + 1;
       } else {
@@ -67,12 +83,18 @@ const Sales = (props) => {
       {
         backgroundColor: colors.green[600],
         data: Object.values(output2),
-        label: 'Departed'
+        label: 'Departed',
+        barThickness: 12,
+        maxBarThickness: 10,
+        barPercentage: 0.5
       },
       {
         backgroundColor: colors.red[600],
         data: Object.values(output1),
-        label: 'Canceled'
+        label: 'Canceled',
+        barThickness: 12,
+        maxBarThickness: 10,
+        barPercentage: 0.5
       }
     ],
     labels: [
@@ -98,13 +120,10 @@ const Sales = (props) => {
     legend: { display: true },
     maintainAspectRatio: false,
     responsive: true,
+
     scales: {
       xAxes: [
         {
-          barThickness: 12,
-          maxBarThickness: 10,
-          barPercentage: 0.5,
-          categoryPercentage: 0.5,
           ticks: {
             fontColor: theme.palette.text.secondary
           },

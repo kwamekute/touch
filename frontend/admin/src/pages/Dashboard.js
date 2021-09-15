@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
 import TotalArrived from 'src/components/dashboard/TotalArrived';
-import LatestBookings from 'src/components/dashboard//LatestBookings';
 import PendingBooking from 'src/components/dashboard/PendingBooking';
 import TotalDeparted from 'src/components/dashboard/TotalDeparted';
 import TotalCanceled from 'src/components/dashboard/TotalCanceled';
@@ -44,9 +43,6 @@ const Dashboard = () => {
             </Grid>
             <Grid item lg={4} md={6} xl={3} xs={12}>
               <TrafficByDevice sx={{ height: '100%' }} />
-            </Grid>
-            <Grid item lg={12} md={12} xl={12} xs={12}>
-              <LatestBookings bookings={bookings} />
             </Grid>
           </Grid>
         </Container>

@@ -18,6 +18,8 @@ import { GlobalContext } from 'src/context/GlobalState';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 import Loading from '../Loading';
+import moment from 'moment';
+import StatusChip from '../StatusChip';
 
 const headCells = [
   { id: 'name', label: 'Full Name' },
@@ -26,6 +28,8 @@ const headCells = [
   { id: 'roomType', label: 'Room type' },
   { id: 'arrival', label: 'Arrival', disableSorting: true },
   { id: 'depature', label: 'Depature', disableSorting: true },
+  { id: 'bookedAt', label: 'Date Booked' },
+  { id: 'status', label: 'Status', disableSorting: true },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
@@ -137,31 +141,45 @@ const BookingListResults = ({ filterfn }) => {
                       <TableCell>{item.checkIn}</TableCell>
                       <TableCell>{item.checkOut}</TableCell>
                       <TableCell>
-                        <IconButton
-                          color="inherit"
-                          onClick={() => openInPopup(item)}
+                        {moment(item.createdAt).format('DD/MM/YYYY')}
+                      </TableCell>
+                      <TableCell>
+                        <StatusChip status={item.status} />
+                      </TableCell>
+                      <TableCell padding="none">
+                        <div
+                          style={{
+                            flexDirection: 'row',
+                            display: 'flex',
+                            alignContent: 'center'
+                          }}
                         >
-                          <EditIcon size="20" />
-                        </IconButton>
-                        {user.user.permission === 'Super-Admin' ? (
                           <IconButton
-                            color="secondary"
-                            onClick={() => {
-                              setConfirmDialog({
-                                isOpen: true,
-                                title:
-                                  'Are you sure you want to delete this booking?',
-                                subTitle: "You can't undo this operation",
-                                onConfirm: () => {
-                                  onDelete(item._id);
-                                }
-                              });
-                              //
-                            }}
+                            color="inherit"
+                            onClick={() => openInPopup(item)}
                           >
-                            <DeleteIcon size="20" />
+                            <EditIcon size="20" />
                           </IconButton>
-                        ) : null}
+                          {user.user.permission === 'Super-Admin' ? (
+                            <IconButton
+                              color="secondary"
+                              onClick={() => {
+                                setConfirmDialog({
+                                  isOpen: true,
+                                  title:
+                                    'Are you sure you want to delete this booking?',
+                                  subTitle: "You can't undo this operation",
+                                  onConfirm: () => {
+                                    onDelete(item._id);
+                                  }
+                                });
+                                //
+                              }}
+                            >
+                              <DeleteIcon size="20" />
+                            </IconButton>
+                          ) : null}
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))}
