@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { GlobalContext } from 'src/context/GlobalState';
 
-const TrafficByDevice = (props) => {
+const CurrentBookingStats = (props) => {
   const theme = useTheme();
 
   const { bookings } = useContext(GlobalContext);
@@ -51,7 +51,6 @@ const TrafficByDevice = (props) => {
   };
 
   const options = {
-    animation: false,
     cutoutPercentage: 80,
     layout: { padding: 0 },
     legend: {
@@ -90,4 +89,4 @@ const TrafficByDevice = (props) => {
   );
 };
 
-export default TrafficByDevice;
+export default CurrentBookingStats;

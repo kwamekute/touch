@@ -7,8 +7,10 @@ import TotalDeparted from 'src/components/dashboard/TotalDeparted';
 import TotalCanceled from 'src/components/dashboard/TotalCanceled';
 
 import { GlobalContext } from 'src/context/GlobalState';
-import Sales from 'src/components/dashboard/Sales';
-import TrafficByDevice from 'src/components/dashboard/TrafficByDevice';
+import CurrentBookingStats from 'src/components/dashboard/CurrentBookingStats';
+import YearlyStat from 'src/components/dashboard/YearlyStat';
+import OverallBookingStats from 'src/components/dashboard/OverallBookingStats';
+import RoomsBookingStats from 'src/components/dashboard/RoomsBookingStats';
 
 const Dashboard = () => {
   const { bookings } = useContext(GlobalContext);
@@ -38,11 +40,17 @@ const Dashboard = () => {
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <TotalCanceled bookings={bookings} sx={{ height: '100%' }} />
             </Grid>
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              <Sales />
+            <Grid item lg={8} md={6} xl={9} xs={12}>
+              <OverallBookingStats />
             </Grid>
             <Grid item lg={4} md={6} xl={3} xs={12}>
-              <TrafficByDevice sx={{ height: '100%' }} />
+              <CurrentBookingStats sx={{ height: '100%' }} />
+            </Grid>
+            <Grid item lg={8} md={6} xl={9} xs={12}>
+              <YearlyStat />
+            </Grid>
+            <Grid item lg={4} md={6} xl={3} xs={12}>
+              <RoomsBookingStats sx={{ height: '100%' }} />
             </Grid>
           </Grid>
         </Container>

@@ -28,7 +28,6 @@ const NewAdminForm = (props) => {
   const handleSubmit = () => {
     addNewUser(values, user).then(() => {
       setOpenPopup(false);
-      console.log('formData=>', values);
     });
   };
 

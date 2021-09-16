@@ -114,13 +114,11 @@ const Sales = (props) => {
   };
 
   const options = {
-    animation: false,
     cornerRadius: 20,
     layout: { padding: 0 },
     legend: { display: true },
     maintainAspectRatio: false,
     responsive: true,
-
     scales: {
       xAxes: [
         {

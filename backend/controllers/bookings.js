@@ -7,9 +7,21 @@ const sendEmail = require("../utils/sendMail");
 //@route GET /api/bookings
 //@access Protected
 exports.getbookings = async (request, response, next) => {
+  const query = request.query;
+  for (var i in query) {
+    if (
+      query[i] === "" ||
+      query[i] === "undefined" ||
+      query[i] === "Invalid date"
+    ) {
+      delete query[i];
+    }
+  }
+  console.log(query);
   try {
     //getting all bookings and sorting for the most rescent first
-    const bookings = await Booking.find().sort({ _id: -1 });
+
+    const bookings = await Booking.find(query).sort({ _id: -1 });
 
     return response.status(200).json({
       status: "success",

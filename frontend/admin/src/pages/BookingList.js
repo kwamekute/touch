@@ -3,8 +3,10 @@ import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import BookingListResults from 'src/components/booking/BookingListResults';
 import BookingListToolbar from 'src/components/booking/BookingListToolbar';
+import LoadingBackdrop from 'src/components/LoadingBackdrop';
 
 const BookingList = () => {
+  const [open, setOpen] = useState(false);
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -40,12 +42,17 @@ const BookingList = () => {
         }}
       >
         <Container maxWidth={false}>
-          <BookingListToolbar onHandleChange={handleSearch} />
+          <BookingListToolbar
+            open={open}
+            setOpen={setOpen}
+            onHandleChange={handleSearch}
+          />
           <Box sx={{ pt: 3 }}>
             <BookingListResults filterfn={filterfn} />
           </Box>
         </Container>
       </Box>
+      <LoadingBackdrop open={open} />
     </>
   );
 };

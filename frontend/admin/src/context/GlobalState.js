@@ -151,6 +151,31 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function getFilteredBookings(user, formData) {
+    const { checkInDate, checkOutDate, email, name, phone, room } = formData;
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.get(
+        `${URL}api/bookings/?name=${name}&email=${email}&phone=${phone}&roomType=${room}&checkIn=${checkInDate}&checkOut=${checkOutDate}`,
+        config
+      );
+
+      dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_BOOKINGS_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
+
   //Delete Booking action
   async function deleteBooking(id, user) {
     try {
@@ -220,7 +245,8 @@ export const GlobalProvider = ({ children }) => {
         addNewUser,
         finishSetup,
         fogortPassword,
-        resetPassword
+        resetPassword,
+        getFilteredBookings
       }}
     >
       {children}
