@@ -110,6 +110,54 @@ exports.getadmins = async (request, response, next) => {
   }
 };
 
+exports.deleteadmin = async (request, response, next) => {
+  const id = request.params.id;
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return next(new ErrorResponse("User doesn't exist", 400));
+    }
+
+    await User.deleteOne({ _id: id });
+
+    return response.status(200).json({
+      status: "success",
+      message: "User deleted successfully",
+      deletedUser: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.updateadmins = async (request, response, next) => {
+  const id = request.params.id;
+  const { permission } = await request.body;
+
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return next(new ErrorResponse("User doesn't exist", 400));
+    }
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { permission },
+      {
+        new: true,
+      }
+    );
+
+    return response.status(200).json({
+      status: "success",
+      message: "User Updated Successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 //@desc login user
 //@route POST /api/auth
 //@access public

@@ -7,12 +7,18 @@ const {
   resetpassword,
   newaccount,
   getadmins,
+  updateadmins,
+  deleteadmin,
 } = require("../controllers/auth");
 const { protect } = require("../middleware/auth");
 
 router.route("/register").post(protect, register);
 
 router.route("/admins").get(protect, getadmins);
+
+router.route("/admins/:id").put(protect, updateadmins);
+
+router.route("/admins/:id").delete(protect, deleteadmin);
 
 router.route("/login").post(login);
 

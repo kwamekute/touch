@@ -12,12 +12,24 @@ export default (state, action) => {
         loading: false,
         admins: action.payload
       };
+    case 'UPDATE_ADMINS':
+      return {
+        ...state,
+        admins: state.admins.map((admin) =>
+          admin._id === action.payload_id ? action.payload : admin
+        )
+      };
     case 'DELETE_BOOKING':
       return {
         ...state,
         bookings: state.bookings.filter(
           (booking) => booking._id !== action.payload._id
         )
+      };
+    case 'DELETE_ADMINS':
+      return {
+        ...state,
+        admins: state.admins.filter((admin) => admin._id !== action.payload._id)
       };
     case 'ADD_BOOKING':
       return {
@@ -32,6 +44,11 @@ export default (state, action) => {
         )
       };
     case 'GET_BOOKINGS_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'GET_ADMINS_ERROR':
       return {
         ...state,
         error: action.payload
@@ -83,6 +100,11 @@ export default (state, action) => {
         message: action.payload
       };
     case 'FORGOT_PASSWORD_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'UPDATE_ADMINS_ERROR':
       return {
         ...state,
         error: action.payload

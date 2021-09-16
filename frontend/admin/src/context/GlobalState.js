@@ -72,6 +72,31 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  //update Admin details
+  async function updateAdmin(user, formData) {
+    const { _id: id, permission } = formData;
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.put(
+        `${URL}api/auth/admins/${id}`,
+        { permission },
+        config
+      );
+      dispatch({ type: 'UPDATE_ADMINS', payload: res.data.users });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'UPDATE_ADMINS_ERROR',
+        payload: error?.response?.data.error
+      });
+    }
+  }
+
   //finish admin account setup
   async function finishSetup(formData, params) {
     const { password, passwordConfirmation } = formData;
@@ -217,6 +242,26 @@ export const GlobalProvider = ({ children }) => {
       });
     }
   }
+  //Delete Booking action
+  async function deleteAdmin(id, user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.delete(`${URL}api/auth/admins/${id}`, config);
+
+      dispatch({ type: 'DELETE_ADMINS', payload: res.data.deletedUser });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_ADMINS_ERROR',
+        payload: error.response?.data.error
+      });
+    }
+  }
 
   //Update Booking action
   async function updateBooking(formData, user) {
@@ -269,7 +314,9 @@ export const GlobalProvider = ({ children }) => {
         fogortPassword,
         resetPassword,
         getFilteredBookings,
-        getAdmins
+        getAdmins,
+        updateAdmin,
+        deleteAdmin
       }}
     >
       {children}

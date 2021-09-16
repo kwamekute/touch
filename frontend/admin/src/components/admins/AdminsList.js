@@ -13,12 +13,12 @@ import {
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
-import BookingDetails from 'src/components/booking/BookingDetails';
 import { GlobalContext } from 'src/context/GlobalState';
 import Notification from '../Notification';
 import ConfirmDialog from '../ConfirmDialog';
 import Loading from '../Loading';
 import moment from 'moment';
+import AdminDetails from './AdminDetails';
 
 const headCells = [
   { id: 'name', label: 'Full Name' },
@@ -36,8 +36,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminsList = ({ filterfn }) => {
-  const { getAdmins, user, error, loading, logOutUser, admins } =
-    useContext(GlobalContext);
+  const {
+    getAdmins,
+    user,
+    error,
+    loading,
+    logOutUser,
+    admins,
+    updateAdmin,
+    deleteAdmin
+  } = useContext(GlobalContext);
 
   const classes = useStyles();
   const navigate = useNavigate();
@@ -70,11 +78,11 @@ const AdminsList = ({ filterfn }) => {
       logOutUser();
       navigate('/login', { replace: true });
     }
-    updateBooking(values, user).then(() => {
+    updateAdmin(user, values).then(() => {
       setOpenPopup(false);
       setNotify({
         isOpen: true,
-        message: 'Status changed successfully',
+        message: 'Permission changed successfully',
         type: 'success'
       });
     });
@@ -82,10 +90,10 @@ const AdminsList = ({ filterfn }) => {
 
   const onDelete = (id) => {
     setConfirmDialog({ ...confirmDialog, isOpen: false });
-    deleteBooking(id, user).then(() => {
+    deleteAdmin(id, user).then(() => {
       setNotify({
         isOpen: true,
-        message: 'Booking deleted successfully',
+        message: 'Admin deleted successfully',
         type: 'error'
       });
     });
@@ -150,7 +158,7 @@ const AdminsList = ({ filterfn }) => {
                                 setConfirmDialog({
                                   isOpen: true,
                                   title:
-                                    'Are you sure you want to delete this booking?',
+                                    'Are you sure you want to delete this admin?',
                                   subTitle: "You can't undo this operation",
                                   onConfirm: () => {
                                     onDelete(item._id);
@@ -176,10 +184,10 @@ const AdminsList = ({ filterfn }) => {
       <Popup
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
-        title="Booking Details"
-        subTitle="Only the Status of a booking can be edited"
+        title="Admin Details"
+        subTitle="Edit admin information"
       >
-        <BookingDetails
+        <AdminDetails
           recordsforedit={recordsForEdit}
           handleSubmit={handleSubmit}
         />
