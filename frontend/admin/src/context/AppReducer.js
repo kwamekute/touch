@@ -16,7 +16,7 @@ export default (state, action) => {
       return {
         ...state,
         admins: state.admins.map((admin) =>
-          admin._id === action.payload_id ? action.payload : admin
+          admin._id === action.payload._id ? action.payload : admin
         )
       };
     case 'DELETE_BOOKING':
@@ -40,7 +40,7 @@ export default (state, action) => {
       return {
         ...state,
         bookings: state.bookings.map((booking) =>
-          booking._id === action.payload_id ? action.payload : booking
+          booking._id === action.payload._id ? action.payload : booking
         )
       };
     case 'GET_BOOKINGS_ERROR':

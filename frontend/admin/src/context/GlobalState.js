@@ -87,7 +87,7 @@ export const GlobalProvider = ({ children }) => {
         { permission },
         config
       );
-      dispatch({ type: 'UPDATE_ADMINS', payload: res.data.users });
+      dispatch({ type: 'UPDATE_ADMINS', payload: res.data.updatedUser });
     } catch (error) {
       console.log(error);
       dispatch({

@@ -15,7 +15,6 @@ import {
 //date util library
 import DateFnsUtils from '@date-io/date-fns';
 import { GlobalContext } from 'src/context/GlobalState';
-import isThisQuarter from 'date-fns/isThisQuarter';
 
 const initialValues = {
   email: '',

@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import AdminsList from 'src/components/admins/AdminsList';
-import { useState } from 'react';
+import AccountToolbar from 'src/components/admins/AccountToolbar';
 
 const ManageAdmins = () => {
+  const user = JSON.parse(localStorage.getItem('authenticatedUser')).user;
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -31,6 +33,7 @@ const ManageAdmins = () => {
       <Helmet>
         <title>Luxury Touch Hotel | Manage Admins</title>
       </Helmet>
+
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -39,6 +42,11 @@ const ManageAdmins = () => {
         }}
       >
         <Container maxWidth="lg">
+          {user.permission === 'Super-Admin' ? (
+            <Box sx={{ pb: 3 }}>
+              <AccountToolbar />
+            </Box>
+          ) : null}
           <Box sx={{ pt: 3 }}>
             <AdminsList filterfn={filterfn} />
           </Box>
