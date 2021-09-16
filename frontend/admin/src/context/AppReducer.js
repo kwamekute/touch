@@ -6,6 +6,12 @@ export default (state, action) => {
         loading: false,
         bookings: action.payload
       };
+    case 'GET_ADMINS':
+      return {
+        ...state,
+        loading: false,
+        admins: action.payload
+      };
     case 'DELETE_BOOKING':
       return {
         ...state,
@@ -77,6 +83,11 @@ export default (state, action) => {
         message: action.payload
       };
     case 'FORGOT_PASSWORD_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'GET_ADMINS_ERROR':
       return {
         ...state,
         error: action.payload

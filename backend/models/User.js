@@ -25,6 +25,12 @@ const UserSchema = new mongoose.Schema({
     select: false,
   },
 
+  phone: {
+    type: String,
+    required: [true, "Please provide phone number"],
+    minlength: 10,
+  },
+
   avartar: {
     type: String,
     default: null,

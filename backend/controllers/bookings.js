@@ -8,6 +8,8 @@ const sendEmail = require("../utils/sendMail");
 //@access Protected
 exports.getbookings = async (request, response, next) => {
   const query = request.query;
+
+  //filter out all empty fields from query object
   for (var i in query) {
     if (
       query[i] === "" ||
@@ -17,7 +19,7 @@ exports.getbookings = async (request, response, next) => {
       delete query[i];
     }
   }
-  console.log(query);
+
   try {
     //getting all bookings and sorting for the most rescent first
 

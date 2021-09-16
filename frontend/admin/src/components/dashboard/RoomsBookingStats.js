@@ -69,7 +69,7 @@ function RoomsBookingStats() {
   };
   return (
     <Card>
-      <CardHeader title="Rooms Bookings Stats" />
+      <CardHeader title="Room Bookings Stats" />
       <Divider />
       <CardContent>
         <Box

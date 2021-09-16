@@ -82,7 +82,7 @@ export default function UseTable(records, headCells, filterfn) {
   //Table Sorting logic END
 
   const TblContainer = (props) => (
-    <TableContainer style={{ width: 1355 }}>
+    <TableContainer style={{ minwidth: 1355, width: '100%' }}>
       <Table className={classes.Table}>{props.children}</Table>
     </TableContainer>
   );
@@ -126,7 +126,7 @@ export default function UseTable(records, headCells, filterfn) {
     <TablePagination
       rowsPerPageOptions={pages}
       component="div"
-      count={records.length}
+      count={records?.length}
       rowsPerPage={rowsPerPage}
       page={page}
       onPageChange={handlePageChange}

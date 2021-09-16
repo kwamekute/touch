@@ -23,7 +23,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/bookings", require("./routes/bookings"));
 
-//serve static files
+//serve static files from publick folder
 app.use(express.static(__dirname + "/public"));
 
 //Error Handler (should be last middleware)

@@ -7,6 +7,7 @@ const user = JSON.parse(localStorage.getItem('authenticatedUser'));
 
 const initialState = {
   bookings: [],
+  admins: [],
   auth: user ? true : false,
   loading: true,
   error: null,
@@ -47,6 +48,26 @@ export const GlobalProvider = ({ children }) => {
       dispatch({
         type: 'ADD_USER_ERROR',
         payload: error.response?.data.error
+      });
+    }
+  }
+
+  //get all users (Admins) action
+  async function getAdmins(user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.get(`${URL}api/auth/admins`, config);
+      dispatch({ type: 'GET_ADMINS', payload: res.data.users });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_ADMINS_ERROR',
+        payload: error?.response?.data.error
       });
     }
   }
@@ -235,6 +256,7 @@ export const GlobalProvider = ({ children }) => {
         error: state.error,
         loading: state.loading,
         user: state.user,
+        admins: state.admins,
         message: state.message,
         deleteBooking,
         addBooking,
@@ -246,7 +268,8 @@ export const GlobalProvider = ({ children }) => {
         finishSetup,
         fogortPassword,
         resetPassword,
-        getFilteredBookings
+        getFilteredBookings,
+        getAdmins
       }}
     >
       {children}

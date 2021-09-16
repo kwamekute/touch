@@ -11,6 +11,7 @@ import Settings from 'src/pages/Settings';
 import { ProtectedRoute } from 'src/routes/ProtectedRoute';
 import AccountSetup from './pages/AccountSetup';
 import ForgotPassword from './pages/ForgotPassword';
+import ManageAdmins from './pages/ManageAdmins';
 import ResetPassword from './pages/ResetPassword';
 
 const routes = [
@@ -27,6 +28,7 @@ const routes = [
       { path: 'dashboard', element: <Dashboard /> },
       { path: 'products', element: <ProductList /> },
       { path: 'settings', element: <Settings /> },
+      { path: 'admins', element: <ManageAdmins /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

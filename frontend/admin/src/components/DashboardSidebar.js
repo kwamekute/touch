@@ -15,6 +15,7 @@ import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   User as UserIcon,
+  Users as UsersIcon,
   Book as BookIcon,
   LogOut as LogoutIcon
 } from 'react-feather';
@@ -39,12 +40,12 @@ const items = [
     href: '/app/account',
     icon: UserIcon,
     title: 'Account'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
   }
+  // {
+  //   href: '/app/settings',
+  //   icon: SettingsIcon,
+  //   title: 'Settings'
+  // }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {
@@ -123,6 +124,27 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
             />
           ))}
         </List>
+        {user?.user?.permission === 'Super-Admin' && (
+          <Button
+            component={RouterLink}
+            to="/app/admins"
+            sx={{
+              color: 'text.secondary',
+              fontWeight: 'medium',
+              justifyContent: 'flex-start',
+              letterSpacing: 0,
+              py: 1.25,
+              textTransform: 'none',
+              width: '100%',
+              '& svg': {
+                mr: 1
+              }
+            }}
+          >
+            <UsersIcon size="20" />
+            <span>Manage Admins</span>
+          </Button>
+        )}
         <Button
           onClick={handleSignout}
           sx={{
