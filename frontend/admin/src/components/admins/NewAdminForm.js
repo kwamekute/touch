@@ -19,7 +19,7 @@ const NewAdminForm = (props) => {
   const { openPopup, setOpenPopup, setNotify } = props;
   const [values, setValues] = useState(initialValues);
 
-  const { addNewUser, user } = useContext(GlobalContext);
+  const { addNewUser, user, getAdmins } = useContext(GlobalContext);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -34,6 +34,8 @@ const NewAdminForm = (props) => {
         type: 'success'
       });
     });
+
+    getAdmins(user);
   };
 
   return (

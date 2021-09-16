@@ -8,8 +8,10 @@ import {
   TableRow,
   TableCell,
   makeStyles,
-  IconButton
+  IconButton,
+  Chip
 } from '@material-ui/core';
+import { green, orange } from '@material-ui/core/colors';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
 import Popup from 'src/components/Popup';
@@ -26,6 +28,7 @@ const headCells = [
   { id: 'phone', label: 'Phone', disableSorting: true },
   { id: 'permission', label: 'Permission', disableSorting: true },
   { id: 'dateCraeted', label: 'Added on', disableSorting: true },
+  { id: 'status', label: 'Status', disableSorting: true },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
@@ -137,6 +140,30 @@ const AdminsList = ({ filterfn }) => {
                       <TableCell>
                         {moment(item.createdAt).format('DD/MM/YYYY')}
                       </TableCell>
+                      {item.inviteToken ? (
+                        <TableCell>
+                          <Chip
+                            size="small"
+                            label="pending"
+                            style={{
+                              backgroundColor: orange[600],
+                              color: 'white'
+                            }}
+                          />
+                        </TableCell>
+                      ) : (
+                        <TableCell>
+                          {' '}
+                          <Chip
+                            size="small"
+                            label="activated"
+                            style={{
+                              backgroundColor: green[600],
+                              color: 'white'
+                            }}
+                          />
+                        </TableCell>
+                      )}
                       <TableCell padding="none">
                         <div
                           style={{
