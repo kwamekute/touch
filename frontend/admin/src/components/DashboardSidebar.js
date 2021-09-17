@@ -52,7 +52,7 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user, logOutUser, gePendingBookings, pendingBookings } =
+  const { user, logOutUser, gePendingBookings, pendingBookings, bookings } =
     useContext(GlobalContext);
 
   const handleSignout = () => {
@@ -60,13 +60,13 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
     navigate('/login', { replace: true });
   };
 
-  // get number of pending bookings
+  //get number of pending bookings
   useEffect(() => {
     gePendingBookings(user).then(() => {
       //assign number of pending bookings to bookings navbar Item
       items[1].count = pendingBookings;
     });
-  });
+  }, [bookings]);
 
   useEffect(() => {
     if (openMobile && onMobileClose) {

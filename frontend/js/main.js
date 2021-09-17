@@ -757,7 +757,7 @@
       //change text
       $("#Book-Submit-Button").html("SUBMITTING...");
       //Get input field values from HTML form
-      var name = $("input[name=name]").val().toLowerCase();
+      var name = $("input[name=name]").val().toUpperCase();
       var phone = $("input[name=phone]").val();
       var email = $("input[name=email]").val().toLowerCase();
       var roomType = $("[name=roomType]").val();
