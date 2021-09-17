@@ -31,7 +31,7 @@ function StatusChip({ status }) {
           <DoneIcon style={{ color: 'white' }} />
         ) : null
       }
-      style={{ backgroundColor: colorForStatus(status)[300], color: 'white' }}
+      style={{ backgroundColor: colorForStatus(status)[600], color: 'white' }}
     />
   );
 }

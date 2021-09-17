@@ -9,7 +9,10 @@ import {
   TableCell,
   makeStyles,
   IconButton,
-  Chip
+  Chip,
+  Avatar,
+  Grid,
+  Typography
 } from '@material-ui/core';
 import { green, orange } from '@material-ui/core/colors';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
@@ -133,12 +136,29 @@ const AdminsList = ({ filterfn }) => {
                 <TableBody>
                   {recordsAfterSorting().map((item) => (
                     <TableRow hover key={item._id}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.email}</TableCell>
-                      <TableCell>{item.phone}</TableCell>
-                      <TableCell>{item.permission}</TableCell>
                       <TableCell>
-                        {moment(item.createdAt).format('DD/MM/YYYY')}
+                        <Grid container>
+                          <Grid item lg={4}>
+                            <Avatar variant="string" src="." alt={item.name} />
+                          </Grid>
+                          <Grid item lg={8}>
+                            <Typography> {item.name}</Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell>
+                        <Typography> {item.email}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{item.phone}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{item.permission}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>
+                          {moment(item.createdAt).format('DD/MM/YYYY')}
+                        </Typography>
                       </TableCell>
                       {item.inviteToken ? (
                         <TableCell>
@@ -153,7 +173,6 @@ const AdminsList = ({ filterfn }) => {
                         </TableCell>
                       ) : (
                         <TableCell>
-                          {' '}
                           <Chip
                             size="small"
                             label="activated"

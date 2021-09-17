@@ -7,16 +7,16 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  TableSortLabel
+  TableSortLabel,
+  Paper
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   Table: {
-    marginTop: theme.spacing(3),
     '& thead th': {
       fontWeight: '600',
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.paper
     },
     '& tbody td': {
       fontWeight: '300'
@@ -82,7 +82,7 @@ export default function UseTable(records, headCells, filterfn) {
   //Table Sorting logic END
 
   const TblContainer = (props) => (
-    <TableContainer style={{ minwidth: 1355, width: '100%' }}>
+    <TableContainer component={Paper}>
       <Table className={classes.Table}>{props.children}</Table>
     </TableContainer>
   );

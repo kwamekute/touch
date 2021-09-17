@@ -8,7 +8,9 @@ import {
   TableRow,
   TableCell,
   makeStyles,
-  IconButton
+  IconButton,
+  Grid,
+  Typography
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
@@ -22,9 +24,7 @@ import moment from 'moment';
 import StatusChip from '../StatusChip';
 
 const headCells = [
-  { id: 'name', label: 'Full Name' },
-  { id: 'email', label: 'Email' },
-  { id: 'phone', label: 'Phone', disableSorting: true },
+  { id: 'personalInfo', label: 'Personal Details' },
   { id: 'roomType', label: 'Room type' },
   { id: 'arrival', label: 'Arrival', disableSorting: true },
   { id: 'depature', label: 'Depature', disableSorting: true },
@@ -32,12 +32,6 @@ const headCells = [
   { id: 'status', label: 'Status', disableSorting: true },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
-
-const useStyles = makeStyles((theme) => ({
-  card: {
-    padding: theme.spacing(3)
-  }
-}));
 
 const BookingListResults = ({ filterfn }) => {
   const {
@@ -51,7 +45,6 @@ const BookingListResults = ({ filterfn }) => {
     loading
   } = useContext(GlobalContext);
 
-  const classes = useStyles();
   const navigate = useNavigate();
 
   const [notify, setNotify] = useState({
@@ -117,7 +110,7 @@ const BookingListResults = ({ filterfn }) => {
 
   return (
     <>
-      <Card className={classes.card}>
+      <Card>
         <PerfectScrollbar>
           <Box sx={{ minWidth: 1050 }}>
             <TblContainer>
@@ -134,52 +127,62 @@ const BookingListResults = ({ filterfn }) => {
                 <TableBody>
                   {recordsAfterSorting().map((item) => (
                     <TableRow hover key={item._id}>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell>{item.email}</TableCell>
-                      <TableCell>{item.phone}</TableCell>
-                      <TableCell>{item.roomType}</TableCell>
-                      <TableCell>{item.checkIn}</TableCell>
-                      <TableCell>{item.checkOut}</TableCell>
                       <TableCell>
-                        {moment(item.createdAt).format('DD/MM/YYYY')}
+                        <Grid container>
+                          <Grid item>
+                            <Typography>Name: {item.name}</Typography>
+                            <Typography color="textSecondary" variant="body2">
+                              Email: {item.email}
+                            </Typography>
+                            <Typography color="textSecondary" variant="caption">
+                              Phone: {item.phone}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{item.roomType}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{item.checkIn}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>{item.checkOut}</Typography>
+                      </TableCell>
+                      <TableCell>
+                        <Typography>
+                          {moment(item.createdAt).format('DD/MM/YYYY')}
+                        </Typography>
                       </TableCell>
                       <TableCell>
                         <StatusChip status={item.status} />
                       </TableCell>
                       <TableCell padding="none">
-                        <div
-                          style={{
-                            flexDirection: 'row',
-                            display: 'flex',
-                            alignContent: 'center'
-                          }}
+                        <IconButton
+                          color="inherit"
+                          onClick={() => openInPopup(item)}
                         >
+                          <EditIcon size="20" />
+                        </IconButton>
+                        {user.user.permission === 'Super-Admin' ? (
                           <IconButton
-                            color="inherit"
-                            onClick={() => openInPopup(item)}
+                            color="secondary"
+                            onClick={() => {
+                              setConfirmDialog({
+                                isOpen: true,
+                                title:
+                                  'Are you sure you want to delete this booking?',
+                                subTitle: "You can't undo this operation",
+                                onConfirm: () => {
+                                  onDelete(item._id);
+                                }
+                              });
+                              //
+                            }}
                           >
-                            <EditIcon size="20" />
+                            <DeleteIcon size="20" />
                           </IconButton>
-                          {user.user.permission === 'Super-Admin' ? (
-                            <IconButton
-                              color="secondary"
-                              onClick={() => {
-                                setConfirmDialog({
-                                  isOpen: true,
-                                  title:
-                                    'Are you sure you want to delete this booking?',
-                                  subTitle: "You can't undo this operation",
-                                  onConfirm: () => {
-                                    onDelete(item._id);
-                                  }
-                                });
-                                //
-                              }}
-                            >
-                              <DeleteIcon size="20" />
-                            </IconButton>
-                          ) : null}
-                        </div>
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   ))}

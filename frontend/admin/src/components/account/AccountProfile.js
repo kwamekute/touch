@@ -23,7 +23,8 @@ const AccountProfile = (props) => {
           }}
         >
           <Avatar
-            src={user.avatar}
+            src="."
+            alt={user.name}
             sx={{
               height: 100,
               width: 100

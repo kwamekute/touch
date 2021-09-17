@@ -1,5 +1,4 @@
-import { makeStyles, Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { makeStyles, Snackbar, Alert } from '@material-ui/core';
 
 export default function Notification(props) {
   const { notify, setNotify } = props;
@@ -17,7 +16,7 @@ export default function Notification(props) {
       autoHideDuration={5000}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
     >
-      <Alert onClose={handleClose} severity={notify.type}>
+      <Alert variant="filled" onClose={handleClose} severity={notify.type}>
         {notify.message}
       </Alert>
     </Snackbar>
