@@ -3,11 +3,13 @@ const mongoose = require("mongoose");
 const BookingSchema = new mongoose.Schema({
   name: {
     type: String,
+    trim: true,
     required: [true, "please provide a name"],
   },
 
   email: {
     type: String,
+    trim: true,
     required: [true, "please provide a email address"],
     match: [
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -17,6 +19,7 @@ const BookingSchema = new mongoose.Schema({
 
   phone: {
     type: String,
+    trim: true,
     required: [true, "Please provide phone number"],
     minlength: 10,
   },

@@ -65,7 +65,7 @@ exports.newaccount = async (request, response, next) => {
     if (!user) {
       return next(
         new ErrorResponse(
-          "This invitation link isn't valid. Perhaps you already used it?",
+          "The invitation link isn't valid. Perhaps you already used it?",
           400
         )
       );
