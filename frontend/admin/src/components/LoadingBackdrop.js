@@ -1,7 +1,6 @@
 import { Backdrop, CircularProgress } from '@material-ui/core';
 
 function LoadingBackdrop({ open }) {
-  console.log('I rendered=>', open);
   return (
     <div>
       <Backdrop
