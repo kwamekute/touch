@@ -52,24 +52,21 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user, logOutUser, bookings } = useContext(GlobalContext);
-
-  // check for number of pending bookings
-  const pendingBookings = (bookings) => {
-    const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Awaiting'
-    );
-    const count = PendingBookings.length;
-    return count;
-  };
-
-  //assign number of pending bookings to bookings navbar Item
-  items[1].count = pendingBookings(bookings);
+  const { user, logOutUser, gePendingBookings, pendingBookings } =
+    useContext(GlobalContext);
 
   const handleSignout = () => {
     logOutUser();
     navigate('/login', { replace: true });
   };
+
+  // get number of pending bookings
+  useEffect(() => {
+    gePendingBookings(user).then(() => {
+      //assign number of pending bookings to bookings navbar Item
+      items[1].count = pendingBookings;
+    });
+  });
 
   useEffect(() => {
     if (openMobile && onMobileClose) {

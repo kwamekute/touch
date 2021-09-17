@@ -12,7 +12,8 @@ const initialState = {
   loading: true,
   error: null,
   user: user,
-  message: null
+  message: null,
+  pendingBookings: null
 };
 
 export const GlobalContext = createContext(initialState);
@@ -67,6 +68,29 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'GET_ADMINS_ERROR',
+        payload: error?.response?.data.error
+      });
+    }
+  }
+
+  //get all users (Admins) action
+  async function gePendingBookings(user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.get(`${URL}api/bookings?status=Awaiting`, config);
+      dispatch({
+        type: 'GET_PENDING_BOOKINGS',
+        payload: res.data.count
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: 'GET_PENDING_BOOKINGS_ERROR',
         payload: error?.response?.data.error
       });
     }
@@ -208,7 +232,7 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       const res = await axios.get(
-        `${URL}api/bookings/?name=${name}&email=${email}&phone=${phone}&roomType=${room}&checkIn=${checkInDate}&checkOut=${checkOutDate}`,
+        `${URL}api/bookings?name=${name}&email=${email}&phone=${phone}&roomType=${room}&checkIn=${checkInDate}&checkOut=${checkOutDate}`,
         config
       );
 
@@ -303,6 +327,7 @@ export const GlobalProvider = ({ children }) => {
         user: state.user,
         admins: state.admins,
         message: state.message,
+        pendingBookings: state.pendingBookings,
         deleteBooking,
         addBooking,
         updateBooking,
@@ -316,7 +341,8 @@ export const GlobalProvider = ({ children }) => {
         getFilteredBookings,
         getAdmins,
         updateAdmin,
-        deleteAdmin
+        deleteAdmin,
+        gePendingBookings
       }}
     >
       {children}

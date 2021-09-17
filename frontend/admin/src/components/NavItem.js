@@ -35,7 +35,7 @@ const NavItem = ({ href, icon: Icon, title, badge, count, ...rest }) => {
               style={{ paddingLeft: 13 }}
               badgeContent={count}
               color="primary"
-              max={10}
+              max={99}
             />
           ) : null
         }

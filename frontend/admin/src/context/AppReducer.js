@@ -6,6 +6,11 @@ export default (state, action) => {
         loading: false,
         bookings: action.payload
       };
+    case 'GET_PENDING_BOOKINGS':
+      return {
+        ...state,
+        pendingBookings: action.payload
+      };
     case 'GET_ADMINS':
       return {
         ...state,
