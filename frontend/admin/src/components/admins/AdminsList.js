@@ -139,7 +139,7 @@ const AdminsList = ({ filterfn }) => {
                       <TableCell>
                         <Grid container>
                           <Grid item lg={4}>
-                            <Avatar variant="string" src="." alt={item.name} />
+                            <Avatar variant="string" alt={item.name} />
                           </Grid>
                           <Grid item lg={8}>
                             <Typography> {item.name}</Typography>

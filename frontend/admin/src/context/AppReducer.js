@@ -11,6 +11,16 @@ export default (state, action) => {
         ...state,
         pendingBookings: action.payload
       };
+    case 'GET_STATS':
+      return {
+        ...state,
+        stats: action.payload
+      };
+    case 'GET_STATS_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
     case 'GET_ADMINS':
       return {
         ...state,

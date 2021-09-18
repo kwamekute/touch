@@ -23,7 +23,6 @@ const AccountProfile = (props) => {
           }}
         >
           <Avatar
-            src="."
             alt={user.name}
             sx={{
               height: 100,

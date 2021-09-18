@@ -3,15 +3,8 @@ import { orange } from '@material-ui/core/colors';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 const PendingBooking = (props) => {
-  const { bookings } = props;
+  const { stats } = props;
 
-  const pendingBookings = (bookings) => {
-    const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Awaiting'
-    );
-    const count = PendingBookings.length;
-    return count;
-  };
   return (
     <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
@@ -21,7 +14,7 @@ const PendingBooking = (props) => {
               TOTAL PENDING
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {pendingBookings(bookings)}
+              {stats.total_pending}
             </Typography>
           </Grid>
           <Grid item>

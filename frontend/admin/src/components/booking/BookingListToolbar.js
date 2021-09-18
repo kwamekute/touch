@@ -110,7 +110,7 @@ const CustomerListToolbar = ({ open, setOpen }) => {
                     onChange={handleChange}
                     label="Phone Number"
                     name="phone"
-                    type="text"
+                    type="number"
                     value={values.phone}
                     variant="outlined"
                   />

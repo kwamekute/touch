@@ -13,7 +13,8 @@ import OverallBookingStats from 'src/components/dashboard/OverallBookingStats';
 import RoomsBookingStats from 'src/components/dashboard/RoomsBookingStats';
 
 const Dashboard = () => {
-  const { bookings } = useContext(GlobalContext);
+  const { stats } = useContext(GlobalContext);
+
   return (
     <>
       <Helmet>
@@ -29,16 +30,16 @@ const Dashboard = () => {
         <Container maxWidth={false}>
           <Grid container spacing={2}>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalArrived bookings={bookings} />
+              <TotalArrived stats={stats} />
             </Grid>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalDeparted bookings={bookings} />
+              <TotalDeparted stats={stats} />
             </Grid>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <PendingBooking bookings={bookings} />
+              <PendingBooking stats={stats} />
             </Grid>
             <Grid item lg={3} sm={6} xl={3} xs={12}>
-              <TotalCanceled bookings={bookings} sx={{ height: '100%' }} />
+              <TotalCanceled stats={stats} sx={{ height: '100%' }} />
             </Grid>
             <Grid item lg={8} md={6} xl={9} xs={12}>
               <OverallBookingStats />

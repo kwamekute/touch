@@ -3,14 +3,7 @@ import BookOutlinedIcon from '@material-ui/icons/BookOutlined';
 import { blue } from '@material-ui/core/colors';
 
 const TotalArrived = (props) => {
-  const { bookings } = props;
-  const arrivedBookings = (bookings) => {
-    const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Arrived'
-    );
-    const count = PendingBookings.length;
-    return count;
-  };
+  const { stats } = props;
   return (
     <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
@@ -20,7 +13,7 @@ const TotalArrived = (props) => {
               TOTAL ARRIVED
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {arrivedBookings(bookings)}
+              {stats.total_arrived}
             </Typography>
           </Grid>
           <Grid item>

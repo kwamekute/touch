@@ -1,16 +1,27 @@
-import { Avatar, Card, CardContent, Grid, Typography } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography
+} from '@material-ui/core';
+import { red, green } from '@material-ui/core/colors';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+
+function colorForStatus(stats) {
+  const status = parseInt(stats.canceled_percentage_difference);
+  if (status >= 50) {
+    return green;
+  }
+  return red;
+}
 
 const TotalCanceled = (props) => {
-  const { bookings } = props;
-  const canceledBookings = (bookings) => {
-    const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Canceled'
-    );
-    const count = PendingBookings.length;
-    return count;
-  };
+  const { stats } = props;
+
   return (
     <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
@@ -20,7 +31,7 @@ const TotalCanceled = (props) => {
               TOTAL CANCELED
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {canceledBookings(bookings)}
+              {stats.total_canceled}
             </Typography>
           </Grid>
           <Grid item>
@@ -35,27 +46,37 @@ const TotalCanceled = (props) => {
             </Avatar>
           </Grid>
         </Grid>
-        {/* <Box
+        <Box
           sx={{
             pt: 2,
             display: 'flex',
             alignItems: 'center'
           }}
         >
-          <ArrowDownwardIcon sx={{ color: red[900] }} />
+          {parseInt(stats.canceled_percentage_difference) >= 50 ? (
+            <ArrowUpwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          ) : (
+            <ArrowDownwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          )}
+
           <Typography
             sx={{
-              color: red[900],
+              color: colorForStatus(stats)[900],
               mr: 1
             }}
             variant="body2"
           >
-            12%
+            {stats.canceled_percentage_difference} %
           </Typography>
-          <Typography color="textSecondary" variant="caption">
-            Since last month
+          <Typography
+            sx={{
+              color: colorForStatus(stats)[900]
+            }}
+            variant="caption"
+          >
+            {/* Since last month */}
           </Typography>
-        </Box> */}
+        </Box>
       </CardContent>
     </Card>
   );

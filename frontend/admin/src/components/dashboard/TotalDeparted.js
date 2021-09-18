@@ -6,19 +6,22 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { green, red } from '@material-ui/core/colors';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 
+function colorForStatus(stats) {
+  const status = parseInt(stats.departed_percentage_difference);
+  if (status >= 50) {
+    return green;
+  }
+  return red;
+}
+
 const TotalDeparted = (props) => {
-  const { bookings } = props;
-  const numberDeparted = (bookings) => {
-    const PendingBookings = bookings.filter(
-      (booking) => booking.status === 'Departed'
-    );
-    const count = PendingBookings.length;
-    return count;
-  };
+  const { stats } = props;
+
   return (
     <Card sx={{ height: '100%' }} {...props}>
       <CardContent>
@@ -28,7 +31,7 @@ const TotalDeparted = (props) => {
               TOTAL DEPARTED
             </Typography>
             <Typography color="textPrimary" variant="h3">
-              {numberDeparted(bookings)}
+              {stats.total_departed}
             </Typography>
           </Grid>
           <Grid item>
@@ -43,27 +46,37 @@ const TotalDeparted = (props) => {
             </Avatar>
           </Grid>
         </Grid>
-        {/* <Box
+        <Box
           sx={{
             alignItems: 'center',
             display: 'flex',
             pt: 2
           }}
         >
-          <ArrowUpwardIcon sx={{ color: green[900] }} />
+          {parseInt(stats.departed_percentage_difference) >= 50 ? (
+            <ArrowUpwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          ) : (
+            <ArrowDownwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          )}
+
           <Typography
-            variant="body2"
             sx={{
-              color: green[900],
+              color: colorForStatus(stats)[900],
               mr: 1
             }}
+            variant="body2"
           >
-            16%
+            {stats.departed_percentage_difference} %
           </Typography>
-          <Typography color="textSecondary" variant="caption">
-            Since last month
+          <Typography
+            sx={{
+              color: colorForStatus(stats)[900]
+            }}
+            variant="caption"
+          >
+            {/* Since last month */}
           </Typography>
-        </Box> */}
+        </Box>
       </CardContent>
     </Card>
   );

@@ -8,12 +8,12 @@ const user = JSON.parse(localStorage.getItem('authenticatedUser'));
 const initialState = {
   bookings: [],
   admins: [],
+  stats: [],
   auth: user ? true : false,
   loading: true,
   error: null,
   user: user,
-  message: null,
-  pendingBookings: null
+  message: null
 };
 
 export const GlobalContext = createContext(initialState);
@@ -22,7 +22,23 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   //actions
+  //get stats action
+  async function getStats(user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
 
+      const res = await axios.get(`${URL}api/bookings/stats`, config);
+
+      dispatch({ type: 'GET_STATS', payload: res.data.stats });
+    } catch (error) {
+      dispatch({ type: 'GET_STATS_ERROR', payload: error });
+    }
+  }
   //Register user action
   async function addNewUser(formData, user) {
     const { name, email, phone, permission } = formData;
@@ -68,29 +84,6 @@ export const GlobalProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: 'GET_ADMINS_ERROR',
-        payload: error?.response?.data.error
-      });
-    }
-  }
-
-  //get all users (Admins) action
-  async function gePendingBookings(user) {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      const res = await axios.get(`${URL}api/bookings?status=Awaiting`, config);
-      dispatch({
-        type: 'GET_PENDING_BOOKINGS',
-        payload: res.data.count
-      });
-    } catch (error) {
-      console.log(error);
-      dispatch({
-        type: 'GET_PENDING_BOOKINGS_ERROR',
         payload: error?.response?.data.error
       });
     }
@@ -327,7 +320,7 @@ export const GlobalProvider = ({ children }) => {
         user: state.user,
         admins: state.admins,
         message: state.message,
-        pendingBookings: state.pendingBookings,
+        stats: state.stats,
         deleteBooking,
         addBooking,
         updateBooking,
@@ -342,7 +335,7 @@ export const GlobalProvider = ({ children }) => {
         getAdmins,
         updateAdmin,
         deleteAdmin,
-        gePendingBookings
+        getStats
       }}
     >
       {children}
