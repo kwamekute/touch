@@ -40,7 +40,8 @@ const BookingListResults = ({ filterfn }) => {
     logOutUser,
     updateBooking,
     deleteBooking,
-    loading
+    loading,
+    getStats
   } = useContext(GlobalContext);
 
   const navigate = useNavigate();
@@ -73,14 +74,15 @@ const BookingListResults = ({ filterfn }) => {
       logOutUser();
       navigate('/login', { replace: true });
     }
-    updateBooking(values, user).then(() => {
-      setOpenPopup(false);
+    updateBooking(values, user).then(async () => {
+      await getStats(user);
       setNotify({
         isOpen: true,
         message: 'Status changed successfully',
         type: 'success'
       });
     });
+    setOpenPopup(false);
   };
 
   const onDelete = (id) => {

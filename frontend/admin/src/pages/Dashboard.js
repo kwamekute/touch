@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container, Grid } from '@material-ui/core';
 import TotalArrived from 'src/components/dashboard/TotalArrived';
+import { useEffect } from 'react';
 import PendingBooking from 'src/components/dashboard/PendingBooking';
 import TotalDeparted from 'src/components/dashboard/TotalDeparted';
 import TotalCanceled from 'src/components/dashboard/TotalCanceled';
@@ -13,7 +14,17 @@ import OverallBookingStats from 'src/components/dashboard/OverallBookingStats';
 import RoomsBookingStats from 'src/components/dashboard/RoomsBookingStats';
 
 const Dashboard = () => {
-  const { stats } = useContext(GlobalContext);
+  const { stats, user, bookings, getBookings, getStats } =
+    useContext(GlobalContext);
+
+  useEffect(() => {
+    getBookings(user);
+    //eslint-diable-next-line react-hooks/exhustive-deps;
+  }, []);
+
+  useEffect(() => {
+    getStats(user);
+  }, [bookings]);
 
   return (
     <>

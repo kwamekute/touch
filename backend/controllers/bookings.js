@@ -171,8 +171,7 @@ exports.getStats = async (request, response, next) => {
       }
     ).countDocuments();
 
-    // Bookings collection must have at least one record for this to work. TODO find a better alternative
-
+    // Bookings collection must have at least one record for the agregations below to work.: TODO find a better alternative
     const [{ total_canceled }] = await Booking.aggregate([
       {
         $facet: {

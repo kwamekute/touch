@@ -12,9 +12,9 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
+import { GlobalContext } from 'src/context/GlobalState';
 //date util library
 import DateFnsUtils from '@date-io/date-fns';
-import { GlobalContext } from 'src/context/GlobalState';
 
 const initialValues = {
   email: '',
@@ -195,7 +195,7 @@ const CustomerListToolbar = ({ open, setOpen }) => {
                   variant="contained"
                   onClick={handleReset}
                 >
-                  Reset filters
+                  Reset
                 </Button>
               </Box>
             </form>
