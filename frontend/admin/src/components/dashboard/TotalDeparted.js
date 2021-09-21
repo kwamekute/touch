@@ -6,17 +6,20 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import { green, red } from '@material-ui/core/colors';
+import { green, red, grey } from '@material-ui/core/colors';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 function colorForStatus(stats) {
-  const status = parseInt(stats.departed_percentage_difference);
-  if (status >= 50) {
+  const status = stats.departed_percentage_difference;
+  if (status < 0) {
     return green;
+  } else if (status > 0) {
+    return red;
   }
-  return red;
+  return grey;
 }
 
 const TotalDeparted = (props) => {
@@ -53,8 +56,10 @@ const TotalDeparted = (props) => {
             pt: 2
           }}
         >
-          {parseInt(stats.departed_percentage_difference) >= 50 ? (
+          {stats.departed_percentage_difference < 0 ? (
             <ArrowUpwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          ) : stats.departed_percentage_difference === null ? (
+            <ArrowRightAltIcon sx={{ color: colorForStatus(stats)[900] }} />
           ) : (
             <ArrowDownwardIcon sx={{ color: colorForStatus(stats)[900] }} />
           )}
@@ -66,7 +71,10 @@ const TotalDeparted = (props) => {
             }}
             variant="body2"
           >
-            {stats.departed_percentage_difference} %
+            {stats.departed_percentage_difference === null
+              ? '-'
+              : Math.abs(stats.departed_percentage_difference)}
+            %
           </Typography>
           <Typography
             sx={{
@@ -74,7 +82,7 @@ const TotalDeparted = (props) => {
             }}
             variant="caption"
           >
-            {/* Since last month */}
+            Since last month
           </Typography>
         </Box>
       </CardContent>

@@ -150,26 +150,38 @@ exports.updatebookings = async (request, response, next) => {
 exports.getStats = async (request, response, next) => {
   const bookings = await Booking.estimatedDocumentCount();
 
+  const now = new Date();
+  const CurrentMonth = now.getMonth() + 1;
+  const getlastMonth = (now) => {
+    const month = now.getMonth();
+    if (month === 0) {
+      return month + 1;
+    }
+    return month;
+  };
+  const priorMonth = getlastMonth(now);
+
+  // console.log(`CurrentMonth`, CurrentMonth);
+  // console.log(`priorMonth`, priorMonth);
+
   try {
     // re-write this to use aggregators
-    const percentage_increase_canceled = await Booking.find(
-      { status: "Canceled" },
-      {
-        createdAt: {
-          $gte: new Date(new Date().setHours(0, 0, 0)),
-          $lte: new Date(new Date().setHours(23, 59, 59)),
-        },
-      }
-    ).countDocuments();
-    const percentage_increase_departed = await Booking.find(
-      { status: "Departed" },
-      {
-        createdAt: {
-          $gte: new Date(new Date().setHours(0, 0, 0)),
-          $lte: new Date(new Date().setHours(23, 59, 59)),
-        },
-      }
-    ).countDocuments();
+    const total_canceled_current_month = await Booking.find({
+      $expr: { $gte: [{ $month: "$createdAt" }, CurrentMonth] },
+      status: "Canceled",
+    }).countDocuments();
+    const total_departed_current_month = await Booking.find({
+      $expr: { $gte: [{ $month: "$createdAt" }, CurrentMonth] },
+      status: "Departed",
+    }).countDocuments();
+    const total_canceled_proir_month = await Booking.find({
+      $expr: { $eq: [{ $month: "$createdAt" }, priorMonth] },
+      status: "Canceled",
+    }).countDocuments();
+    const total_departed_prior_month = await Booking.find({
+      $expr: { $eq: [{ $month: "$createdAt" }, priorMonth] },
+      status: "Departed",
+    }).countDocuments();
 
     // Bookings collection must have at least one record for the agregations below to work.: TODO find a better alternative
     const [{ total_canceled }] = await Booking.aggregate([
@@ -356,22 +368,30 @@ exports.getStats = async (request, response, next) => {
     // console.log("total_arrived", total_arrived);
     // console.log("total_pending", total_pending);
     // console.log("bookings", bookings);
-    // console.log("percentage_increase_canceled", percentage_increase_canceled);
-    // console.log("percentage_increase_departed", percentage_increase_departed);
+    // console.log("total_canceled_current_month", total_canceled_current_month);
+    // console.log("total_departed_current_month", total_departed_current_month);
+    // console.log("total_canceled_proir_month", total_canceled_proir_month);
+    // console.log("total_departed_prior_month", total_departed_prior_month);
+
+    function getPercentageChange(oldNumber, newNumber) {
+      var decreaseValue = oldNumber - newNumber;
+      //A negative value indicates a percentage increase.
+      return (decreaseValue / oldNumber) * 100;
+    }
 
     const stats = {
       total_arrived,
       total_pending,
       total_canceled,
-      canceled_percentage_difference: `${(
-        (percentage_increase_canceled / bookings) *
-        100
-      ).toFixed(0)}`,
+      canceled_percentage_difference: getPercentageChange(
+        total_canceled_proir_month,
+        total_canceled_current_month
+      ),
       total_departed,
-      departed_percentage_difference: `${(
-        (percentage_increase_departed / bookings) *
-        100
-      ).toFixed(0)}`,
+      departed_percentage_difference: getPercentageChange(
+        total_departed_prior_month,
+        total_departed_current_month
+      ),
     };
 
     return response.status(200).json({ success: true, stats });

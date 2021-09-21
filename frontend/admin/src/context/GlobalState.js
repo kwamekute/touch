@@ -36,7 +36,11 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'GET_STATS', payload: res.data.stats });
     } catch (error) {
-      dispatch({ type: 'GET_STATS_ERROR', payload: error });
+      console.log('stats=>', error.response);
+      dispatch({
+        type: 'GET_STATS_ERROR',
+        payload: error.response?.data.error
+      });
     }
   }
   //Register user action

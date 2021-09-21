@@ -6,17 +6,20 @@ import {
   Grid,
   Typography
 } from '@material-ui/core';
-import { red, green } from '@material-ui/core/colors';
+import { red, green, grey } from '@material-ui/core/colors';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 function colorForStatus(stats) {
-  const status = parseInt(stats.canceled_percentage_difference);
-  if (status >= 50) {
+  const status = stats.canceled_percentage_difference;
+  if (status < 0) {
     return green;
+  } else if (status > 0) {
+    return red;
   }
-  return red;
+  return grey;
 }
 
 const TotalCanceled = (props) => {
@@ -53,8 +56,10 @@ const TotalCanceled = (props) => {
             alignItems: 'center'
           }}
         >
-          {parseInt(stats.canceled_percentage_difference) >= 50 ? (
+          {stats.canceled_percentage_difference < 0 ? (
             <ArrowUpwardIcon sx={{ color: colorForStatus(stats)[900] }} />
+          ) : stats.canceled_percentage_difference === null ? (
+            <ArrowRightAltIcon sx={{ color: colorForStatus(stats)[900] }} />
           ) : (
             <ArrowDownwardIcon sx={{ color: colorForStatus(stats)[900] }} />
           )}
@@ -66,7 +71,10 @@ const TotalCanceled = (props) => {
             }}
             variant="body2"
           >
-            {stats.canceled_percentage_difference} %
+            {stats.canceled_percentage_difference === null
+              ? '-'
+              : Math.abs(stats.canceled_percentage_difference)}
+            %
           </Typography>
           <Typography
             sx={{
@@ -74,7 +82,7 @@ const TotalCanceled = (props) => {
             }}
             variant="caption"
           >
-            {/* Since last month */}
+            Since last month
           </Typography>
         </Box>
       </CardContent>

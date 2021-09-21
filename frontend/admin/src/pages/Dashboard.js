@@ -19,11 +19,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     getBookings(user);
+    console.log('called books');
     //eslint-diable-next-line react-hooks/exhustive-deps;
   }, []);
 
   useEffect(() => {
     getStats(user);
+    console.log('called Stats');
   }, [bookings]);
 
   return (
