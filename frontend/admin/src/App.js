@@ -24,7 +24,7 @@ const App = () => {
         });
       }
 
-      if (error.response.status === 401 || 403 || 500) {
+      if (error.response.status === 403) {
         localStorage.removeItem('authenticatedUser');
         navigate('/login', { replace: true });
       } else {
