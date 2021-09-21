@@ -73,7 +73,7 @@ const TotalDeparted = (props) => {
           >
             {stats.departed_percentage_difference === null
               ? '-'
-              : Math.abs(stats.departed_percentage_difference)}
+              : Math.floor(Math.abs(stats.departed_percentage_difference))}
             %
           </Typography>
           <Typography
