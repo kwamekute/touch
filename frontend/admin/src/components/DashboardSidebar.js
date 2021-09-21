@@ -52,21 +52,25 @@ const DashboardSidebar = ({ onMobileClose, openMobile }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user, logOutUser, stats } = useContext(GlobalContext);
+  const { user, logOutUser, stats, getStats } = useContext(GlobalContext);
 
+  useEffect(() => {
+    getStats(user);
+    //eslint-diable-next-line react-hooks/exhustive-deps;
+  }, []);
   //assign number of pending bookings to bookings navbar Item
   items[1].count = stats.total_pending;
-
-  const handleSignout = () => {
-    logOutUser();
-    navigate('/login', { replace: true });
-  };
 
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
     }
   }, [location.pathname]);
+
+  const handleSignout = () => {
+    logOutUser();
+    navigate('/login', { replace: true });
+  };
 
   const content = (
     <Box

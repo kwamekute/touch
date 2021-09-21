@@ -14,19 +14,11 @@ import OverallBookingStats from 'src/components/dashboard/OverallBookingStats';
 import RoomsBookingStats from 'src/components/dashboard/RoomsBookingStats';
 
 const Dashboard = () => {
-  const { stats, user, bookings, getBookings, getStats } =
-    useContext(GlobalContext);
-
-  useEffect(() => {
-    getBookings(user);
-    console.log('called books');
-    //eslint-diable-next-line react-hooks/exhustive-deps;
-  }, []);
+  const { stats, user, getStats } = useContext(GlobalContext);
 
   useEffect(() => {
     getStats(user);
-    console.log('called Stats');
-  }, [bookings]);
+  }, []);
 
   return (
     <>

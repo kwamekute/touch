@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import BookingListResults from 'src/components/booking/BookingListResults';
 import BookingListToolbar from 'src/components/booking/BookingListToolbar';
 import LoadingBackdrop from 'src/components/LoadingBackdrop';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const BookingList = () => {
   const [open, setOpen] = useState(false);
@@ -12,6 +13,13 @@ const BookingList = () => {
       return items;
     }
   });
+
+  const { user, getBookings } = useContext(GlobalContext);
+
+  useEffect(() => {
+    getBookings(user);
+    //eslint-diable-next-line react-hooks/exhustive-deps;
+  }, []);
 
   const handleSearch = (event) => {
     let target = event.target;
