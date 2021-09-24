@@ -14,6 +14,8 @@ const initialValues = {
   roomType: '',
   name: '',
   phone: '',
+  numberAdults: '',
+  numberChildren: '',
   status: '',
   checkIn: '',
   checkOut: ''
