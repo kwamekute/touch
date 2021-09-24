@@ -9,7 +9,8 @@ import {
   TableCell,
   IconButton,
   Grid,
-  Typography
+  Typography,
+  Toolbar
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
@@ -21,6 +22,7 @@ import ConfirmDialog from '../ConfirmDialog';
 import Loading from '../Loading';
 import moment from 'moment';
 import StatusChip from '../StatusChip';
+import FilterTable from '../FilterTable';
 
 const headCells = [
   { id: 'Details', label: 'Personal Details' },

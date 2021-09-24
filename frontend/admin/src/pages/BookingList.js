@@ -6,7 +6,6 @@ import BookingListToolbar from 'src/components/booking/BookingListToolbar';
 import { GlobalContext } from 'src/context/GlobalState';
 
 const BookingList = () => {
-  const [open, setOpen] = useState(false);
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;

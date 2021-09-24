@@ -6,6 +6,7 @@ import AccountToolbar from 'src/components/admins/AccountToolbar';
 
 const ManageAdmins = () => {
   const user = JSON.parse(localStorage.getItem('authenticatedUser')).user;
+
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -22,8 +23,7 @@ const ManageAdmins = () => {
             (x) =>
               x.name.toLowerCase().includes(target.value.toLowerCase()) ||
               x.email.toLowerCase().includes(target.value.toLowerCase()) ||
-              x.phone.includes(target.value) ||
-              x.roomType.toLowerCase().includes(target.value.toLowerCase())
+              x.phone.includes(target.value)
           );
       }
     });
@@ -48,7 +48,7 @@ const ManageAdmins = () => {
             </Box>
           ) : null}
           <Box sx={{ pt: 3 }}>
-            <AdminsList filterfn={filterfn} />
+            <AdminsList filterfn={filterfn} onhandlesearch={handleSearch} />
           </Box>
         </Container>
       </Box>

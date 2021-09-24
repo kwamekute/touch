@@ -24,6 +24,7 @@ import ConfirmDialog from '../ConfirmDialog';
 import Loading from '../Loading';
 import moment from 'moment';
 import AdminDetails from './AdminDetails';
+import FilterTable from '../FilterTable';
 
 const headCells = [
   { id: 'name', label: 'Full Name' },
@@ -37,11 +38,11 @@ const headCells = [
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
   }
 }));
 
-const AdminsList = ({ filterfn }) => {
+const AdminsList = ({ filterfn, onhandlesearch }) => {
   const {
     getAdmins,
     user,
@@ -121,6 +122,7 @@ const AdminsList = ({ filterfn }) => {
     <>
       <Card className={classes.card}>
         <PerfectScrollbar>
+          <FilterTable onhandlesearch={onhandlesearch} />
           <Box sx={{ minWidth: 1050 }}>
             <TblContainer>
               <TblHead />
