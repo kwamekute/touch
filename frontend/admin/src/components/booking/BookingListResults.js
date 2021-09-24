@@ -113,67 +113,80 @@ const BookingListResults = ({ filterfn }) => {
                 </TableBody>
               ) : (
                 <TableBody>
-                  {recordsAfterSorting().map((item) => (
-                    <TableRow hover key={item._id}>
+                  {recordsAfterSorting().length === 0 ? (
+                    <TableRow
+                      style={{ alignItems: 'center', justifyContent: 'center' }}
+                    >
                       <TableCell>
-                        <Grid container>
-                          <Grid item>
-                            <Typography>Name: {item.name}</Typography>
-                            <Typography color="textSecondary" variant="body2">
-                              Email: {item.email}
-                            </Typography>
-                            <Typography color="textSecondary" variant="caption">
-                              Phone: {item.phone}
-                            </Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>{item.roomType}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>{item.checkIn}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>{item.checkOut}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>
-                          {moment(item.createdAt).format('DD/MM/YYYY')}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <StatusChip status={item.status} />
-                      </TableCell>
-                      <TableCell padding="none">
-                        <IconButton
-                          color="inherit"
-                          onClick={() => openInPopup(item)}
-                        >
-                          <EditIcon size="20" />
-                        </IconButton>
-                        {user.user.permission === 'Super-Admin' ? (
-                          <IconButton
-                            color="secondary"
-                            onClick={() => {
-                              setConfirmDialog({
-                                isOpen: true,
-                                title:
-                                  'Are you sure you want to delete this booking?',
-                                subTitle: "You can't undo this operation",
-                                onConfirm: () => {
-                                  onDelete(item._id);
-                                }
-                              });
-                              //
-                            }}
-                          >
-                            <DeleteIcon size="20" />
-                          </IconButton>
-                        ) : null}
+                        <Typography>No Data to show</Typography>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ) : (
+                    recordsAfterSorting().map((item) => (
+                      <TableRow hover key={item._id}>
+                        <TableCell>
+                          <Grid container>
+                            <Grid item>
+                              <Typography>Name: {item.name}</Typography>
+                              <Typography color="textSecondary" variant="body2">
+                                Email: {item.email}
+                              </Typography>
+                              <Typography
+                                color="textSecondary"
+                                variant="caption"
+                              >
+                                Phone: {item.phone}
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>{item.roomType}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>{item.checkIn}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>{item.checkOut}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>
+                            {moment(item.createdAt).format('DD/MM/YYYY')}
+                          </Typography>
+                        </TableCell>
+                        <TableCell>
+                          <StatusChip status={item.status} />
+                        </TableCell>
+                        <TableCell padding="none">
+                          <IconButton
+                            color="inherit"
+                            onClick={() => openInPopup(item)}
+                          >
+                            <EditIcon size="20" />
+                          </IconButton>
+                          {user.user.permission === 'Super-Admin' ? (
+                            <IconButton
+                              color="secondary"
+                              onClick={() => {
+                                setConfirmDialog({
+                                  isOpen: true,
+                                  title:
+                                    'Are you sure you want to delete this booking?',
+                                  subTitle: "You can't undo this operation",
+                                  onConfirm: () => {
+                                    onDelete(item._id);
+                                  }
+                                });
+                                //
+                              }}
+                            >
+                              <DeleteIcon size="20" />
+                            </IconButton>
+                          ) : null}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               )}
             </TblContainer>
