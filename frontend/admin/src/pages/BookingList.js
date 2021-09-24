@@ -37,6 +37,25 @@ const BookingList = () => {
     });
   };
 
+  const handleFilter = (event) => {
+    let target = event.target;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value === '') return items;
+        else
+          return items.filter(
+            (x) =>
+              x.name.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.email.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.roomType.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.checkIn.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.checkOut.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.phone.includes(target.value)
+          );
+      }
+    });
+  };
+
   const handleReset = () => {
     setFilterFn({
       fn: (items) => {
@@ -62,7 +81,10 @@ const BookingList = () => {
             onhandleReset={handleReset}
           />
           <Box sx={{ pt: 3 }}>
-            <BookingListResults filterfn={filterfn} />
+            <BookingListResults
+              filterfn={filterfn}
+              onhandleFilter={handleFilter}
+            />
           </Box>
         </Container>
       </Box>

@@ -139,7 +139,7 @@ const AdminsList = ({ filterfn, onhandlesearch }) => {
                   {recordsAfterSorting().length === 0 ? (
                     <TableRow>
                       <TableCell>
-                        <Typography>No Data To Show</Typography>
+                        <Typography>No data to show</Typography>
                       </TableCell>
                     </TableRow>
                   ) : (

@@ -5,7 +5,8 @@ import {
   Card,
   CardContent,
   TextField,
-  Grid
+  Grid,
+  CardHeader
 } from '@material-ui/core';
 import moment from 'moment';
 import {
@@ -88,6 +89,7 @@ const CustomerListToolbar = ({ onhandleSearch, onhandleReset }) => {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Box>
         <Card>
+          <CardHeader title="Advance Search" />
           <CardContent>
             <form autoComplete="off" noValidate>
               <Grid container spacing={2}>

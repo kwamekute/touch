@@ -30,6 +30,8 @@ const BookingDetails = (props) => {
     });
   }, [recordsforedit]);
 
+  const isEnabled = values?.status === 'Awaiting';
+
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -41,9 +43,9 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
-              label="FullName"
+              size="small"
+              label="Name"
               name="name"
-              required
               value={values.name}
               variant="outlined"
               InputProps={{
@@ -54,9 +56,9 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
               label="Email Address"
               name="email"
-              required
               value={values.email}
               variant="outlined"
               InputProps={{
@@ -67,9 +69,9 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
               label="Room Type"
               name="roomType"
-              required
               value={values.roomType}
               variant="outlined"
               InputProps={{
@@ -80,6 +82,7 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
               label="Phone Number"
               name="phone"
               type="text"
@@ -93,9 +96,9 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
               label="checkIn"
               name="checkIn"
-              required
               value={values.checkIn}
               variant="outlined"
               InputProps={{
@@ -106,6 +109,7 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
               label="checkOut"
               name="checkOut"
               value={values.checkOut}
@@ -118,10 +122,36 @@ const BookingDetails = (props) => {
           <Grid item md={6} xs={12}>
             <TextField
               fullWidth
+              size="small"
+              label="Adults"
+              name="roomType"
+              value={values.numberAdults}
+              variant="outlined"
+              InputProps={{
+                readOnly: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              size="small"
+              label="Children"
+              name="roomType"
+              value={values.numberChildren}
+              variant="outlined"
+              InputProps={{
+                readOnly: true
+              }}
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <TextField
+              fullWidth
+              size="small"
               label="Booking Status"
               name="status"
               onChange={handleChange}
-              required
               select
               SelectProps={{ native: true }}
               value={values.status}
@@ -136,6 +166,7 @@ const BookingDetails = (props) => {
           </Grid>
         </Grid>
       </CardContent>
+
       <Box
         sx={{
           display: 'flex',
@@ -143,6 +174,7 @@ const BookingDetails = (props) => {
         }}
       >
         <Button
+          disabled={isEnabled}
           color="primary"
           variant="contained"
           onClick={() => {

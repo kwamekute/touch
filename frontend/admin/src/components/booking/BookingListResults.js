@@ -34,7 +34,7 @@ const headCells = [
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
-const BookingListResults = ({ filterfn }) => {
+const BookingListResults = ({ filterfn, onhandleFilter }) => {
   const {
     bookings,
     user,
@@ -102,7 +102,8 @@ const BookingListResults = ({ filterfn }) => {
     <>
       <Card>
         <PerfectScrollbar>
-          <Box sx={{ minWidth: 1050 }}>
+          <Box>
+            <FilterTable onhandlesearch={onhandleFilter} />
             <TblContainer>
               <TblHead />
               {loading ? (
