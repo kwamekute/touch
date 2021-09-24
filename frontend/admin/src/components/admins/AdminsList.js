@@ -136,92 +136,100 @@ const AdminsList = ({ filterfn, onhandlesearch }) => {
                 </TableBody>
               ) : (
                 <TableBody>
-                  {recordsAfterSorting().map((item) => (
-                    <TableRow hover key={item._id}>
+                  {recordsAfterSorting().length === 0 ? (
+                    <TableRow>
                       <TableCell>
-                        <Grid container>
-                          <Grid item lg={4}>
-                            <Avatar variant="string" alt={item.name} />
-                          </Grid>
-                          <Grid item lg={8}>
-                            <Typography> {item.name}</Typography>
-                          </Grid>
-                        </Grid>
-                      </TableCell>
-                      <TableCell>
-                        <Typography> {item.email}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>{item.phone}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>{item.permission}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        <Typography>
-                          {moment(item.createdAt).format('DD/MM/YYYY')}
-                        </Typography>
-                      </TableCell>
-                      {item.inviteToken ? (
-                        <TableCell>
-                          <Chip
-                            size="small"
-                            label="pending"
-                            style={{
-                              backgroundColor: orange[600],
-                              color: 'white'
-                            }}
-                          />
-                        </TableCell>
-                      ) : (
-                        <TableCell>
-                          <Chip
-                            size="small"
-                            label="activated"
-                            style={{
-                              backgroundColor: green[600],
-                              color: 'white'
-                            }}
-                          />
-                        </TableCell>
-                      )}
-                      <TableCell padding="none">
-                        <div
-                          style={{
-                            flexDirection: 'row',
-                            display: 'flex',
-                            alignContent: 'center'
-                          }}
-                        >
-                          <IconButton
-                            color="inherit"
-                            onClick={() => openInPopup(item)}
-                          >
-                            <EditIcon size="20" />
-                          </IconButton>
-                          {user.user.permission === 'Super-Admin' ? (
-                            <IconButton
-                              color="secondary"
-                              onClick={() => {
-                                setConfirmDialog({
-                                  isOpen: true,
-                                  title:
-                                    'Are you sure you want to delete this admin?',
-                                  subTitle: "You can't undo this operation",
-                                  onConfirm: () => {
-                                    onDelete(item._id);
-                                  }
-                                });
-                                //
-                              }}
-                            >
-                              <DeleteIcon size="20" />
-                            </IconButton>
-                          ) : null}
-                        </div>
+                        <Typography>No Data To Show</Typography>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ) : (
+                    recordsAfterSorting().map((item) => (
+                      <TableRow hover key={item._id}>
+                        <TableCell>
+                          <Grid container>
+                            <Grid item lg={4}>
+                              <Avatar variant="string" alt={item.name} />
+                            </Grid>
+                            <Grid item lg={8}>
+                              <Typography> {item.name}</Typography>
+                            </Grid>
+                          </Grid>
+                        </TableCell>
+                        <TableCell>
+                          <Typography> {item.email}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>{item.phone}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>{item.permission}</Typography>
+                        </TableCell>
+                        <TableCell>
+                          <Typography>
+                            {moment(item.createdAt).format('DD/MM/YYYY')}
+                          </Typography>
+                        </TableCell>
+                        {item.inviteToken ? (
+                          <TableCell>
+                            <Chip
+                              size="small"
+                              label="pending"
+                              style={{
+                                backgroundColor: orange[600],
+                                color: 'white'
+                              }}
+                            />
+                          </TableCell>
+                        ) : (
+                          <TableCell>
+                            <Chip
+                              size="small"
+                              label="activated"
+                              style={{
+                                backgroundColor: green[600],
+                                color: 'white'
+                              }}
+                            />
+                          </TableCell>
+                        )}
+                        <TableCell padding="none">
+                          <div
+                            style={{
+                              flexDirection: 'row',
+                              display: 'flex',
+                              alignContent: 'center'
+                            }}
+                          >
+                            <IconButton
+                              color="inherit"
+                              onClick={() => openInPopup(item)}
+                            >
+                              <EditIcon size="20" />
+                            </IconButton>
+                            {user.user.permission === 'Super-Admin' ? (
+                              <IconButton
+                                color="secondary"
+                                onClick={() => {
+                                  setConfirmDialog({
+                                    isOpen: true,
+                                    title:
+                                      'Are you sure you want to delete this admin?',
+                                    subTitle: "You can't undo this operation",
+                                    onConfirm: () => {
+                                      onDelete(item._id);
+                                    }
+                                  });
+                                  //
+                                }}
+                              >
+                                <DeleteIcon size="20" />
+                              </IconButton>
+                            ) : null}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               )}
             </TblContainer>
