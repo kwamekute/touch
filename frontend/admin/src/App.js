@@ -19,10 +19,9 @@ const App = () => {
     function (error) {
       if (
         error.response.status === 401 ||
-        error.response.status === 401 ||
+        error.response.status === 403 ||
         error.response.data.error ===
           'Access not authorized, There was an error => jwt expired' ||
-        error.response.status === 401 ||
         error.response.data.error ===
           'Access not authorized, There was an error => jwt malformed'
       ) {
