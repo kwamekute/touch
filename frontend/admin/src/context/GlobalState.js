@@ -36,7 +36,6 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'GET_STATS', payload: res.data.stats });
     } catch (error) {
-      console.log('stats=>', error.response);
       dispatch({
         type: 'GET_STATS_ERROR',
         payload: error.response?.data.error
@@ -65,7 +64,6 @@ export const GlobalProvider = ({ children }) => {
       );
       dispatch({ type: 'ADD_USER' });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'ADD_USER_ERROR',
         payload: error.response?.data.error
@@ -85,7 +83,6 @@ export const GlobalProvider = ({ children }) => {
       const res = await axios.get(`${URL}api/auth/admins`, config);
       dispatch({ type: 'GET_ADMINS', payload: res.data.users });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'GET_ADMINS_ERROR',
         payload: error?.response?.data.error
@@ -110,7 +107,6 @@ export const GlobalProvider = ({ children }) => {
       );
       dispatch({ type: 'UPDATE_ADMINS', payload: res.data.updatedUser });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'UPDATE_ADMINS_ERROR',
         payload: error?.response?.data.error
@@ -129,7 +125,6 @@ export const GlobalProvider = ({ children }) => {
       });
       dispatch({ type: 'FINISH_ADMIN_SETUP', payload: res.data });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'ADD_USER_ERROR',
         payload: error.response?.data.error
@@ -146,7 +141,6 @@ export const GlobalProvider = ({ children }) => {
       });
       dispatch({ type: 'LOGIN_USER', payload: res.data });
     } catch (error) {
-      console.log(error.response);
       dispatch({
         type: 'LOGIN_USER_ERROR',
         payload: error.response?.data.error
@@ -162,7 +156,6 @@ export const GlobalProvider = ({ children }) => {
       });
       dispatch({ type: 'FORGOT_PASSWORD', payload: res.data.message });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'FORGOT_PASSWORD_ERROR',
         payload: error.response?.data.error
@@ -184,7 +177,6 @@ export const GlobalProvider = ({ children }) => {
       );
       dispatch({ type: 'PASSWORD_RESET', payload: res.data.message });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'FORGOT_PASSWORD_ERROR',
         payload: error.response?.data.error
@@ -210,32 +202,6 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
     } catch (error) {
-      console.log(error);
-      dispatch({
-        type: 'GET_BOOKINGS_ERROR',
-        payload: error.response?.data.error
-      });
-    }
-  }
-
-  async function getFilteredBookings(user, formData) {
-    const { checkInDate, checkOutDate, email, name, phone, room } = formData;
-
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`
-        }
-      };
-      const res = await axios.get(
-        `${URL}api/bookings?name=${name}&email=${email}&phone=${phone}&roomType=${room}&checkIn=${checkInDate}&checkOut=${checkOutDate}`,
-        config
-      );
-
-      dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
-    } catch (error) {
-      console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
         payload: error.response?.data.error
@@ -256,7 +222,6 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'DELETE_BOOKING', payload: res.data.deletedBooking });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
         payload: error.response?.data.error
@@ -276,7 +241,6 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'DELETE_ADMINS', payload: res.data.deletedUser });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'GET_ADMINS_ERROR',
         payload: error.response?.data.error
@@ -301,7 +265,6 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'UPDATE_BOOKING', payload: res.data.booking });
     } catch (error) {
-      console.log(error);
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
         payload: error.response?.data.error
@@ -335,7 +298,6 @@ export const GlobalProvider = ({ children }) => {
         finishSetup,
         fogortPassword,
         resetPassword,
-        getFilteredBookings,
         getAdmins,
         updateAdmin,
         deleteAdmin,

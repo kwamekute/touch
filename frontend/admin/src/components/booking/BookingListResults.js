@@ -9,8 +9,7 @@ import {
   TableCell,
   IconButton,
   Grid,
-  Typography,
-  Toolbar
+  Typography
 } from '@material-ui/core';
 import { Edit as EditIcon, Trash2 as DeleteIcon } from 'react-feather';
 import UseTable from '../UseTable';
@@ -35,18 +34,8 @@ const headCells = [
 ];
 
 const BookingListResults = ({ filterfn, onhandleFilter }) => {
-  const {
-    bookings,
-    user,
-    error,
-    logOutUser,
-    updateBooking,
-    deleteBooking,
-    loading,
-    getStats
-  } = useContext(GlobalContext);
-
-  const navigate = useNavigate();
+  const { bookings, user, updateBooking, deleteBooking, loading, getStats } =
+    useContext(GlobalContext);
 
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -72,10 +61,6 @@ const BookingListResults = ({ filterfn, onhandleFilter }) => {
   };
 
   const handleSubmit = (values) => {
-    if (error === 'Access not authorized, There was an error => jwt expired') {
-      logOutUser();
-      navigate('/login', { replace: true });
-    }
     updateBooking(values, user).then(async () => {
       await getStats(user);
       setNotify({

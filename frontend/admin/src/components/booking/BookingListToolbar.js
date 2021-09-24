@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -13,7 +13,6 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
-import { GlobalContext } from 'src/context/GlobalState';
 //date util library
 import DateFnsUtils from '@date-io/date-fns';
 
@@ -37,8 +36,6 @@ const CustomerListToolbar = ({ onhandleSearch, onhandleReset }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [values, setValues] = useState(initialValues);
-
-  const { user, getBookings } = useContext(GlobalContext);
 
   const isEnabled =
     values.email.length > 0 &&

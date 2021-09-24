@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -43,19 +42,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminsList = ({ filterfn, onhandlesearch }) => {
-  const {
-    getAdmins,
-    user,
-    error,
-    loading,
-    logOutUser,
-    admins,
-    updateAdmin,
-    deleteAdmin
-  } = useContext(GlobalContext);
+  const { getAdmins, user, loading, admins, updateAdmin, deleteAdmin } =
+    useContext(GlobalContext);
 
   const classes = useStyles();
-  const navigate = useNavigate();
 
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -81,10 +71,6 @@ const AdminsList = ({ filterfn, onhandlesearch }) => {
   };
 
   const handleSubmit = (values) => {
-    if (error === 'Access not authorized, There was an error => jwt expired') {
-      logOutUser();
-      navigate('/login', { replace: true });
-    }
     updateAdmin(user, values).then(() => {
       setOpenPopup(false);
       setNotify({
@@ -107,16 +93,8 @@ const AdminsList = ({ filterfn, onhandlesearch }) => {
   };
 
   useEffect(() => {
-    getAdmins(user).then(() => {
-      if (
-        error === 'Access not authorized, There was an error => jwt expired'
-      ) {
-        logOutUser();
-        navigate('/login', { replace: true });
-      }
-    });
-    //eslint-diable-next-line react-hooks/exhustive-deps
-  }, []);
+    getAdmins(user);
+  }, [admins]);
 
   return (
     <>

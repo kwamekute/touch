@@ -13,24 +13,23 @@ const App = () => {
   const navigate = useNavigate();
 
   axios.interceptors.response.use(
-    (response) =>
-      new Promise((resolve, reject) => {
-        resolve(response);
-      }),
-    (error) => {
-      if (!error.response) {
-        return new Promise((resolve, reject) => {
-          reject(error);
-        });
-      }
-
-      if (error.response.status === 403) {
-        localStorage.removeItem('authenticatedUser');
+    function (response) {
+      return response;
+    },
+    function (error) {
+      if (
+        error.response.status === 401 ||
+        error.response.status === 401 ||
+        error.response.data.error ===
+          'Access not authorized, There was an error => jwt expired' ||
+        error.response.status === 401 ||
+        error.response.data.error ===
+          'Access not authorized, There was an error => jwt malformed'
+      ) {
         navigate('/login', { replace: true });
+        return Promise.reject(error);
       } else {
-        return new Promise((resolve, reject) => {
-          reject(error);
-        });
+        return Promise.reject(error);
       }
     }
   );
