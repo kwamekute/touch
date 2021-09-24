@@ -15,7 +15,6 @@ import { GlobalContext } from 'src/context/GlobalState';
 import Logo from 'src/components/Logo';
 
 const Login = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { logInUser, error, message } = useContext(GlobalContext);
 
@@ -66,10 +65,10 @@ const Login = () => {
                     display: 'Block',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    width: '20%'
+                    width: '30%'
                   }}
                 >
-                  <Logo style={{ height: 119, width: 119 }} />
+                  <img alt="Logo" src="/static/lux-touch.png" />
                 </Box>
                 <Box sx={{ mb: 3 }}>
                   <Typography color="textPrimary" align="center" variant="h2">
