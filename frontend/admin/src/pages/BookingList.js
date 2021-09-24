@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import BookingListResults from 'src/components/booking/BookingListResults';
 import BookingListToolbar from 'src/components/booking/BookingListToolbar';
-import LoadingBackdrop from 'src/components/LoadingBackdrop';
 import { GlobalContext } from 'src/context/GlobalState';
 
 const BookingList = () => {
@@ -21,19 +20,28 @@ const BookingList = () => {
     //eslint-diable-next-line react-hooks/exhustive-deps;
   }, []);
 
-  const handleSearch = (event) => {
-    let target = event.target;
+  const handleSearch = (values) => {
     setFilterFn({
       fn: (items) => {
-        if (target.value === '') return items;
+        if (!values) return items;
         else
           return items.filter(
             (x) =>
-              x.name.toLowerCase().includes(target.value.toLowerCase()) ||
-              x.email.toLowerCase().includes(target.value.toLowerCase()) ||
-              x.phone.includes(target.value) ||
-              x.roomType.toLowerCase().includes(target.value.toLowerCase())
+              x.name.toLowerCase().includes(values.name.toLowerCase()) &&
+              x.email.toLowerCase().includes(values.email.toLowerCase()) &&
+              x.phone.includes(values.phone) &&
+              x.roomType.toLowerCase().includes(values.room.toLowerCase()) &&
+              x.checkIn.includes(values.checkInDate) &&
+              x.checkOut.includes(values.checkOutDate)
           );
+      }
+    });
+  };
+
+  const handleReset = () => {
+    setFilterFn({
+      fn: (items) => {
+        return items;
       }
     });
   };
@@ -51,16 +59,14 @@ const BookingList = () => {
       >
         <Container maxWidth={false}>
           <BookingListToolbar
-            open={open}
-            setOpen={setOpen}
-            onHandleChange={handleSearch}
+            onhandleSearch={handleSearch}
+            onhandleReset={handleReset}
           />
           <Box sx={{ pt: 3 }}>
             <BookingListResults filterfn={filterfn} />
           </Box>
         </Container>
       </Box>
-      <LoadingBackdrop open={open} />
     </>
   );
 };

@@ -20,7 +20,9 @@ const initialValues = {
   email: '',
   name: '',
   phone: '',
-  room: ''
+  room: '',
+  checkInDate: null,
+  checkOutDate: null
 };
 const rooms = [
   { value: 'Standard Room', label: 'Standard Room' },
@@ -30,12 +32,21 @@ const rooms = [
   { value: 'Deluxe Room', label: 'Deluxe Room' }
 ];
 
-const CustomerListToolbar = ({ open, setOpen }) => {
+const CustomerListToolbar = ({ onhandleSearch, onhandleReset }) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [values, setValues] = useState(initialValues);
 
-  const { getFilteredBookings, user, getBookings } = useContext(GlobalContext);
+  const { user, getBookings } = useContext(GlobalContext);
+
+  const isEnabled =
+    values.email.length > 0 &&
+    values.name.length > 0 &&
+    values.phone.length > 0 &&
+    values.room.length > 0 &&
+    values?.checkInDate?.length > 0 &&
+    values?.checkOutDate?.length > 0;
+  checkInDate === 'Invalid date' && checkOutDate === 'Invalid date';
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -61,16 +72,16 @@ const CustomerListToolbar = ({ open, setOpen }) => {
     });
   }, [checkInDate]);
 
-  const handleSubmit = async () => {
-    setOpen(true);
-    await getFilteredBookings(user, values);
-    setOpen(false);
+  const handleSubmit = () => {
+    console.log(values);
+    onhandleSearch(values);
   };
-  const handleReset = async () => {
-    setOpen(true);
-    await getBookings(user);
+
+  const handleReset = () => {
     setValues(initialValues);
-    setOpen(false);
+    setCheckInDate(null);
+    setCheckOutDate(null);
+    onhandleReset();
   };
 
   return (
@@ -186,6 +197,7 @@ const CustomerListToolbar = ({ open, setOpen }) => {
                   color="primary"
                   variant="contained"
                   onClick={handleSubmit}
+                  disabled={!isEnabled}
                 >
                   Search
                 </Button>
@@ -194,6 +206,7 @@ const CustomerListToolbar = ({ open, setOpen }) => {
                   color="primary"
                   variant="contained"
                   onClick={handleReset}
+                  disabled={!isEnabled}
                 >
                   Reset
                 </Button>

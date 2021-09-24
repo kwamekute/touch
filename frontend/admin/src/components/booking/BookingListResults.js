@@ -23,7 +23,7 @@ import moment from 'moment';
 import StatusChip from '../StatusChip';
 
 const headCells = [
-  { id: 'personalInfo', label: 'Personal Details' },
+  { id: 'Details', label: 'Personal Details' },
   { id: 'roomType', label: 'Room type' },
   { id: 'arrival', label: 'Arrival', disableSorting: true },
   { id: 'depature', label: 'Depature', disableSorting: true },
