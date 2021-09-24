@@ -45,6 +45,10 @@ exports.addbookings = async (request, response, next) => {
     checkIn,
     checkOut,
   } = await request.body;
+
+  const maillist =
+    "startlinkgh@gmail.com,thatkutekwame@gmail.com,francissampah2@gmail.com";
+
   try {
     const newBooking = await Booking.create({
       name,
@@ -82,11 +86,26 @@ exports.addbookings = async (request, response, next) => {
         },
       });
 
-      response.status(201).json({
-        status: "success",
-        message: "Booking created Successfully",
-        booking: newBooking,
-      });
+      try {
+        await sendEmail({
+          to: maillist,
+          subject: "New Booking",
+          template: "admin-booking-mail",
+          templateVars: {
+            name: newBooking.name,
+            roomType: newBooking.roomType,
+            dateBooked: moment(newBooking.createdAt).format("MMMM Do YYYY"),
+          },
+        });
+
+        response.status(201).json({
+          status: "success",
+          message: "Booking created Successfully",
+          booking: newBooking,
+        });
+      } catch (error) {
+        return next(error);
+      }
     } catch (error) {
       return next(error);
     }
