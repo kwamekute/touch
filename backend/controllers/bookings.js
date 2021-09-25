@@ -84,6 +84,7 @@ exports.addbookings = async (request, response, next) => {
             name: newBooking.name,
             roomType: newBooking.roomType,
             dateBooked: moment(newBooking.createdAt).format("MMMM Do YYYY"),
+            url: `${process.env.URL}`,
           },
         });
 
