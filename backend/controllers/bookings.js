@@ -9,7 +9,7 @@ const sendEmail = require("../utils/sendMail");
 exports.getbookings = async (request, response, next) => {
   try {
     //getting all bookings and sorting for the most rescent first
-    const bookings = await Booking.find(query).sort({ _id: -1 }).lean();
+    const bookings = await Booking.find().sort({ _id: -1 }).lean();
     return response.status(200).json({
       status: "success",
       count: bookings.length,

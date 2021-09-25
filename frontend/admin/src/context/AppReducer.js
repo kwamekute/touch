@@ -6,11 +6,6 @@ export default (state, action) => {
         loading: false,
         bookings: action.payload
       };
-    case 'GET_PENDING_BOOKINGS':
-      return {
-        ...state,
-        pendingBookings: action.payload
-      };
     case 'GET_STATS':
       return {
         ...state,
@@ -68,10 +63,6 @@ export default (state, action) => {
         ...state,
         error: action.payload
       };
-    // case 'ADD_USER':
-    //   return {
-    //     ...state
-    //   };
     case 'ADD_USER_ERROR':
       return {
         ...state,
@@ -86,7 +77,8 @@ export default (state, action) => {
       return {
         ...state,
         user: action.payload,
-        auth: true
+        auth: true,
+        error: null
       };
     case 'LOG_OUT_USER':
       localStorage.clear();
@@ -95,12 +87,14 @@ export default (state, action) => {
         user: null,
         auth: false,
         bookings: [],
-        error: null
+        admins: [],
+        stats: []
       };
     case 'LOGIN_USER_ERROR':
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        auth: false
       };
     case 'PASSWORD_RESET':
       return {

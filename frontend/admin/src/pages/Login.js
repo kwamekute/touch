@@ -12,7 +12,6 @@ import {
   Typography
 } from '@material-ui/core';
 import { GlobalContext } from 'src/context/GlobalState';
-import Logo from 'src/components/Logo';
 
 const Login = () => {
   const navigate = useNavigate();

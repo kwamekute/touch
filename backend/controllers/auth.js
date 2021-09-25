@@ -85,21 +85,9 @@ exports.newaccount = async (request, response, next) => {
 };
 
 exports.getadmins = async (request, response, next) => {
-  const query = request.query;
-
-  //filter out all empty, undefined and Invalid fields from query object
-  for (var i in query) {
-    if (
-      query[i] === "" ||
-      query[i] === "undefined" ||
-      query[i] === "Invalid date"
-    ) {
-      delete query[i];
-    }
-  }
   try {
     //getting all bookings and sorting for the most rescent first
-    const users = await User.find(query).sort({ _id: -1 });
+    const users = await User.find().sort({ _id: -1 }).lean();
     return response.status(200).json({
       status: "success",
       count: users.length,

@@ -48,8 +48,10 @@ const BookingList = () => {
               x.name.toLowerCase().includes(target.value.toLowerCase()) ||
               x.email.toLowerCase().includes(target.value.toLowerCase()) ||
               x.roomType.toLowerCase().includes(target.value.toLowerCase()) ||
-              x.checkIn.toLowerCase().includes(target.value.toLowerCase()) ||
-              x.checkOut.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.status.toLowerCase().includes(target.value.toLowerCase()) ||
+              x.checkIn.includes(target.value) ||
+              x.checkOut.includes(target.value) ||
+              x.createdAt.includes(target.value) ||
               x.phone.includes(target.value)
           );
       }

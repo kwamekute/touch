@@ -35,8 +35,8 @@
                       width="100%"
                     >
                       <tbody>
-                        <b>There has been a new booking. </b>
-                        <h4>Booking details</h4>
+                        <b>There has been a new booking.</b>
+                        <h4>Booking summary</h4>
                         <tr>
                           <th style="border: 1px solid #dddddd">Booked by</th>
                           <th style="border: 1px solid #dddddd">Room Type</th>
@@ -51,6 +51,25 @@
                         <th style="border: 1px solid #dddddd">
                           <b><%= dateBooked %></b>
                         </th>
+                        <tr style="margin: auto">
+                          <td style="padding: 20px">
+                            <a
+                              style="
+                                text-decoration: none;
+                                color: #ffffff;
+                                border-radius: 3px;
+                                background-color: #c70a0a;
+                                display: block;
+                                text-align: center;
+                                padding: 15px 32px;
+                              "
+                              href="<%= url %>"
+                              target="_blank"
+                            >
+                              Check out booking details</a
+                            >
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </td>

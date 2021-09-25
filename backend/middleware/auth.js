@@ -21,16 +21,11 @@ exports.protect = async (request, response, next) => {
 
     const user = await User.findById(decoded.id);
     if (!user) {
-      return next(new ErrorResponse("User not found"), 404);
+      return next(new ErrorResponse("Unauthorised Access", 401));
     }
-
     request.user = user;
     next();
   } catch (error) {
-    return next(
-      new ErrorResponse(
-        `Access not authorized, There was an error => ${error.message}`
-      )
-    );
+    return next(new ErrorResponse("Unauthorised Access", 401));
   }
 };

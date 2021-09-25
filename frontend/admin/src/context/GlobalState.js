@@ -91,11 +91,13 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       const res = await axios.get(`${URL}api/auth/admins`, config);
-      dispatch({ type: 'GET_ADMINS', payload: res.data.users });
+      console.log('resssss=>', res);
+      dispatch({ type: 'GET_ADMINS', payload: res?.data.users });
     } catch (error) {
+      console.log('admins error =>', error.response);
       dispatch({
         type: 'GET_ADMINS_ERROR',
-        payload: error?.response?.data.error
+        payload: error?.response?.error
       });
     }
   }
