@@ -36,9 +36,19 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'GET_STATS', payload: res.data.stats });
     } catch (error) {
+      let payload;
+      if (
+        error.response?.data.error ===
+          'Access not authorized, There was an error => jwt expired' ||
+        'Access not authorized, There was an error => jwt malformed'
+      ) {
+        payload = 'Your session has expired please login';
+      } else {
+        payload = error.response?.data.error;
+      }
       dispatch({
         type: 'GET_STATS_ERROR',
-        payload: error.response?.data.error
+        payload
       });
     }
   }
@@ -202,9 +212,19 @@ export const GlobalProvider = ({ children }) => {
 
       dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
     } catch (error) {
+      let payload;
+      if (
+        error.response?.data.error ===
+          'Access not authorized, There was an error => jwt expired' ||
+        'Access not authorized, There was an error => jwt malformed'
+      ) {
+        payload = 'Your session has expired please login';
+      } else {
+        payload = error.response?.data.error;
+      }
       dispatch({
         type: 'GET_BOOKINGS_ERROR',
-        payload: error.response?.data.error
+        payload
       });
     }
   }

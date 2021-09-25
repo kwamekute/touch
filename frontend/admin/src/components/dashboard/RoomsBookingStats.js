@@ -1,12 +1,5 @@
 import { useContext } from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  colors,
-  Divider
-} from '@material-ui/core';
+import { Box, Card, CardContent, CardHeader, Divider } from '@material-ui/core';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 

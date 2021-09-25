@@ -31,9 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestBookings = (props) => {
-  const { bookings, getBookings, user, error, logOutUser } =
-    useContext(GlobalContext);
-  const navigate = useNavigate();
+  const { bookings, getBookings, user } = useContext(GlobalContext);
   const classes = useStyles();
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
@@ -44,14 +42,7 @@ const LatestBookings = (props) => {
     UseTable(bookings, headCells, filterfn);
 
   useEffect(() => {
-    getBookings(user).then(() => {
-      if (
-        error === 'Access not authorized, There was an error => jwt expired'
-      ) {
-        logOutUser();
-        navigate('/login', { replace: true });
-      }
-    });
+    getBookings(user);
     //eslint-diable-next-line react-hooks/exhustive-deps
   }, []);
 

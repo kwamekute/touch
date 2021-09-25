@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { Bar } from 'react-chartjs-2';
 import {
   Box,
@@ -30,16 +29,11 @@ const BOOKING_BUCKETS = {
 
 const Sales = (props) => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { bookings, getBookings, logOutUser, user, error } =
     useContext(GlobalContext);
 
-  useEffect(async () => {
-    await getBookings(user);
-    if (error === 'Access not authorized, There was an error => jwt expired') {
-      logOutUser();
-      navigate('/login', { replace: true });
-    }
+  useEffect(() => {
+    getBookings(user);
     //eslint-diable-next-line react-hooks/exhustive-deps
   }, []);
 
