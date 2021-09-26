@@ -18,7 +18,6 @@ const ManageAdmins = () => {
   const { user, getAdmins } = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log('called');
     getAdmins(user);
   }, []);
 
