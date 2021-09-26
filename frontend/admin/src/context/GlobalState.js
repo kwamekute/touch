@@ -37,11 +37,8 @@ export const GlobalProvider = ({ children }) => {
       dispatch({ type: 'GET_STATS', payload: res.data.stats });
     } catch (error) {
       let payload;
-      if (
-        error.response?.data.error ===
-          'Access not authorized, There was an error => jwt expired' ||
-        'Access not authorized, There was an error => jwt malformed'
-      ) {
+      let err = error.response?.data.error;
+      if (err === 'jwt expired') {
         payload = 'Your session has expired please login';
       } else {
         payload = error.response?.data.error;
@@ -91,12 +88,18 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       const res = await axios.get(`${URL}api/auth/admins`, config);
-      dispatch({ type: 'GET_ADMINS', payload: res?.data.users });
+      dispatch({ type: 'GET_ADMINS', payload: res?.data?.users });
     } catch (error) {
-      console.log('admins error =>', error.response);
+      let payload;
+      let err = error.response?.data?.error;
+      if (err === 'jwt expired') {
+        payload = 'Your session has expired please login';
+      } else {
+        payload = error.response?.data.error;
+      }
       dispatch({
         type: 'GET_ADMINS_ERROR',
-        payload: error?.response?.error
+        payload
       });
     }
   }

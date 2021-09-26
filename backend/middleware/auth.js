@@ -13,7 +13,7 @@ exports.protect = async (request, response, next) => {
   }
 
   if (!token) {
-    return next(new ErrorResponse("Unauthorised Access", 401));
+    return next(new ErrorResponse("Unauthorised Access Please Login", 401));
   }
 
   try {
@@ -21,7 +21,7 @@ exports.protect = async (request, response, next) => {
 
     const user = await User.findById(decoded.id);
     if (!user) {
-      return next(new ErrorResponse("Unauthorised Access", 401));
+      return next(new ErrorResponse("Unauthorised Access Please Login", 401));
     }
     request.user = user;
     next();
