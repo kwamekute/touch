@@ -26,6 +26,6 @@ exports.protect = async (request, response, next) => {
     request.user = user;
     next();
   } catch (error) {
-    return next(new ErrorResponse("Unauthorised Access", 401));
+    return next(new ErrorResponse(`${error.message}`, 401));
   }
 };

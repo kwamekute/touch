@@ -25,11 +25,11 @@ const ForgotPassword = () => {
           backgroundColor: 'background.default',
           display: 'flex',
           flexDirection: 'column',
-          height: '80%',
+          height: '75%',
           justifyContent: 'center'
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="xs">
           <Formik
             initialValues={{
               email: ''
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
+                <Box sx={{ mb: 2 }}>
                   <Typography align="center" color="textPrimary" variant="h2">
                     Reset Password
                   </Typography>
@@ -91,8 +91,9 @@ const ForgotPassword = () => {
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
+                  size="small"
                   helperText={touched.email && errors.email}
-                  label="Enter Email Address"
+                  label="Enter Email"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}

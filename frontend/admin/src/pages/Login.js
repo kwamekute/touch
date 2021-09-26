@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -27,10 +27,11 @@ const Login = () => {
           backgroundColor: 'background.default',
           display: 'flex',
           flexDirection: 'column',
+          height: '70%',
           justifyContent: 'center'
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="xs">
           <Formik
             initialValues={{
               email: '',
@@ -64,12 +65,16 @@ const Login = () => {
                     display: 'Block',
                     marginLeft: 'auto',
                     marginRight: 'auto',
-                    width: '30%'
+                    width: '19%'
                   }}
                 >
-                  <img alt="Logo" src="/static/lux-touch.png" />
+                  <img
+                    alt="Logo"
+                    src="/static/lux-touch.png"
+                    style={{ height: 85, width: 85 }}
+                  />
                 </Box>
-                <Box sx={{ mb: 3 }}>
+                <Box>
                   <Typography color="textPrimary" align="center" variant="h2">
                     Sign in
                   </Typography>
@@ -110,6 +115,7 @@ const Login = () => {
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
+                  size="small"
                   helperText={touched.email && errors.email}
                   label="Email Address"
                   margin="normal"
@@ -123,6 +129,7 @@ const Login = () => {
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
+                  size="small"
                   helperText={touched.password && errors.password}
                   label="Password"
                   margin="normal"

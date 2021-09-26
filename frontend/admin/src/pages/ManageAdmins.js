@@ -1,17 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Helmet } from 'react-helmet';
 import { Box, Container } from '@material-ui/core';
 import AdminsList from 'src/components/admins/AdminsList';
 import AccountToolbar from 'src/components/admins/AccountToolbar';
+import { GlobalContext } from 'src/context/GlobalState';
 
 const ManageAdmins = () => {
-  const user = JSON.parse(localStorage.getItem('authenticatedUser')).user;
-
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
       return items;
     }
   });
+  const authenticatedUser = JSON.parse(
+    localStorage.getItem('authenticatedUser')
+  ).user;
+
+  const { user, getAdmins } = useContext(GlobalContext);
+
+  useEffect(() => {
+    console.log('called');
+    getAdmins(user);
+  }, []);
 
   const handleSearch = (event) => {
     let target = event.target;
@@ -42,7 +51,7 @@ const ManageAdmins = () => {
         }}
       >
         <Container maxWidth="lg">
-          {user.permission === 'Super-Admin' ? (
+          {authenticatedUser.permission === 'Super-Admin' ? (
             <Box sx={{ pb: 3 }}>
               <AccountToolbar />
             </Box>

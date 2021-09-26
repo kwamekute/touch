@@ -7,7 +7,8 @@ const MainLayoutRoot = experimentalStyled('div')(({ theme }) => ({
   display: 'flex',
   height: '100%',
   overflow: 'hidden',
-  width: '100%'
+  width: '100%',
+  paddingTop: '5%'
 }));
 
 const MainLayoutWrapper = experimentalStyled('div')({

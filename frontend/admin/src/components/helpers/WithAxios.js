@@ -9,7 +9,6 @@ const WithAxios = ({ children }) => {
     axios.interceptors.response.use(
       (response) => response,
       async (error) => {
-        const originalRequest = error.config;
         // Prevent infinite loops
         if (error.response.status === 401) {
           logOutUser();

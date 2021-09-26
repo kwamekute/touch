@@ -27,11 +27,11 @@ const AccountSetup = (props) => {
           backgroundColor: 'background.default',
           display: 'flex',
           flexDirection: 'column',
-          height: '100%',
+          height: '70%',
           justifyContent: 'center'
         }}
       >
-        <Container maxWidth="sm">
+        <Container maxWidth="xs">
           <Formik
             initialValues={{
               passwordConfirmation: '',
@@ -61,12 +61,13 @@ const AccountSetup = (props) => {
               values
             }) => (
               <form onSubmit={handleSubmit}>
-                <Box sx={{ mb: 3 }}>
-                  <Typography color="textPrimary" variant="h2">
+                <Box sx={{ mb: 2 }}>
+                  <Typography color="textPrimary" align="center" variant="h2">
                     Account setup
                   </Typography>
                   <Typography
                     color="textSecondary"
+                    align="center"
                     gutterBottom
                     variant="body2"
                   >
@@ -77,6 +78,7 @@ const AccountSetup = (props) => {
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
+                  size="small"
                   helperText={touched.password && errors.password}
                   label="Password"
                   margin="normal"
@@ -92,6 +94,7 @@ const AccountSetup = (props) => {
                     touched.passwordConfirmation && errors.passwordConfirmation
                   )}
                   fullWidth
+                  size="small"
                   helperText={
                     touched.passwordConfirmation && errors.passwordConfirmation
                   }

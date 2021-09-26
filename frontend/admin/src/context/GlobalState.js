@@ -91,7 +91,6 @@ export const GlobalProvider = ({ children }) => {
         }
       };
       const res = await axios.get(`${URL}api/auth/admins`, config);
-      console.log('resssss=>', res);
       dispatch({ type: 'GET_ADMINS', payload: res?.data.users });
     } catch (error) {
       console.log('admins error =>', error.response);
@@ -215,11 +214,8 @@ export const GlobalProvider = ({ children }) => {
       dispatch({ type: 'GET_BOOKINGS', payload: res.data.bookings });
     } catch (error) {
       let payload;
-      if (
-        error.response?.data.error ===
-          'Access not authorized, There was an error => jwt expired' ||
-        'Access not authorized, There was an error => jwt malformed'
-      ) {
+      let err = error.response?.data.error;
+      if (err === 'jwt expired') {
         payload = 'Your session has expired please login';
       } else {
         payload = error.response?.data.error;

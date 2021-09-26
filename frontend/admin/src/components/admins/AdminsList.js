@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AdminsList = ({ filterfn, onhandlesearch }) => {
-  const { getAdmins, user, loading, admins, updateAdmin, deleteAdmin } =
+  const { user, loading, admins, updateAdmin, deleteAdmin } =
     useContext(GlobalContext);
 
   const classes = useStyles();
@@ -91,10 +91,6 @@ const AdminsList = ({ filterfn, onhandlesearch }) => {
       });
     });
   };
-
-  useEffect(() => {
-    getAdmins(user);
-  }, [admins]);
 
   return (
     <>
