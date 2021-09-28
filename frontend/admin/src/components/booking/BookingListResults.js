@@ -39,7 +39,7 @@ const BookingListResults = ({ filterfn, onhandleFilter }) => {
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
-    type: ''
+    type: 'success'
   });
 
   const [confirmDialog, setConfirmDialog] = useState({
