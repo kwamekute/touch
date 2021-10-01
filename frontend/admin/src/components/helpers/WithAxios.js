@@ -13,7 +13,7 @@ const WithAxios = ({ children }) => {
         console.log('errorMSG', error.message);
         if (!error?.response?.status && error.message === 'Network Error') {
           //TODO: change default alert to sweetAlert two or swal
-          alert('Bad Internet connection');
+          alert('Bad or No Internet connection');
           return Promise.reject(error);
         }
         if (error?.response?.status === 401) {

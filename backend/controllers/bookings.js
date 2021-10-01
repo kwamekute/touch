@@ -35,8 +35,9 @@ exports.addbookings = async (request, response, next) => {
     checkOut,
   } = await request.body;
 
-  const maillist =
-    "startlinkgh@gmail.com,thatkutekwame@gmail.com,francissampah2@gmail.com";
+  if (phone.trim().length < 10) {
+    return next(new ErrorResponse("Please enter a valid phone number"));
+  }
 
   try {
     const newBooking = await Booking.create({
@@ -74,6 +75,9 @@ exports.addbookings = async (request, response, next) => {
             .join("-")}.jpg`,
         },
       });
+
+      const maillist =
+        "startlinkgh@gmail.com,thatkutekwame@gmail.com,francissampah2@gmail.com";
 
       try {
         await sendEmail({
