@@ -786,7 +786,7 @@
         post_data,
         function (response) {
           //Response server message
-          if (response.status == "failed") {
+          if (response.status === "failed") {
             output =
               '<div class="notification error"><span class="notification-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></span><span class="notification-text">' +
               response.error +
