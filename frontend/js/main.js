@@ -785,7 +785,6 @@
         "https://luxury-touch.herokuapp.com/api/bookings/",
         post_data,
         function (response) {
-          console.log(response);
           //Response server message
           if (response.status == "failed") {
             output =
