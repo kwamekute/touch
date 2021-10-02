@@ -86,7 +86,7 @@ const CustomerListToolbar = ({ onhandleSearch, onhandleReset }) => {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Box>
         <Card>
-          <CardHeader title="Advance Search" />
+          <CardHeader title="Advanced Search (All fields are requird to enable search)" />
           <CardContent>
             <form autoComplete="off" noValidate>
               <Grid container spacing={2}>

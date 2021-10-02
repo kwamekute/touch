@@ -11,12 +11,15 @@ const WithAxios = ({ children }) => {
       async (error) => {
         // Prevent infinite loops
         console.log('errorMSG', error.message);
-        if (!error?.response?.status && error.message === 'Network Error') {
+        if (!error?.response?.status || error.message === 'Network Error') {
           //TODO: change default alert to sweetAlert two or swal
           alert('Bad or No Internet connection');
           return Promise.reject(error);
         }
-        if (error?.response?.status === 401) {
+        if (
+          error?.response?.status === 401 ||
+          error.message === 'Request failed with status code 401'
+        ) {
           logOutUser();
           return Promise.reject(error);
         }
