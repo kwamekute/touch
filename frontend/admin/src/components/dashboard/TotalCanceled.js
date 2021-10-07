@@ -73,7 +73,7 @@ const TotalCanceled = (props) => {
           >
             {stats.canceled_percentage_difference === null
               ? '-'
-              : Math.abs(stats.canceled_percentage_difference)}
+              : Math.floor(Math.abs(stats.canceled_percentage_difference))}
             %
           </Typography>
           <Typography
