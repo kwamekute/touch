@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import PendingBooking from 'src/components/dashboard/PendingBooking';
 import TotalDeparted from 'src/components/dashboard/TotalDeparted';
 import TotalCanceled from 'src/components/dashboard/TotalCanceled';
+import LatestBookings from 'src/components/dashboard/LatestBookings';
 
 import { GlobalContext } from 'src/context/GlobalState';
 import CurrentBookingStats from 'src/components/dashboard/CurrentBookingStats';
@@ -46,18 +47,26 @@ const Dashboard = () => {
             <Grid item lg={3} sm={6} xl={3} xs={12}>
               <TotalCanceled stats={stats} sx={{ height: '100%' }} />
             </Grid>
-            <Grid item lg={8} md={6} xl={9} xs={12}>
-              <OverallBookingStats />
-            </Grid>
-            <Grid item lg={4} md={6} xl={3} xs={12}>
-              <CurrentBookingStats sx={{ height: '100%' }} />
-            </Grid>
-            <Grid item lg={8} md={6} xl={9} xs={12}>
-              <YearlyStat />
-            </Grid>
-            <Grid item lg={4} md={6} xl={3} xs={12}>
-              <RoomsBookingStats sx={{ height: '100%' }} />
-            </Grid>
+            {user.user.permission === 'Admin' ? (
+              <Grid item lg={12} md={12} xl={12} xs={12}>
+                <LatestBookings />
+              </Grid>
+            ) : (
+              <>
+                <Grid item lg={8} md={6} xl={9} xs={12}>
+                  <OverallBookingStats />
+                </Grid>
+                <Grid item lg={4} md={6} xl={3} xs={12}>
+                  <CurrentBookingStats sx={{ height: '100%' }} />
+                </Grid>
+                <Grid item lg={8} md={6} xl={9} xs={12}>
+                  <YearlyStat />
+                </Grid>
+                <Grid item lg={4} md={6} xl={3} xs={12}>
+                  <RoomsBookingStats sx={{ height: '100%' }} />
+                </Grid>
+              </>
+            )}
           </Grid>
         </Container>
       </Box>

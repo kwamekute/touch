@@ -6,6 +6,12 @@ export default (state, action) => {
         loading: false,
         bookings: action.payload
       };
+    case 'GET_LATEST_BOOKINGS':
+      return {
+        ...state,
+        loading: false,
+        latestBookings: action.payload
+      };
     case 'GET_STATS':
       return {
         ...state,
@@ -59,6 +65,11 @@ export default (state, action) => {
         error: action.payload
       };
     case 'GET_ADMINS_ERROR':
+      return {
+        ...state,
+        error: action.payload
+      };
+    case 'GET_LATEST_BOOKINGS_ERROR':
       return {
         ...state,
         error: action.payload

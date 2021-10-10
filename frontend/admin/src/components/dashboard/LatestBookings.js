@@ -5,12 +5,15 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Card,
+  CardActions,
   CardHeader,
   Divider,
   TableBody,
   TableRow,
   TableCell,
-  makeStyles
+  makeStyles,
+  Grid,
+  Button
 } from '@material-ui/core';
 import UseTable from '../UseTable';
 import StatusChip from '../StatusChip';
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LatestBookings = (props) => {
-  const { bookings, getBookings, user } = useContext(GlobalContext);
+  const { latestBookings, getLatestBookings, user } = useContext(GlobalContext);
   const classes = useStyles();
   const [filterfn, setFilterFn] = useState({
     fn: (items) => {
@@ -39,18 +42,18 @@ const LatestBookings = (props) => {
     }
   });
   const { TblContainer, TblHead, TblPagination, recordsAfterSorting } =
-    UseTable(bookings, headCells, filterfn);
+    UseTable(latestBookings, headCells, filterfn);
 
   useEffect(() => {
-    getBookings(user);
+    getLatestBookings(user);
     //eslint-diable-next-line react-hooks/exhustive-deps
   }, []);
 
   return (
-    <Card className={classes.card}>
-      <CardHeader title="Bookings" />
-      <Divider />
-      <PerfectScrollbar>
+    <PerfectScrollbar>
+      <Card>
+        <CardHeader title="Latest Bookings" />
+        <Divider />
         <Box sx={{ minWidth: 800 }}>
           <TblContainer>
             <TblHead />
@@ -72,9 +75,11 @@ const LatestBookings = (props) => {
             </TableBody>
           </TblContainer>
         </Box>
-      </PerfectScrollbar>
-      <TblPagination />
-    </Card>
+        <CardActions>
+          <Button href="/app/bookings">View More</Button>
+        </CardActions>
+      </Card>
+    </PerfectScrollbar>
   );
 };
 

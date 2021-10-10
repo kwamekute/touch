@@ -7,6 +7,7 @@ const user = JSON.parse(localStorage.getItem('authenticatedUser'));
 
 const initialState = {
   bookings: [],
+  latestBookings: [],
   admins: [],
   stats: [],
   auth: user ? true : false,
@@ -230,6 +231,33 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  //get latest bookings action
+  async function getLatestBookings(user) {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${user.token}`
+        }
+      };
+      const res = await axios.get(`${URL}api/bookings/latest`, config);
+
+      dispatch({ type: 'GET_LATEST_BOOKINGS', payload: res.data.bookings });
+    } catch (error) {
+      let payload;
+      let err = error.response?.data.error;
+      if (err === 'jwt expired') {
+        payload = 'Your session has expired please login';
+      } else {
+        payload = error.response?.data.error;
+      }
+      dispatch({
+        type: 'GET_LATEST_BOOKINGS_ERROR',
+        payload
+      });
+    }
+  }
+
   //Delete Booking action
   async function deleteBooking(id, user) {
     try {
@@ -309,6 +337,7 @@ export const GlobalProvider = ({ children }) => {
         admins: state.admins,
         message: state.message,
         stats: state.stats,
+        latestBookings: state.latestBookings,
         deleteBooking,
         addBooking,
         updateBooking,
@@ -322,7 +351,8 @@ export const GlobalProvider = ({ children }) => {
         getAdmins,
         updateAdmin,
         deleteAdmin,
-        getStats
+        getStats,
+        getLatestBookings
       }}
     >
       {children}
